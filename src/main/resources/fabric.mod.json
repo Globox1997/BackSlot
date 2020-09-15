@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "backslot",
+  "version": "1.0.3",
+  "name": "BackSlot",
+  "description": "Adds another slot to your inventory",
+  "authors": [
+    "Globox_Z"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/backslot",
+    "sources": "https://github.com/Globox1997/BackSlot"
+  },
+  "license": "GLPv3",
+  "icon": "assets/backslot/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.backslot.BackSlotMain"
+    ],
+    "client": [
+      "net.backslot.BackSlotClient"
+    ]
+  },
+  "mixins": [
+    "backslot.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "fabric": "*",
+    "minecraft": "1.16.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  },
+  "accessWidener": "backslot.aw"
+}

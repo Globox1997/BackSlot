@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.backslot.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "PlayerInventoryMixin",
+    "PlayerScreenHandlerMixin",
+    "ServerPlayerEntityMixin",
+    "EntityTrackerEntryMixin"
+  ],
+  "client": [
+    "PlayerEntityRendererMixin",
+    "InGameHudMixin",
+    "HandledScreenMixin",
+    "InventoryScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
