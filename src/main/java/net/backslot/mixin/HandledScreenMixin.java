@@ -25,8 +25,10 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 @Mixin(HandledScreen.class)
 public abstract class HandledScreenMixin<T extends ScreenHandler> extends Screen implements ScreenHandlerProvider<T> {
-  private static final Identifier EMPTY_WEAPON_SLOT_TEXTURE = new Identifier("backslot",
-      "textures/gui/empty_weapon_slot.png");
+  private static final Identifier EMPTY_BACK_SLOT_TEXTURE = new Identifier("backslot",
+      "textures/gui/empty_back_slot.png");
+  private static final Identifier EMPTY_BELT_SLOT_TEXTURE = new Identifier("backslot",
+      "textures/gui/empty_belt_slot.png");
   @Shadow
   public T handler;
   @Shadow
@@ -40,15 +42,22 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> extends Screen
 
   @Inject(method = "drawSlot", at = @At(value = "RETURN"))
   public void drawSlotMixin(MatrixStack matrices, Slot slot, CallbackInfo info) {
-    ItemStack stack = this.playerInventory.getStack(41);
-    if (stack.isEmpty() && this.handler instanceof PlayerScreenHandler) {
+    ItemStack backSlotStack = this.playerInventory.getStack(41);
+    ItemStack beltSlotStack = this.playerInventory.getStack(42);
+    if (this.handler instanceof PlayerScreenHandler) {
       FabricLoader loader = FabricLoader.getInstance();
       int trinketsaddon = 0;
       if (loader.isModLoaded("trinkets")) {
         trinketsaddon = 18;
       }
-      this.client.getTextureManager().bindTexture(EMPTY_WEAPON_SLOT_TEXTURE);
-      DrawableHelper.drawTexture(matrices, 77, 44 - trinketsaddon, 0.0F, 0.0F, 16, 16, 16, 16);
+      if (backSlotStack.isEmpty()) {
+        this.client.getTextureManager().bindTexture(EMPTY_BACK_SLOT_TEXTURE);
+        DrawableHelper.drawTexture(matrices, 77, 44 - trinketsaddon, 0.0F, 0.0F, 16, 16, 16, 16);
+      }
+      if (beltSlotStack.isEmpty()) {
+        this.client.getTextureManager().bindTexture(EMPTY_BELT_SLOT_TEXTURE);
+        DrawableHelper.drawTexture(matrices, 77, 26 - trinketsaddon, 0.0F, 0.0F, 16, 16, 16, 16);
+      }
     }
   }
 

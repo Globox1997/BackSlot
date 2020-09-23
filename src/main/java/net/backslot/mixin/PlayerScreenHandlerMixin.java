@@ -32,7 +32,7 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
     if (loader.isModLoaded("trinkets")) {
       trinketsaddon = 18;
     }
-    Slot slot = new Slot(inventory, 41, 77, 44 - trinketsaddon) {
+    Slot backSlot = new Slot(inventory, 41, 77, 44 - trinketsaddon) {
       @Override
       public int getMaxItemCount() {
         return 1;
@@ -56,7 +56,33 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
       }
 
     };
-    this.addSlot(slot);
+    this.addSlot(backSlot);
+
+    Slot beltSlot = new Slot(inventory, 42, 77, 26 - trinketsaddon) {
+      @Override
+      public int getMaxItemCount() {
+        return 1;
+      }
+
+      @Override
+      public boolean canInsert(ItemStack stack) {
+        if (stack.getItem() instanceof ToolItem) {
+          return true;
+        } else
+          return false;
+
+      }
+
+      @Override
+      public boolean canTakeItems(PlayerEntity playerEntity) {
+        ItemStack itemStack = this.getStack();
+        return !itemStack.isEmpty() && !playerEntity.isCreative() && EnchantmentHelper.hasBindingCurse(itemStack)
+            ? false
+            : super.canTakeItems(playerEntity);
+      }
+
+    };
+    this.addSlot(beltSlot);
 
   }
 

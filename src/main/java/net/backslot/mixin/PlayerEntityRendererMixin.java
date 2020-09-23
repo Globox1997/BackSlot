@@ -9,6 +9,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendereregistry.v1.LivingEntityFeatureRendererRegistrationCallback;
 import net.backslot.client.feature.BackToolFeatureRenderer;
+import net.backslot.client.feature.BeltSlotFeatureRenderer;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
@@ -29,6 +30,7 @@ public abstract class PlayerEntityRendererMixin
   @Inject(method = "<init>(Lnet/minecraft/client/render/entity/EntityRenderDispatcher;Z)V", at = @At("TAIL"))
   public void onConstructor(CallbackInfo info) {
     this.addFeature(new BackToolFeatureRenderer(this));
+    this.addFeature(new BeltSlotFeatureRenderer(this));
   }
 
 }

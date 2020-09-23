@@ -30,17 +30,22 @@ public class EntityTrackerEntryMixin {
   public void startTrackingMixin(ServerPlayerEntity serverPlayer, CallbackInfo info) {
     if (entity instanceof PlayerEntity) {
       PlayerEntity player = (PlayerEntity) entity;
-      if (!serverPlayer.inventory.getStack(41).isEmpty()) {
-        PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
-        data.writeInt(serverPlayer.getEntityId());
-        data.writeItemStack(serverPlayer.inventory.getStack(41));
-        ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, SyncPacket.VISIBILITY_UPDATE_PACKET, data);
-      }
-      if (!player.inventory.getStack(41).isEmpty()) {
-        PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
-        data.writeInt(player.getEntityId());
-        data.writeItemStack(player.inventory.getStack(41));
-        ServerSidePacketRegistry.INSTANCE.sendToPlayer(serverPlayer, SyncPacket.VISIBILITY_UPDATE_PACKET, data);
+      for (int i = 41; i < 43; i++) {
+        System.out.println(i);
+        if (!serverPlayer.inventory.getStack(i).isEmpty()) {
+          PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
+          // data.writeInt(serverPlayer.getEntityId());
+          data.writeIntArray(new int[] { serverPlayer.getEntityId(), i });
+          data.writeItemStack(serverPlayer.inventory.getStack(i));
+          ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, SyncPacket.VISIBILITY_UPDATE_PACKET, data);
+        }
+        if (!player.inventory.getStack(i).isEmpty()) {
+          PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
+          // data.writeInt(player.getEntityId());
+          data.writeIntArray(new int[] { player.getEntityId(), i });
+          data.writeItemStack(player.inventory.getStack(i));
+          ServerSidePacketRegistry.INSTANCE.sendToPlayer(serverPlayer, SyncPacket.VISIBILITY_UPDATE_PACKET, data);
+        }
       }
     }
   }

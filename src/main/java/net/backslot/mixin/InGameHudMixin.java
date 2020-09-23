@@ -43,32 +43,32 @@ public abstract class InGameHudMixin extends DrawableHelper {
   public void renderHotbarMixin(float f, MatrixStack matrixStack, CallbackInfo info) {
     PlayerEntity playerEntity = this.getCameraPlayer();
     if (playerEntity != null) {
-      ItemStack itemStack = playerEntity.inventory.getStack(41);
-      if (!itemStack.isEmpty()) {
-        RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-        int i = this.scaledWidth / 2;
-        int p = this.scaledHeight - 16 - 3;
-
-        Arm arm = playerEntity.getMainArm().getOpposite();
-        RenderSystem.enableBlend();
+      ItemStack backSlotStack = playerEntity.inventory.getStack(41);
+      ItemStack beltSlotStack = playerEntity.inventory.getStack(42);
+      RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+      int i = this.scaledWidth / 2;
+      int p = this.scaledHeight - 16 - 3;
+      Arm arm = playerEntity.getMainArm().getOpposite();
+      if (!backSlotStack.isEmpty() || !beltSlotStack.isEmpty()) {
         if (arm == Arm.LEFT) {
+          RenderSystem.enableBlend();
           this.client.getTextureManager().bindTexture(WIDGETS_TEXTURE);
           this.drawTexture(matrixStack, i + 91, this.scaledHeight - 23, 53, 22, 29, 24);
-          this.renderHotbarItem(i + 91 + 10, p, f, playerEntity, itemStack);
-          // RenderSystem.enableBlend();
-          // this.client.getTextureManager().bindTexture(WIDGETS_TEXTURE);
-          // this.drawTexture(matrixStack, i + 112, this.scaledHeight - 23, 53, 22, 29, 24);
-          // this.renderHotbarItem(i + 112 + 10, p, f, playerEntity, itemStack);
-          // RenderSystem.disableBlend();
+          this.renderHotbarItem(i + 91 + 10, p, f, playerEntity, backSlotStack);
+          RenderSystem.enableBlend();
+          this.client.getTextureManager().bindTexture(WIDGETS_TEXTURE);
+          this.drawTexture(matrixStack, i + 112, this.scaledHeight - 23, 53, 22, 29, 24);
+          this.renderHotbarItem(i + 112 + 10, p, f, playerEntity, beltSlotStack);
         } else {
+          RenderSystem.enableBlend();
           this.drawTexture(matrixStack, i - 91 - 29, this.scaledHeight - 23, 24, 22, 29, 24);
-          this.renderHotbarItem(i - 91 - 26, p, f, playerEntity, itemStack);
-          // this.drawTexture(matrixStack, i - 91 - 45, this.scaledHeight - 23, 24, 22,
-          // 29, 24);
-          // this.renderHotbarItem(i - 91 - 41, p, f, playerEntity, itemStack);
+          this.renderHotbarItem(i - 91 - 26, p, f, playerEntity, backSlotStack);
+          RenderSystem.enableBlend();
+          this.client.getTextureManager().bindTexture(WIDGETS_TEXTURE);
+          this.drawTexture(matrixStack, i - 70 - 29, this.scaledHeight - 23, 24, 22, 29, 24);
+          this.renderHotbarItem(i - 70 - 26, p, f, playerEntity, beltSlotStack);
         }
         RenderSystem.disableBlend();
-
       }
     }
   }

@@ -39,6 +39,7 @@ public abstract class PlayerInventoryMixin implements Inventory {
   public DefaultedList<ItemStack> offHand;
 
   private DefaultedList<ItemStack> backSlot;
+  private DefaultedList<ItemStack> beltSlot;
 
   public PlayerInventoryMixin(PlayerEntity player) {
   }
@@ -46,8 +47,10 @@ public abstract class PlayerInventoryMixin implements Inventory {
   @Inject(method = "<init>*", at = @At("RETURN"))
   private void onConstructed(PlayerEntity playerEntity, CallbackInfo info) {
     this.backSlot = DefaultedList.ofSize(1, ItemStack.EMPTY);
+    this.beltSlot = DefaultedList.ofSize(1, ItemStack.EMPTY);
     this.combinedInventory = new ArrayList<>(combinedInventory);
     this.combinedInventory.add(backSlot);
+    this.combinedInventory.add(beltSlot);
     this.combinedInventory = ImmutableList.copyOf(this.combinedInventory);
   }
 
@@ -59,12 +62,19 @@ public abstract class PlayerInventoryMixin implements Inventory {
       this.backSlot.get(0).toTag(compoundTag);
       tag.add(compoundTag);
     }
+    if (!this.beltSlot.get(0).isEmpty()) {
+      CompoundTag compoundTag = new CompoundTag();
+      compoundTag.putByte("Slot", (byte) (111));
+      this.beltSlot.get(0).toTag(compoundTag);
+      tag.add(compoundTag);
+    }
 
   }
 
   @Inject(method = "deserialize", at = @At("TAIL"))
   public void deserializeMixin(ListTag tag, CallbackInfo info) {
     this.backSlot.clear();
+    this.beltSlot.clear();
     for (int i = 0; i < tag.size(); ++i) {
       CompoundTag compoundTag = tag.getCompound(i);
       int slot = compoundTag.getByte("Slot") & 255;
@@ -72,6 +82,8 @@ public abstract class PlayerInventoryMixin implements Inventory {
       if (!itemStack.isEmpty()) {
         if (slot >= 110 && slot < this.backSlot.size() + 110) {
           this.backSlot.set(slot - 110, itemStack);
+        } else if (slot >= 111 && slot < this.beltSlot.size() + 111) {
+          this.beltSlot.set(slot - 111, itemStack);
         }
       }
     }
@@ -88,10 +100,8 @@ public abstract class PlayerInventoryMixin implements Inventory {
 
   @Inject(method = "isEmpty", at = @At("HEAD"), cancellable = true)
   public void isEmptyMixin(CallbackInfoReturnable<Boolean> info) {
-    for (ItemStack itemStack : this.backSlot) {
-      if (!itemStack.isEmpty()) {
-        info.setReturnValue(false);
-      }
+    if (!this.backSlot.isEmpty() || !this.beltSlot.isEmpty()) {
+      info.setReturnValue(false);
     }
   }
 

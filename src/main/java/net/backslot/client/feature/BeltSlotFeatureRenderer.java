@@ -11,14 +11,15 @@ import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
 @Environment(EnvType.CLIENT)
-public class BackToolFeatureRenderer
+public class BeltSlotFeatureRenderer
     extends HeldItemFeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
 
-  public BackToolFeatureRenderer(
+  public BeltSlotFeatureRenderer(
       FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureRendererContext) {
     super(featureRendererContext);
   }
@@ -27,14 +28,15 @@ public class BackToolFeatureRenderer
   public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i,
       AbstractClientPlayerEntity livingEntity, float f, float g, float h, float j, float k, float l) {
     PlayerEntity player = (PlayerEntity) livingEntity;
-    ItemStack backSlotStack = player.inventory.getStack(41);
-    if (livingEntity instanceof AbstractClientPlayerEntity && !backSlotStack.isEmpty()) {
+    ItemStack beltSlotStack = player.inventory.getStack(42);
+    if (livingEntity instanceof AbstractClientPlayerEntity && !beltSlotStack.isEmpty()) {
       matrixStack.push();
       ModelPart modelPart = this.getContextModel().torso;
       modelPart.rotate(matrixStack);
       matrixStack.scale(2.0F, 2.0F, 2.0F);
-      matrixStack.translate(0.0D, 0.0D, 0.11D);
-      MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, backSlotStack,
+      matrixStack.translate(0.14D, 0.24D, 0.0D);
+      matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(-90.0F));
+      MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, beltSlotStack,
           ModelTransformation.Mode.GROUND, false, matrixStack, vertexConsumerProvider, i);
       matrixStack.pop();
     }

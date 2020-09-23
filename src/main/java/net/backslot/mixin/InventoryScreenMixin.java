@@ -34,7 +34,6 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
 
   @Inject(method = "drawBackground", at = @At(value = "RETURN"))
   public void drawBackgroundMixin(MatrixStack matrices, float delta, int mouseX, int mouseY, CallbackInfo info) {
-    this.client.getTextureManager().bindTexture(BACK_TEXTURE);
     int scaledWidth = this.client.getWindow().getScaledWidth();
     int scaledHeight = this.client.getWindow().getScaledHeight();
     FabricLoader loader = FabricLoader.getInstance();
@@ -44,6 +43,9 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
     if (this.recipeBook.isOpen()) {
       scaledWidth = scaledWidth + 154;
     }
+    this.client.getTextureManager().bindTexture(BACK_TEXTURE);
+    DrawableHelper.drawTexture(matrices, scaledWidth / 2 - 12, scaledHeight / 2 - 58, 0.0F, 0.0F, 18, 18, 18, 18);
+    this.client.getTextureManager().bindTexture(BACK_TEXTURE);
     DrawableHelper.drawTexture(matrices, scaledWidth / 2 - 12, scaledHeight / 2 - 40, 0.0F, 0.0F, 18, 18, 18, 18);
   }
 
