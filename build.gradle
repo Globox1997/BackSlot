@@ -15,7 +15,11 @@ minecraft {
 }
 
 repositories {
-  jcenter()
+	jcenter()
+	maven {
+    url "https://maven.siphalor.de/"
+    name "Siphalor's Maven"
+   }
 }
 
 dependencies {
@@ -23,6 +27,18 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
+	// // Amecs Key
+	modImplementation "de.siphalor:amecsapi-1.16:${project.amecs_version}"
+  include "de.siphalor:amecsapi-1.16:${project.amecs_version}"
+	// modImplementation "com.github.siphalor:amecs:+"
+  // include "com.github.siphalor:amecs:+"
+
+	// modImplementation "curse.maven:net.amecs:3059705"
+	//include "curse.maven:net.amecs:3059705"
+
+	  // jcenter()
+	// maven { url "https://jitpack.io/" }
 
 	//Config & ModMenu
 	// include("me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}")
