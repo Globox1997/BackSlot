@@ -1,5 +1,6 @@
 package net.backslot.client.feature;
 
+import net.backslot.BackSlotMain;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -13,7 +14,9 @@ import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.FlintAndSteelItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ShearsItem;
 
 @Environment(EnvType.CLIENT)
 public class BeltSlotFeatureRenderer
@@ -33,9 +36,13 @@ public class BeltSlotFeatureRenderer
       matrixStack.push();
       ModelPart modelPart = this.getContextModel().torso;
       modelPart.rotate(matrixStack);
-      matrixStack.scale(2.0F, 2.0F, 2.0F);
-      matrixStack.translate(0.14D, 0.24D, 0.0D);
+      matrixStack.translate(0.29D, 0.5D, 0.05D);
       matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(-90.0F));
+      matrixStack.scale(BackSlotMain.CONFIG.beltslot_scale, BackSlotMain.CONFIG.beltslot_scale,
+          BackSlotMain.CONFIG.beltslot_scale);
+      if (beltSlotStack.getItem() instanceof ShearsItem || beltSlotStack.getItem() instanceof FlintAndSteelItem) {
+        matrixStack.scale(0.65F, 0.65F, 0.65F);
+      }
       MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, beltSlotStack,
           ModelTransformation.Mode.GROUND, false, matrixStack, vertexConsumerProvider, i);
       matrixStack.pop();

@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.5.25'
+	id 'fabric-loom' version '0.4-SNAPSHOT'
 	id 'maven-publish'
 }
 
@@ -15,7 +15,6 @@ minecraft {
 }
 
 repositories {
-	jcenter()
 	maven {
     url "https://maven.siphalor.de/"
     name "Siphalor's Maven"
@@ -27,33 +26,28 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
 	// // Amecs Key
 	modImplementation "de.siphalor:amecsapi-1.16:${project.amecs_version}"
   include "de.siphalor:amecsapi-1.16:${project.amecs_version}"
-	// modImplementation "com.github.siphalor:amecs:+"
-  // include "com.github.siphalor:amecs:+"
 
-	// modImplementation "curse.maven:net.amecs:3059705"
-	//include "curse.maven:net.amecs:3059705"
+		// Config
+	modApi("me.shedaniel.cloth:config-2:${project.cloth_config_version}") {
+      exclude(group: "net.fabricmc.fabric-api")
+  }
+	include("me.shedaniel.cloth:config-2:${project.cloth_config_version}") {
+      exclude(group: "net.fabricmc.fabric-api")
+  }
+	modApi("me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}") {
+      exclude(group: "net.fabricmc.fabric-api")
+  }
+	include("me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}") {
+      exclude(group: "net.fabricmc.fabric-api")
+  }
 
-	  // jcenter()
-	// maven { url "https://jitpack.io/" }
-
-	//Config & ModMenu
-	// include("me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}")
-  // modApi("me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}") {
-  //     exclude(group: "net.fabricmc.fabric-api")
-  // }
-	// modApi("me.shedaniel.cloth:config-2:${project.cloth_config_version}") {
-  //   exclude(group: "net.fabricmc.fabric-api")
-  // }
-	// include "me.shedaniel.cloth:config-2:${project.cloth_config_version}"
-  // //modCompile "me.shedaniel.cloth:config-2:${project.cloth_config_version}"
-  // // include "me.shedaniel.cloth:config-2:${project.cloth_config_version}"
-  // // modCompile "me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}"
-  // // include "me.sargunvohra.mcmods:autoconfig1u:${project.auto_config_version}"
-	// modCompile "io.github.prospector:modmenu:${project.mod_menu_version}"
+	// Modmenu dev
+	modCompile "io.github.prospector:modmenu:${project.mod_menu_version}",{
+			exclude(group: "net.fabricmc.fabric-api")
+	}
 }
 
 processResources {

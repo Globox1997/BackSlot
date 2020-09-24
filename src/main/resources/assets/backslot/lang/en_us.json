@@ -1,5 +1,8 @@
 {
   "key.backslot.switch_backslot": "Back Slot Switch",
   "key.backslot.switch_beltslot": "Belt Slot Switch",
-  "category.backslot.key": "Back Slot"
+  "category.backslot.key": "Back Slot",
+  "text.autoconfig.backslot.title": "BackSlot Config",
+  "text.autoconfig.backslot.option.backslot_scale": "BackSlot Item Scale",
+  "text.autoconfig.backslot.option.beltslot_scale": "BeltSlot Item Scale"
 }
