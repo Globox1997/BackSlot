@@ -3,14 +3,20 @@ package net.backslot.mixin;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.item.FishingRodItem;
+import net.minecraft.item.FlintAndSteelItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.OnAStickItem;
 import net.minecraft.item.RangedWeaponItem;
+import net.minecraft.item.ShearsItem;
 import net.minecraft.item.ToolItem;
+import net.minecraft.item.TridentItem;
 import net.minecraft.screen.AbstractRecipeScreenHandler;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
@@ -40,7 +46,9 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
 
       @Override
       public boolean canInsert(ItemStack stack) {
-        if (stack.getItem() instanceof ToolItem || stack.getItem() instanceof RangedWeaponItem) {
+        if (stack.getItem() instanceof ToolItem || stack.getItem() instanceof RangedWeaponItem
+            || stack.getItem() instanceof FishingRodItem || stack.getItem() instanceof OnAStickItem
+            || stack.getItem() instanceof TridentItem) {
           return true;
         } else
           return false;
@@ -66,7 +74,8 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
 
       @Override
       public boolean canInsert(ItemStack stack) {
-        if (stack.getItem() instanceof ToolItem) {
+        if (stack.getItem() instanceof ToolItem
+            || (stack.getItem() instanceof FlintAndSteelItem || stack.getItem() instanceof ShearsItem)) {
           return true;
         } else
           return false;
