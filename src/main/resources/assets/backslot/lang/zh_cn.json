@@ -1,0 +1,8 @@
+{
+  "key.backslot.switch_backslot": "背槽启用",
+  "key.backslot.switch_beltslot": "皮带槽启用",
+  "category.backslot.key": "背槽",
+  "text.autoconfig.backslot.title": "背槽配置",
+  "text.autoconfig.backslot.option.backslot_scale": "背槽物品大小比例",
+  "text.autoconfig.backslot.option.beltslot_scale": "皮带槽物品大小比例"
+}
