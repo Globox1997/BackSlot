@@ -51,7 +51,6 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
   private void sendPacket(int slot) {
     Stream<PlayerEntity> players = PlayerStream.watching(world, this.getBlockPos());
     PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
-    // data.writeInt(this.getEntityId());
     data.writeIntArray(new int[] { this.getEntityId(), slot });
     data.writeItemStack(this.inventory.getStack(slot));
     players.forEach(
