@@ -13,7 +13,8 @@
     "PlayerEntityRendererMixin",
     "InGameHudMixin",
     "HandledScreenMixin",
-    "InventoryScreenMixin"
+    "InventoryScreenMixin",
+    "CreativeInventoryScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
