@@ -61,12 +61,13 @@ public abstract class InGameHudMixin extends DrawableHelper {
           this.renderHotbarItem(i + 112 + 10, p, f, playerEntity, beltSlotStack);
         } else {
           RenderSystem.enableBlend();
+          this.client.getTextureManager().bindTexture(WIDGETS_TEXTURE);
           this.drawTexture(matrixStack, i - 91 - 29, this.scaledHeight - 23, 24, 22, 29, 24);
           this.renderHotbarItem(i - 91 - 26, p, f, playerEntity, backSlotStack);
           RenderSystem.enableBlend();
           this.client.getTextureManager().bindTexture(WIDGETS_TEXTURE);
-          this.drawTexture(matrixStack, i - 70 - 29, this.scaledHeight - 23, 24, 22, 29, 24);
-          this.renderHotbarItem(i - 70 - 26, p, f, playerEntity, beltSlotStack);
+          this.drawTexture(matrixStack, i - 112 - 29, this.scaledHeight - 23, 24, 22, 29, 24);
+          this.renderHotbarItem(i - 112 - 26, p, f, playerEntity, beltSlotStack);
         }
         RenderSystem.disableBlend();
       }
