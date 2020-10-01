@@ -13,10 +13,12 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FishingRodItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.OnAStickItem;
+import net.minecraft.item.TridentItem;
 
 @Environment(EnvType.CLIENT)
 public class BackToolFeatureRenderer
@@ -36,15 +38,28 @@ public class BackToolFeatureRenderer
       matrixStack.push();
       ModelPart modelPart = this.getContextModel().torso;
       modelPart.rotate(matrixStack);
-      matrixStack.translate(0.0D, 0.0D, 0.22D);
-      matrixStack.scale(BackSlotMain.CONFIG.backslot_scale, BackSlotMain.CONFIG.backslot_scale,
-          BackSlotMain.CONFIG.backslot_scale);
-      if (backSlotStack.getItem() instanceof FishingRodItem || backSlotStack.getItem() instanceof OnAStickItem) {
-        matrixStack.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(180.0F));
-        matrixStack.translate(0.0D, -0.3D, 0.0D);
+      if (!(backSlotStack.getItem() instanceof TridentItem)) {
+        matrixStack.translate(0.0D, 0.0D, 0.22D);
+        matrixStack.scale(BackSlotMain.CONFIG.backslot_scale, BackSlotMain.CONFIG.backslot_scale,
+            BackSlotMain.CONFIG.backslot_scale);
+        if (backSlotStack.getItem() instanceof FishingRodItem || backSlotStack.getItem() instanceof OnAStickItem) {
+          matrixStack.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(180.0F));
+          matrixStack.translate(0.0D, -0.3D, 0.0D);
+        }
+        MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, backSlotStack,
+            ModelTransformation.Mode.GROUND, false, matrixStack, vertexConsumerProvider, i);
+      } else {
+        matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(52.0F));
+        matrixStack.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(40.0F));
+        matrixStack.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(-25.F));
+        matrixStack.scale(1.0F, -1.0F, -1.0F);
+        if (!livingEntity.hasStackEquipped(EquipmentSlot.CHEST)) {
+          matrixStack.translate(0.05F, 0.0F, 0.0F);
+        }
+        matrixStack.translate(-0.28F, 0.0F, 0.0F);
+        MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, backSlotStack,
+            ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND, false, matrixStack, vertexConsumerProvider, i);
       }
-      MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, backSlotStack,
-          ModelTransformation.Mode.GROUND, false, matrixStack, vertexConsumerProvider, i);
       matrixStack.pop();
     }
   }

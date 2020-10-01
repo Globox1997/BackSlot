@@ -13,6 +13,7 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.client.util.math.Vector3f;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FlintAndSteelItem;
 import net.minecraft.item.ItemStack;
@@ -37,11 +38,17 @@ public class BeltSlotFeatureRenderer
       ModelPart modelPart = this.getContextModel().torso;
       modelPart.rotate(matrixStack);
       matrixStack.translate(0.29D, 0.5D, 0.05D);
+      if (beltSlotStack.getItem() instanceof FlintAndSteelItem) {
+        matrixStack.translate(0.01F, 0.0F, -0.1F);
+      }
       matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(-90.0F));
       matrixStack.scale(BackSlotMain.CONFIG.beltslot_scale, BackSlotMain.CONFIG.beltslot_scale,
           BackSlotMain.CONFIG.beltslot_scale);
       if (beltSlotStack.getItem() instanceof ShearsItem || beltSlotStack.getItem() instanceof FlintAndSteelItem) {
         matrixStack.scale(0.65F, 0.65F, 0.65F);
+        if(!livingEntity.hasStackEquipped(EquipmentSlot.CHEST)){
+          matrixStack.translate(0.0F,0.0F, 0.015F);
+        }
       }
       MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, beltSlotStack,
           ModelTransformation.Mode.GROUND, false, matrixStack, vertexConsumerProvider, i);
