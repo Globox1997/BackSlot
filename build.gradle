@@ -15,6 +15,8 @@ minecraft {
 }
 
 repositories {
+	maven { url 'https://jitpack.io' }
+	maven {url "https://maven.jamieswhiteshirt.com/libs-release/"}
 	maven {
     url "https://maven.siphalor.de/"
     name "Siphalor's Maven"
@@ -45,6 +47,10 @@ dependencies {
   }
 	// Modmenu dev
 	modCompile "io.github.prospector:modmenu:${project.mod_menu_version}",{
+			exclude(group: "net.fabricmc.fabric-api")
+	}
+	// Medieval Weapons
+	modCompile "com.github.Globox1997:MedievalWeapons:1.0.0",{
 			exclude(group: "net.fabricmc.fabric-api")
 	}
 }

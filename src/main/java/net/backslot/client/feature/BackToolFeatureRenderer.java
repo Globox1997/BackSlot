@@ -3,6 +3,10 @@ package net.backslot.client.feature;
 import net.backslot.BackSlotMain;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.loader.api.FabricLoader;
+import net.medievalweapons.item.Long_Bow_Item;
+import net.medievalweapons.item.Long_Sword_Item;
+import net.medievalweapons.item.Small_Axe_Item;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -40,8 +44,21 @@ public class BackToolFeatureRenderer
       modelPart.rotate(matrixStack);
       if (!(backSlotStack.getItem() instanceof TridentItem)) {
         matrixStack.translate(0.0D, 0.0D, 0.22D);
-        matrixStack.scale(BackSlotMain.CONFIG.backslot_scale, BackSlotMain.CONFIG.backslot_scale,
-            BackSlotMain.CONFIG.backslot_scale);
+        float downScaling = 0.0F;
+        FabricLoader loader = FabricLoader.getInstance();
+        if (loader.isModLoaded("medievalweapons")) {
+          if (backSlotStack.getItem() instanceof Long_Bow_Item) {
+            downScaling = -1.3F;
+          }
+          if (backSlotStack.getItem() instanceof Small_Axe_Item) {
+            downScaling = -0.5F;
+          }
+          if (backSlotStack.getItem() instanceof Long_Sword_Item) {
+            downScaling = -0.2F;
+          }
+        }
+        matrixStack.scale(BackSlotMain.CONFIG.backslot_scale + downScaling,
+            BackSlotMain.CONFIG.backslot_scale + downScaling, BackSlotMain.CONFIG.backslot_scale + downScaling);
         if (backSlotStack.getItem() instanceof FishingRodItem || backSlotStack.getItem() instanceof OnAStickItem) {
           matrixStack.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(180.0F));
           matrixStack.translate(0.0D, -0.3D, 0.0D);

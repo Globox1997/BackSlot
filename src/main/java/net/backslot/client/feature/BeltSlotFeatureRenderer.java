@@ -3,6 +3,9 @@ package net.backslot.client.feature;
 import net.backslot.BackSlotMain;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.loader.api.FabricLoader;
+import net.medievalweapons.item.Long_Sword_Item;
+import net.medievalweapons.item.Small_Axe_Item;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -42,12 +45,22 @@ public class BeltSlotFeatureRenderer
         matrixStack.translate(0.01F, 0.0F, -0.1F);
       }
       matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(-90.0F));
-      matrixStack.scale(BackSlotMain.CONFIG.beltslot_scale, BackSlotMain.CONFIG.beltslot_scale,
-          BackSlotMain.CONFIG.beltslot_scale);
+      float downScaling = 0.0F;
+      FabricLoader loader = FabricLoader.getInstance();
+      if (loader.isModLoaded("medievalweapons")) {
+        if (beltSlotStack.getItem() instanceof Small_Axe_Item) {
+          downScaling = -0.5F;
+        }
+        if (beltSlotStack.getItem() instanceof Long_Sword_Item) {
+          downScaling = -0.3F;
+        }
+      }
+      matrixStack.scale(BackSlotMain.CONFIG.beltslot_scale + downScaling,
+          BackSlotMain.CONFIG.beltslot_scale + downScaling, BackSlotMain.CONFIG.beltslot_scale + downScaling);
       if (beltSlotStack.getItem() instanceof ShearsItem || beltSlotStack.getItem() instanceof FlintAndSteelItem) {
         matrixStack.scale(0.65F, 0.65F, 0.65F);
-        if(!livingEntity.hasStackEquipped(EquipmentSlot.CHEST)){
-          matrixStack.translate(0.0F,0.0F, 0.015F);
+        if (!livingEntity.hasStackEquipped(EquipmentSlot.CHEST)) {
+          matrixStack.translate(0.0F, 0.0F, 0.015F);
         }
       }
       MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, beltSlotStack,

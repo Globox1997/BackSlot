@@ -22,6 +22,9 @@ import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
 import net.fabricmc.loader.api.FabricLoader;
+import net.medievalweapons.item.Francisca_HT_Item;
+import net.medievalweapons.item.Francisca_LT_Item;
+import net.medievalweapons.item.Javelin_Item;
 import net.minecraft.enchantment.EnchantmentHelper;
 
 @Mixin(PlayerScreenHandler.class)
@@ -46,9 +49,12 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
 
       @Override
       public boolean canInsert(ItemStack stack) {
+        FabricLoader loader = FabricLoader.getInstance();
         if (stack.getItem() instanceof ToolItem || stack.getItem() instanceof RangedWeaponItem
             || stack.getItem() instanceof FishingRodItem || stack.getItem() instanceof OnAStickItem
-            || stack.getItem() instanceof TridentItem) {
+            || stack.getItem() instanceof TridentItem
+            || (loader.isModLoaded("medievalweapons") && (stack.getItem() instanceof Javelin_Item
+                || stack.getItem() instanceof Francisca_HT_Item || stack.getItem() instanceof Francisca_LT_Item))) {
           return true;
         } else
           return false;
@@ -74,8 +80,10 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
 
       @Override
       public boolean canInsert(ItemStack stack) {
-        if (stack.getItem() instanceof ToolItem
-            || (stack.getItem() instanceof FlintAndSteelItem || stack.getItem() instanceof ShearsItem)) {
+        FabricLoader loader = FabricLoader.getInstance();
+        if (stack.getItem() instanceof ToolItem || (stack.getItem() instanceof FlintAndSteelItem
+            || stack.getItem() instanceof ShearsItem || (loader.isModLoaded("medievalweapons")
+                && (stack.getItem() instanceof Francisca_HT_Item || stack.getItem() instanceof Francisca_LT_Item)))) {
           return true;
         } else
           return false;
