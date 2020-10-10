@@ -3,6 +3,7 @@
   "key.backslot.switch_beltslot": "Belt Slot Switch",
   "category.backslot.key": "Back Slot",
   "text.autoconfig.backslot.title": "BackSlot Config",
-  "text.autoconfig.backslot.option.backslot_scale": "BackSlot Item Scale",
-  "text.autoconfig.backslot.option.beltslot_scale": "BeltSlot Item Scale"
+  "text.autoconfig.backslot.option.backslot_scale": "BackSlot item scale",
+  "text.autoconfig.backslot.option.beltslot_scale": "BeltSlot item scale",
+  "text.autoconfig.backslot.option.backslot_sounds": "BackSlot sounds"
 }

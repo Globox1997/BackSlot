@@ -1,0 +1,13 @@
+{
+  "pack_up_item": {
+    "sounds": [
+      "backslot:pack_up_item",
+      "backslot:pack_up_item_2"
+    ]
+  },
+  "sheath_sword": {
+    "sounds": [
+      "backslot:sheath_sword"
+    ]
+  }
+}
