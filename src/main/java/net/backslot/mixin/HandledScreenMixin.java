@@ -6,9 +6,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
 
+import net.backslot.BackSlotMain;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -29,6 +29,7 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> extends Screen
       "textures/gui/empty_back_slot.png");
   private static final Identifier EMPTY_BELT_SLOT_TEXTURE = new Identifier("backslot",
       "textures/gui/empty_belt_slot.png");
+  private static boolean changeArrangement = BackSlotMain.CONFIG.change_slot_arrangement;
   @Shadow
   public T handler;
   @Shadow
@@ -45,18 +46,23 @@ public abstract class HandledScreenMixin<T extends ScreenHandler> extends Screen
     ItemStack backSlotStack = this.playerInventory.getStack(41);
     ItemStack beltSlotStack = this.playerInventory.getStack(42);
     if (this.handler instanceof PlayerScreenHandler) {
-      FabricLoader loader = FabricLoader.getInstance();
-      int trinketsaddon = 0;
-      if (loader.isModLoaded("trinkets")) {
-        trinketsaddon = 18;
+      int backSlot_x = 0;
+      int backSlot_y = 0;
+      int beltSlot_x = 0;
+      int beltSlot_y = 0;
+      if (changeArrangement) {
+        backSlot_x = 75;
+        backSlot_y = 22;
+        beltSlot_x = 57;
+        beltSlot_y = 40;
       }
       if (backSlotStack.isEmpty()) {
         this.client.getTextureManager().bindTexture(EMPTY_BACK_SLOT_TEXTURE);
-        DrawableHelper.drawTexture(matrices, 77, 44 - trinketsaddon, 0.0F, 0.0F, 16, 16, 16, 16);
+        DrawableHelper.drawTexture(matrices, 77 + backSlot_x, 44 + backSlot_y, 0.0F, 0.0F, 16, 16, 16, 16);
       }
       if (beltSlotStack.isEmpty()) {
         this.client.getTextureManager().bindTexture(EMPTY_BELT_SLOT_TEXTURE);
-        DrawableHelper.drawTexture(matrices, 77, 26 - trinketsaddon, 0.0F, 0.0F, 16, 16, 16, 16);
+        DrawableHelper.drawTexture(matrices, 77 + beltSlot_x, 26 + beltSlot_y, 0.0F, 0.0F, 16, 16, 16, 16);
       }
     }
   }
