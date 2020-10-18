@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "backslot",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "name": "BackSlot",
   "description": "Adds two slots to your inventory",
   "authors": [
