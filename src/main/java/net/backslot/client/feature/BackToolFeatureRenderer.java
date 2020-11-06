@@ -1,5 +1,8 @@
 package net.backslot.client.feature;
 
+import chronosacaria.mcdw.bases.McdwBow;
+import chronosacaria.mcdw.bases.McdwHammer;
+import chronosacaria.mcdw.bases.McdwStaff;
 import net.backslot.BackSlotMain;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -55,6 +58,23 @@ public class BackToolFeatureRenderer
           }
           if (backSlotStack.getItem() instanceof Long_Sword_Item) {
             downScaling = -0.2F;
+          }
+        }
+        if (loader.isModLoaded("mcdw")) {
+          if (backSlotStack.getItem() instanceof McdwHammer) {
+            matrixStack.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(90.0F));
+            matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270.0F));
+            matrixStack.translate(0.0D, -0.4D, -0.2D);
+          }
+          if (backSlotStack.getItem() instanceof McdwBow
+              && !backSlotStack.getItem().getTranslationKey().contains("bow_bonebow")
+              && !backSlotStack.getItem().getTranslationKey().contains("bow_longbow")
+              && !backSlotStack.getItem().getTranslationKey().contains("bow_red_snake")
+              && !backSlotStack.getItem().getTranslationKey().contains("bow_guardian_bow")) {
+            matrixStack.translate(0.0D, 0.23D, 0.0D);
+          }
+          if (backSlotStack.getItem() instanceof McdwStaff) {
+            matrixStack.translate(0.3D, 0.3D, 0.0D);
           }
         }
         matrixStack.scale(BackSlotMain.CONFIG.backslot_scale + downScaling,

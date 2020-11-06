@@ -55,6 +55,9 @@ public class BeltSlotFeatureRenderer
           downScaling = -0.3F;
         }
       }
+      if (loader.isModLoaded("mcdw")) {
+        downScaling = -0.3F;
+      }
       matrixStack.scale(BackSlotMain.CONFIG.beltslot_scale + downScaling,
           BackSlotMain.CONFIG.beltslot_scale + downScaling, BackSlotMain.CONFIG.beltslot_scale + downScaling);
       if (beltSlotStack.getItem() instanceof ShearsItem || beltSlotStack.getItem() instanceof FlintAndSteelItem) {
