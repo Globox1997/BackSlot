@@ -3,6 +3,7 @@ package net.backslot.client.feature;
 import chronosacaria.mcdw.bases.McdwBow;
 import chronosacaria.mcdw.bases.McdwHammer;
 import chronosacaria.mcdw.bases.McdwStaff;
+import chronosacaria.mcdw.bases.McdwSword;
 import net.backslot.BackSlotMain;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -74,6 +75,10 @@ public class BackToolFeatureRenderer
             matrixStack.translate(0.0D, 0.23D, 0.0D);
           }
           if (backSlotStack.getItem() instanceof McdwStaff) {
+            matrixStack.translate(0.3D, 0.3D, 0.0D);
+          }
+          if (backSlotStack.getItem() instanceof McdwSword
+              && backSlotStack.getItem().getTranslationKey().contains("sword_dancers_sword")) {
             matrixStack.translate(0.3D, 0.3D, 0.0D);
           }
         }
