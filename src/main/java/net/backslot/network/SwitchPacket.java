@@ -5,7 +5,6 @@ import chronosacaria.mcdw.bases.McdwHammer;
 import chronosacaria.mcdw.bases.McdwSickle;
 import chronosacaria.mcdw.bases.McdwSpear;
 import chronosacaria.mcdw.bases.McdwStaff;
-import chronosacaria.mcdw.bases.McdwSword;
 import net.backslot.BackSlotMain;
 import net.backslot.sound.BackSlotSounds;
 import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
@@ -70,9 +69,9 @@ public class SwitchPacket {
   private static boolean isItemAllowed(ItemStack stack, int slot) {
     FabricLoader loader = FabricLoader.getInstance();
     if (loader.isModLoaded("mcdw") && slot == 42
-        && (stack.getItem() instanceof McdwHammer
-            || stack.getItem() instanceof McdwGlaive || stack.getItem() instanceof McdwSpear
-            || stack.getItem() instanceof McdwSickle || stack.getItem() instanceof McdwStaff)) {// || stack.getItem() instanceof McdwSword
+        && (stack.getItem() instanceof McdwHammer || stack.getItem() instanceof McdwGlaive
+            || stack.getItem() instanceof McdwSpear || stack.getItem() instanceof McdwSickle
+            || stack.getItem() instanceof McdwStaff)) {
       return false;
     }
     if (stack.isEmpty() || stack.getItem() instanceof ToolItem

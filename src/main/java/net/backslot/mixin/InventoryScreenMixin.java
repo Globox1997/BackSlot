@@ -27,6 +27,7 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
   private static final Identifier BACK_TEXTURE = new Identifier("backslot", "textures/gui/blank.png");
   @Shadow
   private final RecipeBookWidget recipeBook = new RecipeBookWidget();
+  private static boolean changeArrangement = BackSlotMain.CONFIG.change_slot_arrangement;
 
   public InventoryScreenMixin(PlayerScreenHandler screenHandler, PlayerInventory playerInventory, Text text) {
     super(screenHandler, playerInventory, text);
@@ -40,7 +41,7 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
     int backSlot_y = 0;
     int beltSlot_x = 0;
     int beltSlot_y = 0;
-    if (BackSlotMain.CONFIG.change_slot_arrangement) {
+    if (changeArrangement) {
       backSlot_x = 75;
       backSlot_y = 40;
       beltSlot_x = 57;
