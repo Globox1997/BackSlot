@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.At;
 
+import net.backslot.BackSlotMain;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -42,7 +43,7 @@ public abstract class InGameHudMixin extends DrawableHelper {
   @Inject(method = "renderHotbar", at = @At(value = "RETURN"))
   public void renderHotbarMixin(float f, MatrixStack matrixStack, CallbackInfo info) {
     PlayerEntity playerEntity = this.getCameraPlayer();
-    if (playerEntity != null) {
+    if (playerEntity != null && !BackSlotMain.CONFIG.disable_backslot_hud) {
       ItemStack backSlotStack = playerEntity.inventory.getStack(41);
       ItemStack beltSlotStack = playerEntity.inventory.getStack(42);
       RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);

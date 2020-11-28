@@ -12,4 +12,5 @@ public class BackSlotConfig implements ConfigData {
   public boolean backslot_sounds = true;
   @Comment("Use for mod compatibility - Reload necessary")
   public boolean change_slot_arrangement = false;
+  public boolean disable_backslot_hud = false;
 }

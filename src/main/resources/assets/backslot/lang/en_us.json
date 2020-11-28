@@ -6,5 +6,6 @@
   "text.autoconfig.backslot.option.backslot_scale": "BackSlot item scale",
   "text.autoconfig.backslot.option.beltslot_scale": "BeltSlot item scale",
   "text.autoconfig.backslot.option.backslot_sounds": "BackSlot sounds",
-  "text.autoconfig.backslot.option.change_slot_arrangement": "Change slot arrangement"
+  "text.autoconfig.backslot.option.change_slot_arrangement": "Change slot arrangement",
+  "text.autoconfig.backslot.option.disable_backslot_hud": "Disable Backslot HUD"
 }
