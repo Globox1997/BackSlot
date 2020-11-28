@@ -50,7 +50,7 @@ dependencies {
 			exclude(group: "net.fabricmc.fabric-api")
 	}
 	// Medieval Weapons
-	modCompile "com.github.Globox1997:MedievalWeapons:1.0.0",{
+	modCompile "com.github.Globox1997:MedievalWeapons:1.0.3",{
 			exclude(group: "net.fabricmc.fabric-api")
 	}
 	// Dungeon Weapons
