@@ -1,6 +1,6 @@
 package net.backslot.mixin;
 
-import java.util.stream.Stream;
+import java.util.Collection;
 
 import com.mojang.authlib.GameProfile;
 
@@ -14,13 +14,14 @@ import io.netty.buffer.Unpooled;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.backslot.network.SyncPacket;
-import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
-import net.fabricmc.fabric.api.server.PlayerStream;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.world.World;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 
 @Mixin(ServerPlayerEntity.class)
@@ -49,12 +50,11 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
   }
 
   private void sendPacket(int slot) {
-    Stream<PlayerEntity> players = PlayerStream.watching(world, this.getBlockPos());
+    Collection<ServerPlayerEntity> players = PlayerLookup.tracking((ServerWorld) world, this.getBlockPos());
     PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
     data.writeIntArray(new int[] { this.getEntityId(), slot });
     data.writeItemStack(this.inventory.getStack(slot));
-    players.forEach(
-        player -> ServerSidePacketRegistry.INSTANCE.sendToPlayer(player, SyncPacket.VISIBILITY_UPDATE_PACKET, data));
+    players.forEach(player -> ServerPlayNetworking.send(player, SyncPacket.VISIBILITY_UPDATE_PACKET, data));
   }
 
 }

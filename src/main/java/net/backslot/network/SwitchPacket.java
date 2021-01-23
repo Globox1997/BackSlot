@@ -7,12 +7,11 @@ import chronosacaria.mcdw.bases.McdwSpear;
 import chronosacaria.mcdw.bases.McdwStaff;
 import net.backslot.BackSlotMain;
 import net.backslot.sound.BackSlotSounds;
-import net.fabricmc.fabric.api.network.ServerSidePacketRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
 import net.medievalweapons.item.Francisca_HT_Item;
 import net.medievalweapons.item.Francisca_LT_Item;
 import net.medievalweapons.item.Javelin_Item;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FishingRodItem;
 import net.minecraft.item.FlintAndSteelItem;
 import net.minecraft.item.ItemStack;
@@ -31,9 +30,7 @@ public class SwitchPacket {
   public static final Identifier SWITCH_PACKET = new Identifier("backslot", "switch_item");
 
   public static void init() {
-
-    ServerSidePacketRegistry.INSTANCE.register(SWITCH_PACKET, (context, buffer) -> {
-      PlayerEntity player = context.getPlayer();
+    ServerPlayNetworking.registerGlobalReceiver(SWITCH_PACKET, (server, player, handler, buffer, sender) -> {
       int slot = buffer.readInt();
       int selectedSlot = player.inventory.selectedSlot;
       ItemStack selectedStack = (ItemStack) player.inventory.getStack(selectedSlot);
