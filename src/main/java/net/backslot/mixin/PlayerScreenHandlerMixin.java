@@ -1,5 +1,7 @@
 package net.backslot.mixin;
 
+import com.mojang.datafixers.util.Pair;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -21,7 +23,11 @@ import net.minecraft.screen.AbstractRecipeScreenHandler;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.util.Identifier;
 import net.backslot.BackSlotMain;
+import net.backslot.client.sprite.BackSlotSprites;
+import net.fabricmc.api.Environment;
+import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.medievalweapons.item.Francisca_HT_Item;
 import net.medievalweapons.item.Francisca_LT_Item;
@@ -36,7 +42,7 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
     super(screenHandlerType, i);
   }
 
-  @Inject(method = "<init>*", at = @At("RETURN"))
+  @Inject(method = "<init>*", at = @At("TAIL"))
   private void onConstructed(PlayerInventory inventory, boolean onServer, PlayerEntity owner, CallbackInfo info) {
     int backSlot_x = 0;
     int backSlot_y = 0;
@@ -48,7 +54,7 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
       beltSlot_x = 57;
       beltSlot_y = 40;
     }
-    Slot backSlot = new Slot(inventory, 41, 77 + backSlot_x, 44 + backSlot_y) {
+    this.addSlot(new Slot(inventory, 41, 77 + backSlot_x, 44 + backSlot_y) {
       @Override
       public int getMaxItemCount() {
         return 1;
@@ -65,7 +71,6 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
           return true;
         } else
           return false;
-
       }
 
       @Override
@@ -76,10 +81,15 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
             : super.canTakeItems(playerEntity);
       }
 
-    };
-    this.addSlot(backSlot);
+      @Environment(EnvType.CLIENT)
+      @Override
+      public Pair<Identifier, Identifier> getBackgroundSprite() {
+        return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, BackSlotSprites.EMPTY_BACK_SLOT_TEXTURE);
+      }
 
-    Slot beltSlot = new Slot(inventory, 42, 77 + beltSlot_x, 26 + beltSlot_y) {
+    });
+
+    this.addSlot(new Slot(inventory, 42, 77 + beltSlot_x, 26 + beltSlot_y) {
       @Override
       public int getMaxItemCount() {
         return 1;
@@ -94,7 +104,6 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
           return true;
         } else
           return false;
-
       }
 
       @Override
@@ -105,8 +114,16 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
             : super.canTakeItems(playerEntity);
       }
 
-    };
-    this.addSlot(beltSlot);
+      @Environment(EnvType.CLIENT)
+      @Override
+      public Pair<Identifier, Identifier> getBackgroundSprite() {
+        return Pair.of(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE, BackSlotSprites.EMPTY_BELT_SLOT_TEXTURE);
+      }
+
+    });
+
+    // Weird bug where the second added slot background gets highlighted above the
+    // white highlight overlay
 
   }
 
