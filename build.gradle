@@ -16,11 +16,9 @@ minecraft {
 
 repositories {
 	maven { url 'https://jitpack.io' }
-	maven {url "https://maven.jamieswhiteshirt.com/libs-release/"}
-	maven {
-    url "https://maven.siphalor.de/"
-    name "Siphalor's Maven"
-   }
+	maven { url "https://maven.jamieswhiteshirt.com/libs-release/" }
+	maven { url "https://maven.siphalor.de/" }
+	maven { url = "https://dl.bintray.com/ladysnake/libs" }
 }
 
 dependencies {
@@ -30,12 +28,12 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	// Amecs Key
 	modImplementation "de.siphalor:amecsapi-1.16:${project.amecs_version}"
- 	 include "de.siphalor:amecsapi-1.16:${project.amecs_version}"
+ 	include "de.siphalor:amecsapi-1.16:${project.amecs_version}"
 
 	// Config
 	modApi("me.shedaniel.cloth:config-2:${project.cloth_config_version}") {
       exclude(group: "net.fabricmc.fabric-api")
- 	 }
+ 	}
 	include("me.shedaniel.cloth:config-2:${project.cloth_config_version}") {
       exclude(group: "net.fabricmc.fabric-api")
   	}
@@ -53,6 +51,10 @@ dependencies {
 	modCompile "com.github.Globox1997:MedievalWeapons:1.0.3",{
 			exclude(group: "net.fabricmc.fabric-api")
 	}
+	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:2.7.10"
+    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-base:2.7.10"
+	modImplementation "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-block:2.7.10"
+    include "io.github.onyxstudios.Cardinal-Components-API:cardinal-components-block:2.7.10"
 	// Dungeon Weapons
 	modCompile "com.github.chronosacaria:MCDungeonsWeapons:1.1.7-1.16.4",{
 			exclude(group: "net.fabricmc.fabric-api")
