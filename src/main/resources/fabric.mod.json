@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "backslot",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "name": "BackSlot",
   "description": "Adds two slots to your inventory which get displayed on your character",
   "authors": [
@@ -9,6 +9,7 @@
   ],
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/backslot",
+    "issues": "https://github.com/Globox1997/BackSlot/issues",
     "sources": "https://github.com/Globox1997/BackSlot"
   },
   "license": "GLPv3",
