@@ -42,6 +42,8 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
     super(screenHandlerType, i);
   }
 
+  // Tried different injection points to fix a mod compatibility bug but it didnt
+  // work
   @Inject(method = "<init>*", at = @At("TAIL"))
   private void onConstructed(PlayerInventory inventory, boolean onServer, PlayerEntity owner, CallbackInfo info) {
     int backSlot_x = 0;
@@ -121,9 +123,6 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
       }
 
     });
-
-    // Weird bug where the second added slot background gets highlighted above the
-    // white highlight overlay
 
   }
 
