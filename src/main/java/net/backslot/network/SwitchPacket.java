@@ -51,10 +51,10 @@ public class SwitchPacket {
             }
           } else if (slotStack.getItem() instanceof SwordItem) {
             player.world.playSound(null, player.getBlockPos(), BackSlotSounds.SHEATH_SWORD_EVENT, SoundCategory.PLAYERS,
-                1.0F, 1.0F);
+                1.0F, 0.9F + player.world.random.nextFloat() * 0.2F);
           } else if (selectedStack.getItem() instanceof SwordItem) {
             player.world.playSound(null, player.getBlockPos(), BackSlotSounds.PACK_UP_ITEM_EVENT, SoundCategory.PLAYERS,
-                1.0F, 1.0F);
+                1.0F, 0.9F + player.world.random.nextFloat() * 0.2F);
           } else if (!selectedStack.isEmpty()) {
             player.world.playSound(null, player.getBlockPos(), SoundEvents.ITEM_ARMOR_EQUIP_GENERIC,
                 SoundCategory.PLAYERS, 1.0F, 1.0F);
