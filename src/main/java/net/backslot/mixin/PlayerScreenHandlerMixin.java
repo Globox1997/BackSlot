@@ -45,9 +45,9 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
   @Inject(method = "<init>*", at = @At("TAIL"))
   private void onConstructed(PlayerInventory inventory, boolean onServer, PlayerEntity owner, CallbackInfo info) {
     int backSlot_x = 0;
-    int backSlot_y = 0;
+    int backSlot_y = -18;
     int beltSlot_x = 0;
-    int beltSlot_y = 0;
+    int beltSlot_y = -18;
     if (changeArrangement) {
       backSlot_x = 75;
       backSlot_y = 22;

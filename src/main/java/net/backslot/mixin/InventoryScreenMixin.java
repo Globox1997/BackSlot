@@ -38,9 +38,9 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
     int scaledWidth = this.client.getWindow().getScaledWidth();
     int scaledHeight = this.client.getWindow().getScaledHeight();
     int backSlot_x = 0;
-    int backSlot_y = 0;
+    int backSlot_y = -18;
     int beltSlot_x = 0;
-    int beltSlot_y = 0;
+    int beltSlot_y = -18;
     if (changeArrangement) {
       backSlot_x = 75;
       backSlot_y = 40;
