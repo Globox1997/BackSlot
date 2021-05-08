@@ -37,10 +37,10 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
   public void drawBackgroundMixin(MatrixStack matrices, float delta, int mouseX, int mouseY, CallbackInfo info) {
     int scaledWidth = this.client.getWindow().getScaledWidth();
     int scaledHeight = this.client.getWindow().getScaledHeight();
-    int backSlot_x = 0;
-    int backSlot_y = 0;
-    int beltSlot_x = 0;
-    int beltSlot_y = 0;
+    int backSlot_x = BackSlotMain.CONFIG.backSlot_x;
+    int backSlot_y = BackSlotMain.CONFIG.backSlot_y;
+    int beltSlot_x = BackSlotMain.CONFIG.beltSlot_x;
+    int beltSlot_y = BackSlotMain.CONFIG.beltSlot_y;
     if (changeArrangement) {
       backSlot_x = 75;
       backSlot_y = 40;

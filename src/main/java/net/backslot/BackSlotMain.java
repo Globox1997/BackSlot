@@ -1,7 +1,7 @@
 package net.backslot;
 
-import me.sargunvohra.mcmods.autoconfig1u.AutoConfig;
-import me.sargunvohra.mcmods.autoconfig1u.serializer.JanksonConfigSerializer;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.backslot.config.BackSlotConfig;
 import net.backslot.network.SwitchPacket;
 import net.backslot.sound.BackSlotSounds;
@@ -15,8 +15,8 @@ public class BackSlotMain implements ModInitializer {
   public void onInitialize() {
     AutoConfig.register(BackSlotConfig.class, JanksonConfigSerializer::new);
     CONFIG = AutoConfig.getConfigHolder(BackSlotConfig.class).getConfig();
-    SwitchPacket.init();
     BackSlotSounds.init();
+    SwitchPacket.init();
   }
 
 }

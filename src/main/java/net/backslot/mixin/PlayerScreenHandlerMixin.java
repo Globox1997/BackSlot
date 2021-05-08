@@ -11,14 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.FishingRodItem;
-import net.minecraft.item.FlintAndSteelItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.OnAStickItem;
-import net.minecraft.item.RangedWeaponItem;
-import net.minecraft.item.ShearsItem;
-import net.minecraft.item.ToolItem;
-import net.minecraft.item.TridentItem;
 import net.minecraft.screen.AbstractRecipeScreenHandler;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.screen.ScreenHandlerType;
@@ -26,12 +19,9 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.Identifier;
 import net.backslot.BackSlotMain;
 import net.backslot.client.sprite.BackSlotSprites;
+import net.backslot.network.SwitchPacket;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.api.FabricLoader;
-import net.medievalweapons.item.Francisca_HT_Item;
-import net.medievalweapons.item.Francisca_LT_Item;
-import net.medievalweapons.item.Javelin_Item;
 import net.minecraft.enchantment.EnchantmentHelper;
 
 @Mixin(PlayerScreenHandler.class)
@@ -46,10 +36,10 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
   // work
   @Inject(method = "<init>*", at = @At("TAIL"))
   private void onConstructed(PlayerInventory inventory, boolean onServer, PlayerEntity owner, CallbackInfo info) {
-    int backSlot_x = 0;
-    int backSlot_y = 0;
-    int beltSlot_x = 0;
-    int beltSlot_y = 0;
+    int backSlot_x = BackSlotMain.CONFIG.backSlot_x;
+    int backSlot_y = BackSlotMain.CONFIG.backSlot_y;
+    int beltSlot_x = BackSlotMain.CONFIG.beltSlot_x;
+    int beltSlot_y = BackSlotMain.CONFIG.beltSlot_y;
     if (changeArrangement) {
       backSlot_x = 75;
       backSlot_y = 22;
@@ -64,15 +54,7 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
 
       @Override
       public boolean canInsert(ItemStack stack) {
-        FabricLoader loader = FabricLoader.getInstance();
-        if (stack.getItem() instanceof ToolItem || stack.getItem() instanceof RangedWeaponItem
-            || stack.getItem() instanceof FishingRodItem || stack.getItem() instanceof OnAStickItem
-            || stack.getItem() instanceof TridentItem
-            || (loader.isModLoaded("medievalweapons") && (stack.getItem() instanceof Javelin_Item
-                || stack.getItem() instanceof Francisca_HT_Item || stack.getItem() instanceof Francisca_LT_Item))) {
-          return true;
-        } else
-          return false;
+        return SwitchPacket.isItemAllowed(stack, 41);
       }
 
       @Override
@@ -99,13 +81,7 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
 
       @Override
       public boolean canInsert(ItemStack stack) {
-        FabricLoader loader = FabricLoader.getInstance();
-        if (stack.getItem() instanceof ToolItem || (stack.getItem() instanceof FlintAndSteelItem
-            || stack.getItem() instanceof ShearsItem || (loader.isModLoaded("medievalweapons")
-                && (stack.getItem() instanceof Francisca_HT_Item || stack.getItem() instanceof Francisca_LT_Item)))) {
-          return true;
-        } else
-          return false;
+        return SwitchPacket.isItemAllowed(stack, 42);
       }
 
       @Override

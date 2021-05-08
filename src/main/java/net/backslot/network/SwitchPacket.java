@@ -9,9 +9,15 @@ import net.backslot.BackSlotMain;
 import net.backslot.sound.BackSlotSounds;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
+import net.medievalweapons.item.Big_Axe_Item;
 import net.medievalweapons.item.Francisca_HT_Item;
 import net.medievalweapons.item.Francisca_LT_Item;
+import net.medievalweapons.item.Healing_Staff_Item;
 import net.medievalweapons.item.Javelin_Item;
+import net.medievalweapons.item.Lance_Item;
+import net.medievalweapons.item.Long_Sword_Item;
+import net.medievalweapons.item.Small_Axe_Item;
+import net.medievalweapons.item.Thalleous_Sword_Item;
 import net.minecraft.item.FishingRodItem;
 import net.minecraft.item.FlintAndSteelItem;
 import net.minecraft.item.ItemStack;
@@ -66,21 +72,31 @@ public class SwitchPacket {
 
   }
 
-  private static boolean isItemAllowed(ItemStack stack, int slot) {
+  public static boolean isItemAllowed(ItemStack stack, int slot) {
     FabricLoader loader = FabricLoader.getInstance();
-    if (loader.isModLoaded("mcdw") && slot == 42
-        && (stack.getItem() instanceof McdwHammer || stack.getItem() instanceof McdwGlaive
-            || stack.getItem() instanceof McdwSpear || stack.getItem() instanceof McdwSickle
-            || stack.getItem() instanceof McdwStaff)) {
-      return false;
+    boolean isMedievalWeaponsModLoaded = loader.isModLoaded("medievalweapons");
+    boolean isDungeonsWeaponsModLoaded = loader.isModLoaded("mcdw");
+    if (slot == 42) {
+      if (isDungeonsWeaponsModLoaded && (stack.getItem() instanceof McdwHammer || stack.getItem() instanceof McdwGlaive
+          || stack.getItem() instanceof McdwSpear || stack.getItem() instanceof McdwSickle
+          || stack.getItem() instanceof McdwStaff)) {
+        return false;
+      }
+      if (isMedievalWeaponsModLoaded && (stack.getItem() instanceof Small_Axe_Item
+          || stack.getItem() instanceof Long_Sword_Item || stack.getItem() instanceof Big_Axe_Item
+          || stack.getItem() instanceof Javelin_Item || stack.getItem() instanceof Lance_Item
+          || stack.getItem() instanceof Healing_Staff_Item || stack.getItem() instanceof Thalleous_Sword_Item)) {
+        return false;
+      }
     }
+
     if (stack.isEmpty() || stack.getItem() instanceof ToolItem
         || (slot == 41 && (stack.getItem() instanceof RangedWeaponItem || stack.getItem() instanceof FishingRodItem
             || stack.getItem() instanceof TridentItem || stack.getItem() instanceof OnAStickItem
-            || (loader.isModLoaded("medievalweapons") && (stack.getItem() instanceof Javelin_Item
-                || stack.getItem() instanceof Francisca_HT_Item || stack.getItem() instanceof Francisca_LT_Item))))
+            || (isMedievalWeaponsModLoaded
+                && (stack.getItem() instanceof Francisca_HT_Item || stack.getItem() instanceof Francisca_LT_Item))))
         || (slot == 42 && (stack.getItem() instanceof FlintAndSteelItem || stack.getItem() instanceof ShearsItem
-            || (loader.isModLoaded("medievalweapons")
+            || (isMedievalWeaponsModLoaded
                 && (stack.getItem() instanceof Francisca_HT_Item || stack.getItem() instanceof Francisca_LT_Item))))) {
       return true;
     } else
