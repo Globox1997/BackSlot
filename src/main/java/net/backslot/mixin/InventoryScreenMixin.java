@@ -52,10 +52,10 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
       scaledWidth = scaledWidth + 154;
     }
     this.client.getTextureManager().bindTexture(BACK_TEXTURE);
-    DrawableHelper.drawTexture(matrices, scaledWidth / 2 - 12 + backSlot_x, scaledHeight / 2 - 58 + backSlot_y, 0.0F,
+    DrawableHelper.drawTexture(matrices, scaledWidth / 2 - 12 + beltSlot_x, scaledHeight / 2 - 58 + beltSlot_y, 0.0F,
         0.0F, 18, 18, 18, 18);
     this.client.getTextureManager().bindTexture(BACK_TEXTURE);
-    DrawableHelper.drawTexture(matrices, scaledWidth / 2 - 12 + beltSlot_x, scaledHeight / 2 - 40 + beltSlot_y, 0.0F,
+    DrawableHelper.drawTexture(matrices, scaledWidth / 2 - 12 + backSlot_x, scaledHeight / 2 - 40 + backSlot_y, 0.0F,
         0.0F, 18, 18, 18, 18);
   }
 
