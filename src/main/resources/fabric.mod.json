@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "backslot",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "name": "BackSlot",
   "description": "Adds two slots to your inventory which get displayed on your character",
   "authors": [
