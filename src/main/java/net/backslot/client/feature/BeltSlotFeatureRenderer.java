@@ -1,5 +1,6 @@
 package net.backslot.client.feature;
 
+import chronosacaria.mcdw.weapons.SoulDaggers;
 import net.backslot.BackSlotMain;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -40,7 +41,11 @@ public class BeltSlotFeatureRenderer
       matrixStack.push();
       ModelPart modelPart = this.getContextModel().torso;
       modelPart.rotate(matrixStack);
-      matrixStack.translate(0.29D, 0.5D, 0.05D);
+      double switchBeltSide = 0.29D;
+      if (BackSlotMain.CONFIG.switch_beltslot_side) {
+        switchBeltSide = -0.29D;
+      }
+      matrixStack.translate(switchBeltSide, 0.5D, 0.05D);
       if (beltSlotStack.getItem() instanceof FlintAndSteelItem) {
         matrixStack.translate(0.01F, 0.0F, -0.1F);
       }
@@ -55,7 +60,8 @@ public class BeltSlotFeatureRenderer
           downScaling = -0.3F;
         }
       }
-      if (loader.isModLoaded("mcdw")) {
+      if (loader.isModLoaded("mcdw") && (beltSlotStack.getItem() == SoulDaggers.DAGGER_ETERNAL_KNIFE
+          || beltSlotStack.getItem() == SoulDaggers.SWORD_TRUTHSEEKER)) {
         downScaling = -0.3F;
       }
       matrixStack.scale(BackSlotMain.CONFIG.beltslot_scale + downScaling,

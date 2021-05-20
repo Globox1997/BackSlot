@@ -14,5 +14,6 @@
   "text.autoconfig.backslot.option.backSlot_y": "Backslot Y",
   "text.autoconfig.backslot.option.beltSlot_x": "Beltslot X",
   "text.autoconfig.backslot.option.beltSlot_y": "Beltslot Y",
-  "text.autoconfig.backslot.option.backSlot_x.@PrefixText": "Inventory Slot Positions - Reload world necessary"
+  "text.autoconfig.backslot.option.backSlot_x.@PrefixText": "Inventory Slot Positions - Reload world necessary",
+  "text.autoconfig.backslot.option.switch_beltslot_side": "Switch Beltslot side"
 }
