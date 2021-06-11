@@ -41,14 +41,14 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
   @Inject(method = "playerTick", at = @At("HEAD"))
   private void playerTickMixin(CallbackInfo info) {
     if (!this.world.isClient) {
-      if (!ItemStack.areItemsEqualIgnoreDamage(backSlotStack, this.inventory.getStack(41))) {
+      if (!ItemStack.areItemsEqualIgnoreDamage(backSlotStack, this.getInventory().getStack(41))) {
         sendPacket(41);
       }
-      backSlotStack = this.inventory.getStack(41);
-      if (!ItemStack.areItemsEqualIgnoreDamage(beltSlotStack, this.inventory.getStack(42))) {
+      backSlotStack = this.getInventory().getStack(41);
+      if (!ItemStack.areItemsEqualIgnoreDamage(beltSlotStack, this.getInventory().getStack(42))) {
         sendPacket(42);
       }
-      beltSlotStack = this.inventory.getStack(42);
+      beltSlotStack = this.getInventory().getStack(42);
     }
   }
 
@@ -57,13 +57,13 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
   public void onDeathMixin(DamageSource source, CallbackInfo info) {
     if (FabricLoader.getInstance().isModLoaded("gravestones")
         && !this.world.getGameRules().getBoolean(GameRules.KEEP_INVENTORY)) {
-      if (!this.inventory.getStack(41).isEmpty()) {
-        this.dropStack(this.inventory.getStack(41));
-        this.inventory.removeStack(41);
+      if (!this.getInventory().getStack(41).isEmpty()) {
+        this.dropStack(this.getInventory().getStack(41));
+        this.getInventory().removeStack(41);
       }
-      if (!this.inventory.getStack(42).isEmpty()) {
-        this.dropStack(this.inventory.getStack(42));
-        this.inventory.removeStack(42);
+      if (!this.getInventory().getStack(42).isEmpty()) {
+        this.dropStack(this.getInventory().getStack(42));
+        this.getInventory().removeStack(42);
       }
     }
   }
@@ -71,8 +71,8 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
   private void sendPacket(int slot) {
     Collection<ServerPlayerEntity> players = PlayerLookup.tracking((ServerWorld) world, this.getBlockPos());
     PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
-    data.writeIntArray(new int[] { this.getEntityId(), slot });
-    data.writeItemStack(this.inventory.getStack(slot));
+    data.writeIntArray(new int[] { this.getId(), slot });
+    data.writeItemStack(this.getInventory().getStack(slot));
     players.forEach(player -> ServerPlayNetworking.send(player, SyncPacket.VISIBILITY_UPDATE_PACKET, data));
   }
 

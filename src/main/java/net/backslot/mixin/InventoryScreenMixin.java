@@ -1,5 +1,6 @@
 package net.backslot.mixin;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -51,10 +52,10 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
     if (this.recipeBook.isOpen()) {
       scaledWidth = scaledWidth + 154;
     }
-    this.client.getTextureManager().bindTexture(BACK_TEXTURE);
+    RenderSystem.setShaderTexture(0, BACK_TEXTURE);
     DrawableHelper.drawTexture(matrices, scaledWidth / 2 - 12 + beltSlot_x, scaledHeight / 2 - 58 + beltSlot_y, 0.0F,
         0.0F, 18, 18, 18, 18);
-    this.client.getTextureManager().bindTexture(BACK_TEXTURE);
+    RenderSystem.setShaderTexture(0, BACK_TEXTURE);
     DrawableHelper.drawTexture(matrices, scaledWidth / 2 - 12 + backSlot_x, scaledHeight / 2 - 40 + backSlot_y, 0.0F,
         0.0F, 18, 18, 18, 18);
   }

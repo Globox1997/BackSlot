@@ -25,7 +25,7 @@ import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FishingRodItem;
@@ -47,10 +47,10 @@ public class BackToolFeatureRenderer
   public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i,
       AbstractClientPlayerEntity livingEntity, float f, float g, float h, float j, float k, float l) {
     PlayerEntity player = (PlayerEntity) livingEntity;
-    ItemStack backSlotStack = player.inventory.getStack(41);
+    ItemStack backSlotStack = player.getInventory().getStack(41);
     if (livingEntity instanceof AbstractClientPlayerEntity && !backSlotStack.isEmpty()) {
       matrixStack.push();
-      ModelPart modelPart = this.getContextModel().torso;
+      ModelPart modelPart = this.getContextModel().body;
       modelPart.rotate(matrixStack);
       Item backSloItem = backSlotStack.getItem();
       FabricLoader loader = FabricLoader.getInstance();
@@ -70,8 +70,8 @@ public class BackToolFeatureRenderer
         }
         if (loader.isModLoaded("mcdw")) {
           if (backSlotStack.getItem() instanceof McdwHammer) {
-            matrixStack.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(90.0F));
-            matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270.0F));
+            matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(90.0F));
+            matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(270.0F));
             matrixStack.translate(0.0D, -0.4D, -0.2D);
           }
           if (backSlotStack.getItem() instanceof McdwBow
@@ -92,33 +92,33 @@ public class BackToolFeatureRenderer
         matrixStack.scale(BackSlotMain.CONFIG.backslot_scale + downScaling,
             BackSlotMain.CONFIG.backslot_scale + downScaling, BackSlotMain.CONFIG.backslot_scale + downScaling);
         if (backSlotStack.getItem() instanceof FishingRodItem || backSlotStack.getItem() instanceof OnAStickItem) {
-          matrixStack.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(180.0F));
+          matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(180.0F));
           matrixStack.translate(0.0D, -0.3D, 0.0D);
         }
         MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, backSlotStack,
             ModelTransformation.Mode.GROUND, false, matrixStack, vertexConsumerProvider, i);
       } else {
         if (backSloItem instanceof TridentItem) {
-          matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(52.0F));
-          matrixStack.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(40.0F));
-          matrixStack.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(-25.F));
+          matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(52.0F));
+          matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(40.0F));
+          matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(-25.F));
         } else if (loader.isModLoaded("medievalweapons")) {
           if (backSloItem instanceof Lance_Item || backSloItem instanceof Healing_Staff_Item) {
-            matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90F));
-            matrixStack.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(50F));
+            matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90F));
+            matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(50F));
             matrixStack.translate(0.0D, 0.2D, 0.0D);
           } else if (backSloItem instanceof Thalleous_Sword_Item) {
-            matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90F));
-            matrixStack.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(240F));
+            matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90F));
+            matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(240F));
             matrixStack.translate(-0.01D, 0.5D, 0.3D);
           } else if (backSloItem instanceof Javelin_Item) {
-            matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90F));
-            matrixStack.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(40F));
+            matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90F));
+            matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(40F));
             matrixStack.translate(0.02D, 0.5D, 0.0D);
           } else if (backSloItem instanceof Big_Axe_Item) {
-            matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(48F));
-            matrixStack.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(220F));
-            matrixStack.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(267F));
+            matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(48F));
+            matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(220F));
+            matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(267F));
             matrixStack.translate(0.9D, 0.05D, 0.1D);
           }
         }

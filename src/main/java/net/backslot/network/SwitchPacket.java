@@ -38,14 +38,14 @@ public class SwitchPacket {
   public static void init() {
     ServerPlayNetworking.registerGlobalReceiver(SWITCH_PACKET, (server, player, handler, buffer, sender) -> {
       int slot = buffer.readInt();
-      int selectedSlot = player.inventory.selectedSlot;
-      ItemStack selectedStack = (ItemStack) player.inventory.getStack(selectedSlot);
-      ItemStack slotStack = (ItemStack) player.inventory.getStack(slot);
+      int selectedSlot = player.getInventory().selectedSlot;
+      ItemStack selectedStack = (ItemStack) player.getInventory().getStack(selectedSlot);
+      ItemStack slotStack = (ItemStack) player.getInventory().getStack(slot);
 
       if (isItemAllowed(selectedStack, slot)) {
-        player.inventory.setStack(slot, selectedStack);
-        player.inventory.setStack(selectedSlot, slotStack);
-        player.inventory.markDirty();
+        player.getInventory().setStack(slot, selectedStack);
+        player.getInventory().setStack(selectedSlot, slotStack);
+        player.getInventory().markDirty();
         if (BackSlotMain.CONFIG.backslot_sounds) {
           if (selectedStack.isEmpty() && !slotStack.isEmpty()) {
             if (slotStack.getItem() instanceof SwordItem) {

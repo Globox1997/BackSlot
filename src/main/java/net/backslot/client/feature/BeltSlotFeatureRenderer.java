@@ -16,7 +16,7 @@ import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FlintAndSteelItem;
@@ -36,10 +36,10 @@ public class BeltSlotFeatureRenderer
   public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i,
       AbstractClientPlayerEntity livingEntity, float f, float g, float h, float j, float k, float l) {
     PlayerEntity player = (PlayerEntity) livingEntity;
-    ItemStack beltSlotStack = player.inventory.getStack(42);
+    ItemStack beltSlotStack = player.getInventory().getStack(42);
     if (livingEntity instanceof AbstractClientPlayerEntity && !beltSlotStack.isEmpty()) {
       matrixStack.push();
-      ModelPart modelPart = this.getContextModel().torso;
+      ModelPart modelPart = this.getContextModel().body;
       modelPart.rotate(matrixStack);
       double switchBeltSide = 0.29D;
       if (BackSlotMain.CONFIG.switch_beltslot_side) {
@@ -49,7 +49,7 @@ public class BeltSlotFeatureRenderer
       if (beltSlotStack.getItem() instanceof FlintAndSteelItem) {
         matrixStack.translate(0.01F, 0.0F, -0.1F);
       }
-      matrixStack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(-90.0F));
+      matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(-90.0F));
       float downScaling = 0.0F;
       FabricLoader loader = FabricLoader.getInstance();
       if (loader.isModLoaded("medievalweapons")) {

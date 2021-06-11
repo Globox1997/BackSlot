@@ -18,8 +18,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtList;
 import net.minecraft.util.collection.DefaultedList;
 
 @Mixin(PlayerInventory.class)
@@ -54,31 +54,31 @@ public abstract class PlayerInventoryMixin implements Inventory {
     this.combinedInventory = ImmutableList.copyOf(this.combinedInventory);
   }
 
-  @Inject(method = "serialize", at = @At("TAIL"))
-  public void serializeMixin(ListTag tag, CallbackInfoReturnable<ListTag> info) {
+  @Inject(method = "writeNbt", at = @At("TAIL"))
+  public void serializeMixin(NbtList tag, CallbackInfoReturnable<NbtList> info) {
     if (!this.backSlot.get(0).isEmpty()) {
-      CompoundTag compoundTag = new CompoundTag();
+      NbtCompound compoundTag = new NbtCompound();
       compoundTag.putByte("Slot", (byte) (110));
-      this.backSlot.get(0).toTag(compoundTag);
+      this.backSlot.get(0).writeNbt(compoundTag);
       tag.add(compoundTag);
     }
     if (!this.beltSlot.get(0).isEmpty()) {
-      CompoundTag compoundTag = new CompoundTag();
+      NbtCompound compoundTag = new NbtCompound();
       compoundTag.putByte("Slot", (byte) (111));
-      this.beltSlot.get(0).toTag(compoundTag);
+      this.beltSlot.get(0).writeNbt(compoundTag);
       tag.add(compoundTag);
     }
 
   }
 
-  @Inject(method = "deserialize", at = @At("TAIL"))
-  public void deserializeMixin(ListTag tag, CallbackInfo info) {
+  @Inject(method = "readNbt", at = @At("TAIL"))
+  public void deserializeMixin(NbtList tag, CallbackInfo info) {
     this.backSlot.clear();
     this.beltSlot.clear();
     for (int i = 0; i < tag.size(); ++i) {
-      CompoundTag compoundTag = tag.getCompound(i);
+      NbtCompound compoundTag = tag.getCompound(i);
       int slot = compoundTag.getByte("Slot") & 255;
-      ItemStack itemStack = ItemStack.fromTag(compoundTag);
+      ItemStack itemStack = ItemStack.fromNbt(compoundTag);
       if (!itemStack.isEmpty()) {
         if (slot >= 110 && slot < this.backSlot.size() + 110) {
           this.backSlot.set(slot - 110, itemStack);

@@ -31,16 +31,16 @@ public class EntityTrackerEntryMixin {
     if (entity instanceof PlayerEntity) {
       PlayerEntity player = (PlayerEntity) entity;
       for (int i = 41; i < 43; i++) {
-        if (!serverPlayer.inventory.getStack(i).isEmpty()) {
+        if (!serverPlayer.getInventory().getStack(i).isEmpty()) {
           PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
-          data.writeIntArray(new int[] { serverPlayer.getEntityId(), i });
-          data.writeItemStack(serverPlayer.inventory.getStack(i));
+          data.writeIntArray(new int[] { serverPlayer.getId(), i });
+          data.writeItemStack(serverPlayer.getInventory().getStack(i));
           ServerPlayNetworking.send((ServerPlayerEntity) player, SyncPacket.VISIBILITY_UPDATE_PACKET, data);
         }
-        if (!player.inventory.getStack(i).isEmpty()) {
+        if (!player.getInventory().getStack(i).isEmpty()) {
           PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
-          data.writeIntArray(new int[] { player.getEntityId(), i });
-          data.writeItemStack(player.inventory.getStack(i));
+          data.writeIntArray(new int[] { player.getId(), i });
+          data.writeItemStack(player.getInventory().getStack(i));
           ServerPlayNetworking.send(serverPlayer, SyncPacket.VISIBILITY_UPDATE_PACKET, data);
         }
       }

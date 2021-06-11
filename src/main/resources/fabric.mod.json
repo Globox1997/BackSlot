@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "backslot",
-  "version": "1.1.11",
+  "version": "${version}",
   "name": "BackSlot",
   "description": "Adds two slots to your inventory which get displayed on your character",
   "authors": [
@@ -32,7 +32,7 @@
   "depends": {
     "fabricloader": ">=0.7.4",
     "fabric": "*",
-    "minecraft": "1.16.x"
+    "minecraft": "1.17.x"
   },
   "suggests": {
     "flamingo": "*"

@@ -17,7 +17,7 @@ public class SyncPacket {
       client.execute(() -> {
         if (client.player.world.getEntityById(entityId) != null) {
           PlayerEntity player = (PlayerEntity) client.player.world.getEntityById(entityId);
-          player.inventory.setStack(slot, itemStack.copy());
+          player.getInventory().setStack(slot, itemStack.copy());
         }
       });
     });

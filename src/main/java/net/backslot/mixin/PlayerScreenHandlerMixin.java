@@ -46,6 +46,7 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
       beltSlot_x = 57;
       beltSlot_y = 40;
     }
+
     this.addSlot(new Slot(inventory, 41, 77 + backSlot_x, 44 + backSlot_y) {
       @Override
       public int getMaxItemCount() {

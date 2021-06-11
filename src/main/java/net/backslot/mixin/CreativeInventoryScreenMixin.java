@@ -19,7 +19,7 @@ public abstract class CreativeInventoryScreenMixin
     extends AbstractInventoryScreen<CreativeInventoryScreen.CreativeScreenHandler> {
 
   public CreativeInventoryScreenMixin(PlayerEntity player) {
-    super(new CreativeInventoryScreen.CreativeScreenHandler(player), player.inventory, LiteralText.EMPTY);
+    super(new CreativeInventoryScreen.CreativeScreenHandler(player), player.getInventory(), LiteralText.EMPTY);
     player.currentScreenHandler = this.handler;
   }
 
