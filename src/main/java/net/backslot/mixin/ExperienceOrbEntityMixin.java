@@ -1,5 +1,6 @@
 package net.backslot.mixin;
 
+import java.util.AbstractMap;
 import java.util.Map;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,26 +27,26 @@ public class ExperienceOrbEntityMixin {
             if (original != null) {
                 if (backSlotRepairable && beltSlotRepairable) {
                     if (player.world.random.nextInt(6) == 0) {
-                        return Map.entry(EquipmentSlot.OFFHAND, player.getInventory().getStack(41 + player.world.random.nextInt(2)));
+                        return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(41 + player.world.random.nextInt(2)));
                     } else
                         return original;
                 } else if (backSlotRepairable) {
                     if (player.world.random.nextInt(4) == 0) {
-                        return Map.entry(EquipmentSlot.OFFHAND, player.getInventory().getStack(41));
+                        return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(41));
                     } else
                         return original;
                 } else {
                     if (player.world.random.nextInt(4) == 0) {
-                        return Map.entry(EquipmentSlot.OFFHAND, player.getInventory().getStack(42));
+                        return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(42));
                     } else
                         return original;
                 }
             } else if (backSlotRepairable && beltSlotRepairable) {
-                return Map.entry(EquipmentSlot.OFFHAND, player.getInventory().getStack(41 + player.world.random.nextInt(2)));
+                return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(41 + player.world.random.nextInt(2)));
             } else if (backSlotRepairable) {
-                return Map.entry(EquipmentSlot.OFFHAND, player.getInventory().getStack(41));
+                return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(41));
             } else {
-                return Map.entry(EquipmentSlot.OFFHAND, player.getInventory().getStack(42));
+                return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(42));
             }
         } else
             return original;
