@@ -7,7 +7,8 @@
     "PlayerInventoryMixin",
     "PlayerScreenHandlerMixin",
     "ServerPlayerEntityMixin",
-    "EntityTrackerEntryMixin"
+    "EntityTrackerEntryMixin",
+    "ExperienceOrbEntityMixin"
   ],
   "client": [
     "PlayerEntityRendererMixin",
