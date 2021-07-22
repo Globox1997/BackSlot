@@ -18,7 +18,7 @@ repositories {
 	maven { url 'https://jitpack.io' }
 	maven { url "https://maven.jamieswhiteshirt.com/libs-release/" }
 	maven { url "https://maven.siphalor.de/" }
-	maven { url "https://dl.bintray.com/ladysnake/libs" }
+	//maven { url "https://dl.bintray.com/ladysnake/libs" }
 	maven { url "https://maven.shedaniel.me/" }
 	maven { url "https://maven.terraformersmc.com/" }
 	maven { url "https://www.cursemaven.com" }
@@ -29,8 +29,12 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+
 	// Amecs Key
-	modImplementation include("de.siphalor:amecsapi-1.17:${project.amecs_version}")
+	modImplementation include("de.siphalor:amecsapi-1.17:${project.amecs_version}"){
+		exclude group: "net.fabricmc.fabric-api"
+		exclude module: "nmuk-1.17"
+	}
 	// Config
 	modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
     	exclude(group: "net.fabricmc.fabric-api")
@@ -48,9 +52,10 @@ dependencies {
 			exclude(group: "com.github.TheIllusiveC4")
 	}
 	// Dungeon Weapons
-	modCompileOnly ('curse.maven:mcdw-407311:3350376'),{
+	modCompileOnly "curse.maven:mcdw-407311:3380445",{
 			exclude(group: "net.fabricmc.fabric-api")
 	}
+	modCompileOnly "curse.maven:enchanthelper-434579:3347061"
 }
 
 processResources {
