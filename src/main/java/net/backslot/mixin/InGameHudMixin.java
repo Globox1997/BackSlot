@@ -25,63 +25,63 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin extends DrawableHelper {
-  @Shadow
-  @Final
-  @Mutable
-  private MinecraftClient client;
-  @Shadow
-  private static final Identifier WIDGETS_TEXTURE = new Identifier("textures/gui/widgets.png");
-  @Shadow
-  private int scaledWidth;
-  @Shadow
-  private int scaledHeight;
+    @Shadow
+    @Final
+    @Mutable
+    private MinecraftClient client;
+    @Shadow
+    private static final Identifier WIDGETS_TEXTURE = new Identifier("textures/gui/widgets.png");
+    @Shadow
+    private int scaledWidth;
+    @Shadow
+    private int scaledHeight;
 
-  public InGameHudMixin(MinecraftClient client) {
-    this.client = client;
-  }
-
-  @Inject(method = "renderHotbar", at = @At(value = "RETURN"))
-  public void renderHotbarMixin(float f, MatrixStack matrixStack, CallbackInfo info) {
-    PlayerEntity playerEntity = this.getCameraPlayer();
-    if (playerEntity != null && !BackSlotMain.CONFIG.disable_backslot_hud) {
-      ItemStack backSlotStack = playerEntity.getInventory().getStack(41);
-      ItemStack beltSlotStack = playerEntity.getInventory().getStack(42);
-      RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-      int i = this.scaledWidth / 2;
-      int p = this.scaledHeight - 16 - 3;
-      Arm arm = playerEntity.getMainArm().getOpposite();
-      if (!backSlotStack.isEmpty() || !beltSlotStack.isEmpty()) {
-        if (arm == Arm.LEFT) {
-          RenderSystem.enableBlend();
-          RenderSystem.setShaderTexture(0, WIDGETS_TEXTURE);
-          this.drawTexture(matrixStack, i + 91, this.scaledHeight - 23, 53, 22, 29, 24);
-          this.renderHotbarItem(i + 91 + 10, p, f, playerEntity, backSlotStack, 0);
-          RenderSystem.enableBlend();
-          RenderSystem.setShaderTexture(0, WIDGETS_TEXTURE);
-          this.drawTexture(matrixStack, i + 112, this.scaledHeight - 23, 53, 22, 29, 24);
-          this.renderHotbarItem(i + 112 + 10, p, f, playerEntity, beltSlotStack, 0);
-        } else {
-          RenderSystem.enableBlend();
-          RenderSystem.setShaderTexture(0, WIDGETS_TEXTURE);
-          this.drawTexture(matrixStack, i - 91 - 29, this.scaledHeight - 23, 24, 22, 29, 24);
-          this.renderHotbarItem(i - 91 - 26, p, f, playerEntity, backSlotStack, 0);
-          RenderSystem.enableBlend();
-          RenderSystem.setShaderTexture(0, WIDGETS_TEXTURE);
-          this.drawTexture(matrixStack, i - 112 - 29, this.scaledHeight - 23, 24, 22, 29, 24);
-          this.renderHotbarItem(i - 112 - 26, p, f, playerEntity, beltSlotStack, 0);
-        }
-        RenderSystem.disableBlend();
-      }
+    public InGameHudMixin(MinecraftClient client) {
+        this.client = client;
     }
-  }
 
-  @Shadow
-  private PlayerEntity getCameraPlayer() {
-    return (PlayerEntity) this.client.getCameraEntity();
-  }
+    @Inject(method = "renderHotbar", at = @At(value = "RETURN"))
+    public void renderHotbarMixin(float f, MatrixStack matrixStack, CallbackInfo info) {
+        PlayerEntity playerEntity = this.getCameraPlayer();
+        if (playerEntity != null && !BackSlotMain.CONFIG.disable_backslot_hud) {
+            ItemStack backSlotStack = playerEntity.getInventory().getStack(41);
+            ItemStack beltSlotStack = playerEntity.getInventory().getStack(42);
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+            int i = this.scaledWidth / 2;
+            int p = this.scaledHeight - 16 - 3;
+            Arm arm = playerEntity.getMainArm().getOpposite();
+            if (!backSlotStack.isEmpty() || !beltSlotStack.isEmpty()) {
+                if (arm == Arm.LEFT) {
+                    RenderSystem.enableBlend();
+                    RenderSystem.setShaderTexture(0, WIDGETS_TEXTURE);
+                    this.drawTexture(matrixStack, i + 91, this.scaledHeight - 23, 53, 22, 29, 24);
+                    this.renderHotbarItem(i + 91 + 10, p, f, playerEntity, backSlotStack, 0);
+                    RenderSystem.enableBlend();
+                    RenderSystem.setShaderTexture(0, WIDGETS_TEXTURE);
+                    this.drawTexture(matrixStack, i + 112, this.scaledHeight - 23, 53, 22, 29, 24);
+                    this.renderHotbarItem(i + 112 + 10, p, f, playerEntity, beltSlotStack, 0);
+                } else {
+                    RenderSystem.enableBlend();
+                    RenderSystem.setShaderTexture(0, WIDGETS_TEXTURE);
+                    this.drawTexture(matrixStack, i - 91 - 29, this.scaledHeight - 23, 24, 22, 29, 24);
+                    this.renderHotbarItem(i - 91 - 26, p, f, playerEntity, backSlotStack, 0);
+                    RenderSystem.enableBlend();
+                    RenderSystem.setShaderTexture(0, WIDGETS_TEXTURE);
+                    this.drawTexture(matrixStack, i - 112 - 29, this.scaledHeight - 23, 24, 22, 29, 24);
+                    this.renderHotbarItem(i - 112 - 26, p, f, playerEntity, beltSlotStack, 0);
+                }
+                RenderSystem.disableBlend();
+            }
+        }
+    }
 
-  @Shadow
-  private void renderHotbarItem(int i, int j, float f, PlayerEntity playerEntity, ItemStack itemStack, int seed) {
-  }
+    @Shadow
+    private PlayerEntity getCameraPlayer() {
+        return (PlayerEntity) this.client.getCameraEntity();
+    }
+
+    @Shadow
+    private void renderHotbarItem(int i, int j, float f, PlayerEntity playerEntity, ItemStack itemStack, int seed) {
+    }
 
 }

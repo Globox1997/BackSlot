@@ -33,74 +33,64 @@ import net.minecraft.util.Identifier;
 
 public class SwitchPacket {
 
-  public static final Identifier SWITCH_PACKET = new Identifier("backslot", "switch_item");
+    public static final Identifier SWITCH_PACKET = new Identifier("backslot", "switch_item");
 
-  public static void init() {
-    ServerPlayNetworking.registerGlobalReceiver(SWITCH_PACKET, (server, player, handler, buffer, sender) -> {
-      int slot = buffer.readInt();
-      int selectedSlot = player.getInventory().selectedSlot;
-      ItemStack selectedStack = (ItemStack) player.getInventory().getStack(selectedSlot);
-      ItemStack slotStack = (ItemStack) player.getInventory().getStack(slot);
+    public static void init() {
+        ServerPlayNetworking.registerGlobalReceiver(SWITCH_PACKET, (server, player, handler, buffer, sender) -> {
+            int slot = buffer.readInt();
+            int selectedSlot = player.getInventory().selectedSlot;
+            ItemStack selectedStack = (ItemStack) player.getInventory().getStack(selectedSlot);
+            ItemStack slotStack = (ItemStack) player.getInventory().getStack(slot);
 
-      if (isItemAllowed(selectedStack, slot)) {
-        player.getInventory().setStack(slot, selectedStack);
-        player.getInventory().setStack(selectedSlot, slotStack);
-        player.getInventory().markDirty();
-        if (BackSlotMain.CONFIG.backslot_sounds) {
-          if (selectedStack.isEmpty() && !slotStack.isEmpty()) {
-            if (slotStack.getItem() instanceof SwordItem) {
-              player.world.playSound(null, player.getBlockPos(), BackSlotSounds.SHEATH_SWORD_EVENT,
-                  SoundCategory.PLAYERS, 1.0F, 1.0F);
-            } else {
-              player.world.playSound(null, player.getBlockPos(), SoundEvents.ITEM_ARMOR_EQUIP_GENERIC,
-                  SoundCategory.PLAYERS, 1.0F, 1.0F);
+            if (isItemAllowed(selectedStack, slot)) {
+                player.getInventory().setStack(slot, selectedStack);
+                player.getInventory().setStack(selectedSlot, slotStack);
+                player.getInventory().markDirty();
+                if (BackSlotMain.CONFIG.backslot_sounds) {
+                    if (selectedStack.isEmpty() && !slotStack.isEmpty()) {
+                        if (slotStack.getItem() instanceof SwordItem) {
+                            player.world.playSound(null, player.getBlockPos(), BackSlotSounds.SHEATH_SWORD_EVENT, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                        } else {
+                            player.world.playSound(null, player.getBlockPos(), SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                        }
+                    } else if (slotStack.getItem() instanceof SwordItem) {
+                        player.world.playSound(null, player.getBlockPos(), BackSlotSounds.SHEATH_SWORD_EVENT, SoundCategory.PLAYERS, 1.0F, 0.9F + player.world.random.nextFloat() * 0.2F);
+                    } else if (selectedStack.getItem() instanceof SwordItem) {
+                        player.world.playSound(null, player.getBlockPos(), BackSlotSounds.PACK_UP_ITEM_EVENT, SoundCategory.PLAYERS, 1.0F, 0.9F + player.world.random.nextFloat() * 0.2F);
+                    } else if (!selectedStack.isEmpty()) {
+                        player.world.playSound(null, player.getBlockPos(), SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                    }
+                }
             }
-          } else if (slotStack.getItem() instanceof SwordItem) {
-            player.world.playSound(null, player.getBlockPos(), BackSlotSounds.SHEATH_SWORD_EVENT, SoundCategory.PLAYERS,
-                1.0F, 0.9F + player.world.random.nextFloat() * 0.2F);
-          } else if (selectedStack.getItem() instanceof SwordItem) {
-            player.world.playSound(null, player.getBlockPos(), BackSlotSounds.PACK_UP_ITEM_EVENT, SoundCategory.PLAYERS,
-                1.0F, 0.9F + player.world.random.nextFloat() * 0.2F);
-          } else if (!selectedStack.isEmpty()) {
-            player.world.playSound(null, player.getBlockPos(), SoundEvents.ITEM_ARMOR_EQUIP_GENERIC,
-                SoundCategory.PLAYERS, 1.0F, 1.0F);
-          }
-        }
-      }
 
-    });
+        });
 
-  }
-
-  public static boolean isItemAllowed(ItemStack stack, int slot) {
-    FabricLoader loader = FabricLoader.getInstance();
-    boolean isMedievalWeaponsModLoaded = loader.isModLoaded("medievalweapons");
-    boolean isDungeonsWeaponsModLoaded = loader.isModLoaded("mcdw");
-    if (slot == 42) {
-      if (isDungeonsWeaponsModLoaded && (stack.getItem() instanceof McdwHammer || stack.getItem() instanceof McdwGlaive
-          || stack.getItem() instanceof McdwSpear || stack.getItem() instanceof McdwSickle
-          || stack.getItem() instanceof McdwStaff)) {
-        return false;
-      }
-      if (isMedievalWeaponsModLoaded && (stack.getItem() instanceof Small_Axe_Item
-          || stack.getItem() instanceof Long_Sword_Item || stack.getItem() instanceof Big_Axe_Item
-          || stack.getItem() instanceof Javelin_Item || stack.getItem() instanceof Lance_Item
-          || stack.getItem() instanceof Healing_Staff_Item || stack.getItem() instanceof Thalleous_Sword_Item)) {
-        return false;
-      }
     }
 
-    if (stack.isEmpty() || stack.getItem() instanceof ToolItem
-        || (slot == 41 && (stack.getItem() instanceof RangedWeaponItem || stack.getItem() instanceof FishingRodItem
-            || stack.getItem() instanceof TridentItem || stack.getItem() instanceof OnAStickItem
-            || (isMedievalWeaponsModLoaded
-                && (stack.getItem() instanceof Francisca_HT_Item || stack.getItem() instanceof Francisca_LT_Item))))
-        || (slot == 42 && (stack.getItem() instanceof FlintAndSteelItem || stack.getItem() instanceof ShearsItem
-            || (isMedievalWeaponsModLoaded
-                && (stack.getItem() instanceof Francisca_HT_Item || stack.getItem() instanceof Francisca_LT_Item))))) {
-      return true;
-    } else
-      return false;
-  }
+    public static boolean isItemAllowed(ItemStack stack, int slot) {
+        FabricLoader loader = FabricLoader.getInstance();
+        boolean isMedievalWeaponsModLoaded = loader.isModLoaded("medievalweapons");
+        boolean isDungeonsWeaponsModLoaded = loader.isModLoaded("mcdw");
+        if (slot == 42) {
+            if (isDungeonsWeaponsModLoaded && (stack.getItem() instanceof McdwHammer || stack.getItem() instanceof McdwGlaive || stack.getItem() instanceof McdwSpear
+                    || stack.getItem() instanceof McdwSickle || stack.getItem() instanceof McdwStaff)) {
+                return false;
+            }
+            if (isMedievalWeaponsModLoaded
+                    && (stack.getItem() instanceof Small_Axe_Item || stack.getItem() instanceof Long_Sword_Item || stack.getItem() instanceof Big_Axe_Item || stack.getItem() instanceof Javelin_Item
+                            || stack.getItem() instanceof Lance_Item || stack.getItem() instanceof Healing_Staff_Item || stack.getItem() instanceof Thalleous_Sword_Item)) {
+                return false;
+            }
+        }
+
+        if (stack.isEmpty() || stack.getItem() instanceof ToolItem
+                || (slot == 41 && (stack.getItem() instanceof RangedWeaponItem || stack.getItem() instanceof FishingRodItem || stack.getItem() instanceof TridentItem
+                        || stack.getItem() instanceof OnAStickItem || (isMedievalWeaponsModLoaded && (stack.getItem() instanceof Francisca_HT_Item || stack.getItem() instanceof Francisca_LT_Item))))
+                || (slot == 42 && (stack.getItem() instanceof FlintAndSteelItem || stack.getItem() instanceof ShearsItem
+                        || (isMedievalWeaponsModLoaded && (stack.getItem() instanceof Francisca_HT_Item || stack.getItem() instanceof Francisca_LT_Item))))) {
+            return true;
+        } else
+            return false;
+    }
 
 }

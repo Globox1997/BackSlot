@@ -19,32 +19,32 @@ import net.minecraft.server.network.ServerPlayerEntity;
 
 @Mixin(EntityTrackerEntry.class)
 public class EntityTrackerEntryMixin {
-  @Shadow
-  private final Entity entity;
+    @Shadow
+    private final Entity entity;
 
-  public EntityTrackerEntryMixin(Entity entity) {
-    this.entity = entity;
-  }
-
-  @Inject(method = "startTracking", at = @At(value = "TAIL"))
-  public void startTrackingMixin(ServerPlayerEntity serverPlayer, CallbackInfo info) {
-    if (entity instanceof PlayerEntity) {
-      PlayerEntity player = (PlayerEntity) entity;
-      for (int i = 41; i < 43; i++) {
-        if (!serverPlayer.getInventory().getStack(i).isEmpty()) {
-          PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
-          data.writeIntArray(new int[] { serverPlayer.getId(), i });
-          data.writeItemStack(serverPlayer.getInventory().getStack(i));
-          ServerPlayNetworking.send((ServerPlayerEntity) player, SyncPacket.VISIBILITY_UPDATE_PACKET, data);
-        }
-        if (!player.getInventory().getStack(i).isEmpty()) {
-          PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
-          data.writeIntArray(new int[] { player.getId(), i });
-          data.writeItemStack(player.getInventory().getStack(i));
-          ServerPlayNetworking.send(serverPlayer, SyncPacket.VISIBILITY_UPDATE_PACKET, data);
-        }
-      }
+    public EntityTrackerEntryMixin(Entity entity) {
+        this.entity = entity;
     }
-  }
+
+    @Inject(method = "startTracking", at = @At(value = "TAIL"))
+    public void startTrackingMixin(ServerPlayerEntity serverPlayer, CallbackInfo info) {
+        if (entity instanceof PlayerEntity) {
+            PlayerEntity player = (PlayerEntity) entity;
+            for (int i = 41; i < 43; i++) {
+                if (!serverPlayer.getInventory().getStack(i).isEmpty()) {
+                    PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
+                    data.writeIntArray(new int[] { serverPlayer.getId(), i });
+                    data.writeItemStack(serverPlayer.getInventory().getStack(i));
+                    ServerPlayNetworking.send((ServerPlayerEntity) player, SyncPacket.VISIBILITY_UPDATE_PACKET, data);
+                }
+                if (!player.getInventory().getStack(i).isEmpty()) {
+                    PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
+                    data.writeIntArray(new int[] { player.getId(), i });
+                    data.writeItemStack(player.getInventory().getStack(i));
+                    ServerPlayNetworking.send(serverPlayer, SyncPacket.VISIBILITY_UPDATE_PACKET, data);
+                }
+            }
+        }
+    }
 
 }

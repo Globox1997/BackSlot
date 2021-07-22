@@ -7,11 +7,11 @@ import net.fabricmc.api.ClientModInitializer;
 
 public class BackSlotClient implements ClientModInitializer {
 
-  @Override
-  public void onInitializeClient() {
-    BackSlotSprites.init();
-    SyncPacket.init();
-    SwitchKey.init();
-  }
+    @Override
+    public void onInitializeClient() {
+        BackSlotSprites.init();
+        SyncPacket.init();
+        SwitchKey.init();
+    }
 
 }

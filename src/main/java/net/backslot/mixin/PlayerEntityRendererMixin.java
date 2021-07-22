@@ -17,18 +17,16 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel;
 
 @Environment(EnvType.CLIENT)
 @Mixin(PlayerEntityRenderer.class)
-public abstract class PlayerEntityRendererMixin
-    extends LivingEntityRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
+public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
 
-  public PlayerEntityRendererMixin(EntityRendererFactory.Context ctx,
-      PlayerEntityModel<AbstractClientPlayerEntity> model, float shadowRadius) {
-    super(ctx, model, shadowRadius);
-  }
+    public PlayerEntityRendererMixin(EntityRendererFactory.Context ctx, PlayerEntityModel<AbstractClientPlayerEntity> model, float shadowRadius) {
+        super(ctx, model, shadowRadius);
+    }
 
-  @Inject(method = "<init>", at = @At("TAIL"))
-  public void onConstructor(CallbackInfo info) {
-    this.addFeature(new BackToolFeatureRenderer(this));
-    this.addFeature(new BeltSlotFeatureRenderer(this));
-  }
+    @Inject(method = "<init>", at = @At("TAIL"))
+    public void onConstructor(CallbackInfo info) {
+        this.addFeature(new BackToolFeatureRenderer(this));
+        this.addFeature(new BeltSlotFeatureRenderer(this));
+    }
 
 }

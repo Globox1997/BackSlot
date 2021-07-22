@@ -17,45 +17,43 @@ import de.siphalor.amecs.api.KeyModifiers;
 
 public class SwitchKey {
 
-  public static KeyBinding beltSlotKeyBind;
-  public static KeyBinding backSlotKeyBind;
-  public static boolean backSlotBoolean;
-  public static boolean beltSlotBoolean;
+    public static KeyBinding beltSlotKeyBind;
+    public static KeyBinding backSlotKeyBind;
+    public static boolean backSlotBoolean;
+    public static boolean beltSlotBoolean;
 
-  public static void init() {
+    public static void init() {
 
-    backSlotKeyBind = new AmecsKeyBinding(new Identifier("backslot", "switch_backslot"), InputUtil.Type.KEYSYM,
-        GLFW.GLFW_KEY_G, "category.backslot.key", new KeyModifiers());
-    beltSlotKeyBind = new AmecsKeyBinding(new Identifier("backslot", "switch_beltslot"), InputUtil.Type.KEYSYM,
-        GLFW.GLFW_KEY_G, "category.backslot.key", new KeyModifiers().setShift(true));
-    KeyBindingHelper.registerKeyBinding(backSlotKeyBind);
-    KeyBindingHelper.registerKeyBinding(beltSlotKeyBind);
-    ClientTickEvents.END_CLIENT_TICK.register(client -> {
-      if (backSlotKeyBind.wasPressed()) {
-        if (!backSlotBoolean) {
-          switchItem(41);
-        }
-        backSlotBoolean = true;
-      } else {
-        backSlotBoolean = false;
-      }
-      if (beltSlotKeyBind.wasPressed()) {
-        if (!beltSlotBoolean) {
-          switchItem(42);
-        }
-        beltSlotBoolean = true;
-      } else {
-        beltSlotBoolean = false;
-      }
+        backSlotKeyBind = new AmecsKeyBinding(new Identifier("backslot", "switch_backslot"), InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_G, "category.backslot.key", new KeyModifiers());
+        beltSlotKeyBind = new AmecsKeyBinding(new Identifier("backslot", "switch_beltslot"), InputUtil.Type.KEYSYM, GLFW.GLFW_KEY_G, "category.backslot.key", new KeyModifiers().setShift(true));
+        KeyBindingHelper.registerKeyBinding(backSlotKeyBind);
+        KeyBindingHelper.registerKeyBinding(beltSlotKeyBind);
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (backSlotKeyBind.wasPressed()) {
+                if (!backSlotBoolean) {
+                    switchItem(41);
+                }
+                backSlotBoolean = true;
+            } else {
+                backSlotBoolean = false;
+            }
+            if (beltSlotKeyBind.wasPressed()) {
+                if (!beltSlotBoolean) {
+                    switchItem(42);
+                }
+                beltSlotBoolean = true;
+            } else {
+                beltSlotBoolean = false;
+            }
 
-    });
-  }
+        });
+    }
 
-  public static void switchItem(int slot) {
-    PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
-    buf.writeInt(slot);
-    CustomPayloadC2SPacket packet = new CustomPayloadC2SPacket(SwitchPacket.SWITCH_PACKET, buf);
-    MinecraftClient.getInstance().getNetworkHandler().sendPacket(packet);
-  }
+    public static void switchItem(int slot) {
+        PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+        buf.writeInt(slot);
+        CustomPayloadC2SPacket packet = new CustomPayloadC2SPacket(SwitchPacket.SWITCH_PACKET, buf);
+        MinecraftClient.getInstance().getNetworkHandler().sendPacket(packet);
+    }
 
 }

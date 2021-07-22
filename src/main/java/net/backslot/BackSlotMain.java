@@ -9,14 +9,14 @@ import net.fabricmc.api.ModInitializer;
 
 public class BackSlotMain implements ModInitializer {
 
-  public static BackSlotConfig CONFIG = new BackSlotConfig();
+    public static BackSlotConfig CONFIG = new BackSlotConfig();
 
-  @Override
-  public void onInitialize() {
-    AutoConfig.register(BackSlotConfig.class, JanksonConfigSerializer::new);
-    CONFIG = AutoConfig.getConfigHolder(BackSlotConfig.class).getConfig();
-    BackSlotSounds.init();
-    SwitchPacket.init();
-  }
+    @Override
+    public void onInitialize() {
+        AutoConfig.register(BackSlotConfig.class, JanksonConfigSerializer::new);
+        CONFIG = AutoConfig.getConfigHolder(BackSlotConfig.class).getConfig();
+        BackSlotSounds.init();
+        SwitchPacket.init();
+    }
 
 }
