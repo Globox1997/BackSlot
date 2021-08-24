@@ -42,10 +42,10 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
         int beltSlot_x = BackSlotMain.CONFIG.beltSlot_x;
         int beltSlot_y = BackSlotMain.CONFIG.beltSlot_y;
         if (changeArrangement) {
-            backSlot_x = 75;
-            backSlot_y = 40;
-            beltSlot_x = 57;
-            beltSlot_y = 22;
+            backSlot_x += 75;
+            backSlot_y += 40;
+            beltSlot_x += 57;
+            beltSlot_y += 22;
         }
 
         if (this.recipeBook.isOpen()) {
