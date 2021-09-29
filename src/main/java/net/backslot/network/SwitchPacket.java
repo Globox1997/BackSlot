@@ -84,9 +84,10 @@ public class SwitchPacket {
         }
 
         if (stack.isEmpty() || stack.getItem() instanceof ToolItem
-                || (slot == 41 && (stack.getItem() instanceof RangedWeaponItem || stack.getItem() instanceof FishingRodItem || stack.getItem() instanceof TridentItem
-                        || stack.getItem() instanceof OnAStickItem || (isMedievalWeaponsModLoaded && (stack.getItem() instanceof Francisca_HT_Item || stack.getItem() instanceof Francisca_LT_Item))))
-                || (slot == 42 && (stack.getItem() instanceof FlintAndSteelItem || stack.getItem() instanceof ShearsItem
+                || (slot == 41 && (stack.isIn(BackSlotMain.BACKSLOT_ITEMS) || stack.getItem() instanceof RangedWeaponItem || stack.getItem() instanceof FishingRodItem
+                        || stack.getItem() instanceof TridentItem || stack.getItem() instanceof OnAStickItem
+                        || (isMedievalWeaponsModLoaded && (stack.getItem() instanceof Francisca_HT_Item || stack.getItem() instanceof Francisca_LT_Item))))
+                || (slot == 42 && (stack.isIn(BackSlotMain.BELTSLOT_ITEMS) || stack.getItem() instanceof FlintAndSteelItem || stack.getItem() instanceof ShearsItem
                         || (isMedievalWeaponsModLoaded && (stack.getItem() instanceof Francisca_HT_Item || stack.getItem() instanceof Francisca_LT_Item))))) {
             return true;
         } else

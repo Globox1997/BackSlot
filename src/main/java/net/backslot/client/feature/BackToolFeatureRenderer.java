@@ -53,7 +53,7 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
             FabricLoader loader = FabricLoader.getInstance();
             if (!this.isSpecialModelItem(backSloItem, loader)) {
                 matrixStack.translate(0.0D, 0.0D, 0.22D);
-                float downScaling = 0.0F; // Can be used to downSlace specific items
+                float downScaling = 0.0F; // Can be used to downScale specific items
                 if (loader.isModLoaded("medievalweapons")) {
                     if (backSlotStack.getItem() instanceof Long_Bow_Item) {
                         matrixStack.scale(1.0F, 1.0F, 0.5F);
