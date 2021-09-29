@@ -108,6 +108,12 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
                         matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(40F));
                         matrixStack.translate(0.02D, 0.5D, 0.0D);
                     } else if (backSloItem instanceof Big_Axe_Item) {
+                        if (!player.getOffHandStack().isEmpty()) {
+                            matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(25.0F));
+                            matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(-25.0F));
+                            matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(60.0F));
+                            matrixStack.translate(-0.1D, -0.3D, -0.4D);
+                        }
                         matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(48F));
                         matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(220F));
                         matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(267F));
