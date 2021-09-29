@@ -10,7 +10,7 @@ import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 public class BackSlotConfig implements ConfigData {
     public boolean backslot_sounds = true;
     @ConfigEntry.Gui.RequiresRestart
-    @Comment("Use for mod compatibility")
+    @Comment("Use for mod compatibility : Turn of when using advanced settings")
     public boolean change_slot_arrangement = false;
     public boolean disable_backslot_hud = false;
     public boolean switch_beltslot_side = false;
