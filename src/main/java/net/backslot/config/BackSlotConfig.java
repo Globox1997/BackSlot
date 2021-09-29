@@ -14,6 +14,7 @@ public class BackSlotConfig implements ConfigData {
     public boolean change_slot_arrangement = false;
     public boolean disable_backslot_hud = false;
     public boolean switch_beltslot_side = false;
+    public boolean offhand_switch = false;
     @ConfigEntry.Category("advanced_settings")
     @ConfigEntry.Gui.RequiresRestart
     @ConfigEntry.Gui.PrefixText

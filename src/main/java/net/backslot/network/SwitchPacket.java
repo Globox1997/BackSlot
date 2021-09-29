@@ -38,10 +38,9 @@ public class SwitchPacket {
     public static void init() {
         ServerPlayNetworking.registerGlobalReceiver(SWITCH_PACKET, (server, player, handler, buffer, sender) -> {
             int slot = buffer.readInt();
-            int selectedSlot = player.getInventory().selectedSlot;
-            ItemStack selectedStack = (ItemStack) player.getInventory().getStack(selectedSlot);
-            ItemStack slotStack = (ItemStack) player.getInventory().getStack(slot);
-
+            int selectedSlot = (slot == 42 && BackSlotMain.CONFIG.offhand_switch) ? 40 : player.getInventory().selectedSlot;
+            ItemStack selectedStack = (slot == 42 && BackSlotMain.CONFIG.offhand_switch) ? player.getInventory().offHand.get(0) : player.getInventory().getStack(selectedSlot);
+            ItemStack slotStack = player.getInventory().getStack(slot);
             if (isItemAllowed(selectedStack, slot)) {
                 player.getInventory().setStack(slot, selectedStack);
                 player.getInventory().setStack(selectedSlot, slotStack);

@@ -31,29 +31,28 @@ public class SwitchKey {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (backSlotKeyBind.wasPressed()) {
                 if (!backSlotBoolean) {
-                    switchItem(41);
+                    switchItem(client, 41);
                 }
                 backSlotBoolean = true;
-            } else {
+            } else if (backSlotBoolean) {
                 backSlotBoolean = false;
             }
             if (beltSlotKeyBind.wasPressed()) {
                 if (!beltSlotBoolean) {
-                    switchItem(42);
+                    switchItem(client, 42);
                 }
                 beltSlotBoolean = true;
-            } else {
+            } else if (beltSlotBoolean) {
                 beltSlotBoolean = false;
             }
 
         });
     }
 
-    public static void switchItem(int slot) {
+    public static void switchItem(MinecraftClient client, int slot) {
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         buf.writeInt(slot);
-        CustomPayloadC2SPacket packet = new CustomPayloadC2SPacket(SwitchPacket.SWITCH_PACKET, buf);
-        MinecraftClient.getInstance().getNetworkHandler().sendPacket(packet);
+        client.getNetworkHandler().sendPacket(new CustomPayloadC2SPacket(SwitchPacket.SWITCH_PACKET, buf));
     }
 
 }
