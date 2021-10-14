@@ -15,6 +15,10 @@ public class BackSlotConfig implements ConfigData {
     public boolean disable_backslot_hud = false;
     public boolean switch_beltslot_side = false;
     public boolean offhand_switch = false;
+    public boolean offhand_shield = true;
+    public boolean offhand_fallback = true;
+    public boolean put_aside = true;
+    public boolean drop_holding = true;
     @ConfigEntry.Category("advanced_settings")
     @ConfigEntry.Gui.RequiresRestart
     @ConfigEntry.Gui.PrefixText
@@ -33,5 +37,4 @@ public class BackSlotConfig implements ConfigData {
     public float backslot_scale = 2.0F;
     @ConfigEntry.Category("advanced_settings")
     public float beltslot_scale = 2.0F;
-
 }
