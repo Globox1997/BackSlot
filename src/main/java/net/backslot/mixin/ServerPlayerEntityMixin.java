@@ -55,7 +55,8 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
     // Gravestone compat
     @Inject(method = "onDeath", at = @At("HEAD"))
     public void onDeathMixin(DamageSource source, CallbackInfo info) {
-        if (FabricLoader.getInstance().isModLoaded("gravestones") && !this.world.getGameRules().getBoolean(GameRules.KEEP_INVENTORY)) {
+        boolean lifesaverActive = FabricLoader.getInstance().isModLoaded("charm") || FabricLoader.getInstance().isModLoaded("gravestones");
+        if (lifesaverActive && !this.world.getGameRules().getBoolean(GameRules.KEEP_INVENTORY)) {
             if (!this.getInventory().getStack(41).isEmpty()) {
                 this.dropStack(this.getInventory().getStack(41));
                 this.getInventory().removeStack(41);
