@@ -32,7 +32,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// Amecs Key
-	modImplementation include("de.siphalor:amecsapi-1.17:${project.amecs_version}"){
+	modImplementation include("de.siphalor:amecsapi-1.17:${project.amecs_version}") {
 		exclude group: "net.fabricmc.fabric-api"
 		exclude module: "nmuk-1.17"
 	}
@@ -41,20 +41,20 @@ dependencies {
     	exclude(group: "net.fabricmc.fabric-api")
   	}
 	// Modmenu
-	modCompileOnly modRuntime("com.terraformersmc:modmenu:${project.mod_menu_version}"),{
+	modCompileOnly modRuntime("com.terraformersmc:modmenu:${project.mod_menu_version}") {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 	// Medieval Weapons
-	modCompileOnly "com.github.Globox1997:MedievalWeapons:71f49ed87a",{
-			exclude(group: "net.fabricmc.fabric-api")
-			exclude(group: "me.shedaniel.cloth")
-			exclude(group: "io.github.prospector")
-			exclude(group: "io.github.onyxstudios")
-			exclude(group: "com.github.TheIllusiveC4")
+	modCompileOnly("curse.maven:medieval-weapons-411400:3460407") {
+		exclude(group: "net.fabricmc.fabric-api")
+		exclude(group: "me.shedaniel.cloth")
+		exclude(group: "io.github.prospector")
+		exclude(group: "io.github.onyxstudios")
+		exclude(group: "com.github.TheIllusiveC4")
 	}
 	// Dungeon Weapons
-	modCompileOnly "curse.maven:mcdw-407311:3380445",{
-			exclude(group: "net.fabricmc.fabric-api")
+	modCompileOnly("curse.maven:mcdw-407311:3380445") {
+		exclude(group: "net.fabricmc.fabric-api")
 	}
 	modCompileOnly "curse.maven:enchanthelper-434579:3347061"
 	//modRuntime "dev.upcraft:Soulbound:2.0.0"
