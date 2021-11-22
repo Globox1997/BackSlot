@@ -2,9 +2,7 @@ package net.backslot.mixin;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -13,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import net.backslot.BackSlotMain;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
@@ -25,10 +22,7 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin extends DrawableHelper {
-    @Shadow
-    @Final
-    @Mutable
-    private MinecraftClient client;
+
     @Shadow
     private static final Identifier WIDGETS_TEXTURE = new Identifier("textures/gui/widgets.png");
     @Shadow
@@ -36,14 +30,11 @@ public abstract class InGameHudMixin extends DrawableHelper {
     @Shadow
     private int scaledHeight;
 
-    public InGameHudMixin(MinecraftClient client) {
-        this.client = client;
-    }
-
-    @Inject(method = "renderHotbar", at = @At(value = "RETURN"))
-    public void renderHotbarMixin(float f, MatrixStack matrixStack, CallbackInfo info) {
+    @Inject(method = "renderHotbar", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;disableBlend()V"))
+    private void renderHotbarMixin(float f, MatrixStack matrixStack, CallbackInfo info) {
         PlayerEntity playerEntity = this.getCameraPlayer();
-        if (playerEntity != null && !BackSlotMain.CONFIG.disable_backslot_hud) {
+        // player can't be null cause it is already checked in method
+        if (!BackSlotMain.CONFIG.disable_backslot_hud) {
             ItemStack backSlotStack = playerEntity.getInventory().getStack(41);
             ItemStack beltSlotStack = playerEntity.getInventory().getStack(42);
             RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -70,14 +61,13 @@ public abstract class InGameHudMixin extends DrawableHelper {
                     this.drawTexture(matrixStack, i - 112 - 29, this.scaledHeight - 23, 24, 22, 29, 24);
                     this.renderHotbarItem(i - 112 - 26, p, f, playerEntity, beltSlotStack, 0);
                 }
-                RenderSystem.disableBlend();
             }
         }
     }
 
     @Shadow
     private PlayerEntity getCameraPlayer() {
-        return (PlayerEntity) this.client.getCameraEntity();
+        return null;
     }
 
     @Shadow

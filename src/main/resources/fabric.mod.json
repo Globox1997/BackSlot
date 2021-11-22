@@ -38,6 +38,5 @@
   },
   "suggests": {
     "flamingo": "*"
-  },
-  "accessWidener": "backslot.aw"
+  }
 }

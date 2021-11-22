@@ -10,10 +10,6 @@ archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
-loom {
-	accessWidenerPath = file("src/main/resources/backslot.aw")
-}
-
 repositories {
 	maven { url 'https://jitpack.io' }
 	maven { url "https://maven.jamieswhiteshirt.com/libs-release/" }
