@@ -17,15 +17,15 @@ import net.minecraft.item.ItemStack;
 public class EntityMixin {
 
     @Inject(method = "getItemsEquipped", at = @At("RETURN"), cancellable = true)
-    public void getItemsEquippedWithBackSlotItems(CallbackInfoReturnable<Iterable<ItemStack>> cir) {
-        Entity self = (Entity) (Object) this;
-        if (self instanceof PlayerEntity) {
-            PlayerEntity playerEntity = (PlayerEntity) self;
+    public void getItemsEquippedWithBackSlotItems(CallbackInfoReturnable<Iterable<ItemStack>> info) {
+        Entity entity = (Entity) (Object) this;
+        if (entity instanceof PlayerEntity) {
+            PlayerEntity playerEntity = (PlayerEntity) entity;
             ItemStack backSlotStack = playerEntity.getInventory().getStack(41);
             ItemStack beltSlotStack = playerEntity.getInventory().getStack(42);
-            Iterable<ItemStack> equippedItems = cir.getReturnValue();
+            Iterable<ItemStack> equippedItems = info.getReturnValue();
             Iterable<ItemStack> equippedBackSlotItems = Arrays.asList(backSlotStack, beltSlotStack);
-            cir.setReturnValue(Iterables.concat(equippedItems, equippedBackSlotItems));
+            info.setReturnValue(Iterables.concat(equippedItems, equippedBackSlotItems));
         }
     }
 
