@@ -4,7 +4,6 @@ import chronosacaria.mcdw.items.ItemRegistry;
 import net.backslot.BackSlotMain;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.loader.api.FabricLoader;
 import net.medievalweapons.item.Long_Sword_Item;
 import net.medievalweapons.item.Small_Axe_Item;
 import net.minecraft.client.MinecraftClient;
@@ -48,8 +47,7 @@ public class BeltSlotFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
             }
             matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(-90.0F));
             float downScaling = 0.0F;
-            FabricLoader loader = FabricLoader.getInstance();
-            if (loader.isModLoaded("medievalweapons")) {
+            if (BackSlotMain.isMedievalWeaponsLoaded) {
                 if (beltSlotStack.getItem() instanceof Small_Axe_Item) {
                     downScaling = -0.5F;
                 }
@@ -57,7 +55,7 @@ public class BeltSlotFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
                     downScaling = -0.3F;
                 }
             }
-            if (loader.isModLoaded("mcdw") && (beltSlotStack.getItem() == ItemRegistry.ITEMS.get("dagger_eternal_knife") || beltSlotStack.getItem() == ItemRegistry.ITEMS.get("sword_truthseeker"))) {
+            if (BackSlotMain.isMcdwLoaded && (beltSlotStack.getItem() == ItemRegistry.ITEMS.get("dagger_eternal_knife") || beltSlotStack.getItem() == ItemRegistry.ITEMS.get("sword_truthseeker"))) {
                 downScaling = -0.3F;
             }
             matrixStack.scale(BackSlotMain.CONFIG.beltslot_scale + downScaling, BackSlotMain.CONFIG.beltslot_scale + downScaling, BackSlotMain.CONFIG.beltslot_scale + downScaling);

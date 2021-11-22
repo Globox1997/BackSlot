@@ -9,7 +9,6 @@ import net.backslot.BackSlotMain;
 import net.backslot.sound.BackSlotSounds;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.fabricmc.loader.api.FabricLoader;
 import net.medievalweapons.item.Big_Axe_Item;
 import net.medievalweapons.item.Francisca_HT_Item;
 import net.medievalweapons.item.Francisca_LT_Item;
@@ -187,15 +186,12 @@ public class SwitchPacket {
     }
 
     public static boolean isItemAllowed(ItemStack stack, int slot) {
-        FabricLoader loader = FabricLoader.getInstance();
-        boolean isMedievalWeaponsModLoaded = loader.isModLoaded("medievalweapons");
-        boolean isDungeonsWeaponsModLoaded = loader.isModLoaded("mcdw");
         if (slot == 42) {
-            if (isDungeonsWeaponsModLoaded && (stack.getItem() instanceof McdwHammer || stack.getItem() instanceof McdwGlaive || stack.getItem() instanceof McdwSpear
+            if (BackSlotMain.isMcdwLoaded && (stack.getItem() instanceof McdwHammer || stack.getItem() instanceof McdwGlaive || stack.getItem() instanceof McdwSpear
                     || stack.getItem() instanceof McdwSickle || stack.getItem() instanceof McdwStaff)) {
                 return false;
             }
-            if (isMedievalWeaponsModLoaded
+            if (BackSlotMain.isMedievalWeaponsLoaded
                     && (stack.getItem() instanceof Small_Axe_Item || stack.getItem() instanceof Long_Sword_Item || stack.getItem() instanceof Big_Axe_Item || stack.getItem() instanceof Javelin_Item
                             || stack.getItem() instanceof Lance_Item || stack.getItem() instanceof Healing_Staff_Item || stack.getItem() instanceof Thalleous_Sword_Item)) {
                 return false;
@@ -205,9 +201,9 @@ public class SwitchPacket {
         if (stack.isEmpty() || stack.getItem() instanceof ToolItem
                 || (slot == 41 && (stack.isIn(BackSlotMain.BACKSLOT_ITEMS) || stack.getItem() instanceof RangedWeaponItem || stack.getItem() instanceof FishingRodItem
                         || stack.getItem() instanceof TridentItem || stack.getItem() instanceof OnAStickItem
-                        || (isMedievalWeaponsModLoaded && (stack.getItem() instanceof Francisca_HT_Item || stack.getItem() instanceof Francisca_LT_Item))))
+                        || (BackSlotMain.isMedievalWeaponsLoaded && (stack.getItem() instanceof Francisca_HT_Item || stack.getItem() instanceof Francisca_LT_Item))))
                 || (slot == 42 && (stack.isIn(BackSlotMain.BELTSLOT_ITEMS) || stack.getItem() instanceof FlintAndSteelItem || stack.getItem() instanceof ShearsItem
-                        || (isMedievalWeaponsModLoaded && (stack.getItem() instanceof Francisca_HT_Item || stack.getItem() instanceof Francisca_LT_Item))))) {
+                        || (BackSlotMain.isMedievalWeaponsLoaded && (stack.getItem() instanceof Francisca_HT_Item || stack.getItem() instanceof Francisca_LT_Item))))) {
             return true;
         } else
             return false;

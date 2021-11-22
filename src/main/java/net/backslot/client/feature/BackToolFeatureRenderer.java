@@ -7,7 +7,6 @@ import chronosacaria.mcdw.bases.McdwSword;
 import net.backslot.BackSlotMain;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.loader.api.FabricLoader;
 import net.medievalweapons.item.Big_Axe_Item;
 import net.medievalweapons.item.Healing_Staff_Item;
 import net.medievalweapons.item.Javelin_Item;
@@ -50,11 +49,10 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
             ModelPart modelPart = this.getContextModel().body;
             modelPart.rotate(matrixStack);
             Item backSloItem = backSlotStack.getItem();
-            FabricLoader loader = FabricLoader.getInstance();
-            if (!this.isSpecialModelItem(backSloItem, loader)) {
+            if (!this.isSpecialModelItem(backSloItem)) {
                 matrixStack.translate(0.0D, 0.0D, 0.22D);
                 float downScaling = 0.0F; // Can be used to downScale specific items
-                if (loader.isModLoaded("medievalweapons")) {
+                if (BackSlotMain.isMedievalWeaponsLoaded) {
                     if (backSlotStack.getItem() instanceof Long_Bow_Item) {
                         matrixStack.scale(1.0F, 1.0F, 0.5F);
                     }
@@ -65,7 +63,7 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
                         matrixStack.translate(0.3D, 0.0D, 0.0D);
                     }
                 }
-                if (loader.isModLoaded("mcdw")) {
+                if (BackSlotMain.isMcdwLoaded) {
                     if (backSlotStack.getItem() instanceof McdwHammer) {
                         matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(90.0F));
                         matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(270.0F));
@@ -94,7 +92,7 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
                     matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(52.0F));
                     matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(40.0F));
                     matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(-25.F));
-                } else if (loader.isModLoaded("medievalweapons")) {
+                } else if (BackSlotMain.isMedievalWeaponsLoaded) {
                     if (backSloItem instanceof Lance_Item || backSloItem instanceof Healing_Staff_Item) {
                         matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90F));
                         matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(50F));
@@ -124,7 +122,7 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
                 matrixStack.scale(1.0F, -1.0F, -1.0F);
                 if (!livingEntity.hasStackEquipped(EquipmentSlot.CHEST)) {
                     matrixStack.translate(0.05F, 0.0F, 0.0F);
-                } else if (loader.isModLoaded("medievalweapons")
+                } else if (BackSlotMain.isMedievalWeaponsLoaded
                         && (backSloItem instanceof Lance_Item || backSloItem instanceof Healing_Staff_Item || backSloItem instanceof Thalleous_Sword_Item || backSloItem instanceof Javelin_Item)) {
                     matrixStack.translate(0.05D, 0.0D, 0.0D);
                 }
@@ -138,10 +136,10 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
 
     // Belt slot has to get fixed too
 
-    private boolean isSpecialModelItem(Item item, FabricLoader loader) {
+    private boolean isSpecialModelItem(Item item) {
         if (item instanceof TridentItem) {
             return true;
-        } else if (loader.isModLoaded("medievalweapons")
+        } else if (BackSlotMain.isMedievalWeaponsLoaded
                 && (item instanceof Healing_Staff_Item || item instanceof Big_Axe_Item || item instanceof Javelin_Item || item instanceof Lance_Item || item instanceof Thalleous_Sword_Item)) {
             return true;
         } else
