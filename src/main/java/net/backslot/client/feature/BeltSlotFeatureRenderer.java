@@ -1,6 +1,7 @@
 package net.backslot.client.feature;
 
-import chronosacaria.mcdw.items.ItemRegistry;
+import chronosacaria.mcdw.enums.SoulDaggersID;
+import chronosacaria.mcdw.items.ItemsInit;
 import net.backslot.BackSlotMain;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -55,7 +56,8 @@ public class BeltSlotFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
                     downScaling = -0.3F;
                 }
             }
-            if (BackSlotMain.isMcdwLoaded && (beltSlotStack.getItem() == ItemRegistry.ITEMS.get("dagger_eternal_knife") || beltSlotStack.getItem() == ItemRegistry.ITEMS.get("sword_truthseeker"))) {
+            if (BackSlotMain.isMcdwLoaded && (beltSlotStack.getItem() == ItemsInit.soulDaggerItems.get(SoulDaggersID.DAGGER_ETERNAL_KNIFE)
+                    || beltSlotStack.getItem() == ItemsInit.soulDaggerItems.get(SoulDaggersID.SWORD_TRUTHSEEKER))) {
                 downScaling = -0.3F;
             }
             matrixStack.scale(BackSlotMain.CONFIG.beltslot_scale + downScaling, BackSlotMain.CONFIG.beltslot_scale + downScaling, BackSlotMain.CONFIG.beltslot_scale + downScaling);
