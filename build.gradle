@@ -48,7 +48,7 @@ dependencies {
 		exclude(group: "com.github.TheIllusiveC4")
 	}
 	// Dungeon Weapons
-	modCompileOnly("curse.maven:mcdw-407311:3380445") {
+	modCompileOnly("curse.maven:mcdw-407311:3587872") {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 	modCompileOnly "curse.maven:enchanthelper-434579:3347061"
