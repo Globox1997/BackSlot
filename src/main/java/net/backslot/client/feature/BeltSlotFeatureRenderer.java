@@ -48,7 +48,10 @@ public class BeltSlotFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
             }
             matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(-90.0F));
             float downScaling = 0.0F;
-            if (BackSlotMain.isMedievalWeaponsLoaded) {
+            /*This code is no longer needed with the change from ModelTransformation.Mode.GROUND to .HEAD down below.
+              All the scaling, positioning for MCDW/Most other mods can be done within the .json files, in the [head] category.
+              Leaving it as comments just in case. */
+            /*if (BackSlotMain.isMedievalWeaponsLoaded) {
                 if (beltSlotStack.getItem() instanceof Small_Axe_Item) {
                     downScaling = -0.5F;
                 }
@@ -59,7 +62,7 @@ public class BeltSlotFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
             if (BackSlotMain.isMcdwLoaded && (beltSlotStack.getItem() == ItemsInit.soulDaggerItems.get(SoulDaggersID.DAGGER_ETERNAL_KNIFE)
                     || beltSlotStack.getItem() == ItemsInit.soulDaggerItems.get(SoulDaggersID.SWORD_TRUTHSEEKER))) {
                 downScaling = -0.3F;
-            }
+            }*/
             matrixStack.scale(BackSlotMain.CONFIG.beltslot_scale + downScaling, BackSlotMain.CONFIG.beltslot_scale + downScaling, BackSlotMain.CONFIG.beltslot_scale + downScaling);
             if (beltSlotStack.getItem() instanceof ShearsItem || beltSlotStack.getItem() instanceof FlintAndSteelItem) {
                 matrixStack.scale(0.65F, 0.65F, 0.65F);
@@ -67,7 +70,7 @@ public class BeltSlotFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
                     matrixStack.translate(0.0F, 0.0F, 0.015F);
                 }
             }
-            MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, beltSlotStack, ModelTransformation.Mode.GROUND, false, matrixStack, vertexConsumerProvider, i);
+            MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, beltSlotStack, ModelTransformation.Mode.HEAD, false, matrixStack, vertexConsumerProvider, i);
             matrixStack.pop();
         }
     }
