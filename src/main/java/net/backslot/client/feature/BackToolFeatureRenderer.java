@@ -52,7 +52,10 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
             if (!this.isSpecialModelItem(backSloItem)) {
                 matrixStack.translate(0.0D, 0.0D, 0.22D);
                 float downScaling = 0.0F; // Can be used to downScale specific items
-                if (BackSlotMain.isMedievalWeaponsLoaded) {
+               /*This code is no longer needed with the change from ModelTransformation.Mode.GROUND to .HEAD down below.
+                 All the scaling, positioning for MCDW/Most other mods can be done within the .json files, in the [head] category.
+                 Leaving it as comments just in case. */
+               /* if (BackSlotMain.isMedievalWeaponsLoaded) {
                     if (backSlotStack.getItem() instanceof Long_Bow_Item) {
                         matrixStack.scale(1.0F, 1.0F, 0.5F);
                     }
@@ -80,13 +83,16 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
                     if (backSlotStack.getItem() instanceof McdwSword && backSlotStack.getItem().getTranslationKey().contains("sword_dancers_sword")) {
                         matrixStack.translate(0.3D, 0.3D, 0.0D);
                     }
-                }
+                }*/
                 matrixStack.scale(BackSlotMain.CONFIG.backslot_scale + downScaling, BackSlotMain.CONFIG.backslot_scale + downScaling, BackSlotMain.CONFIG.backslot_scale + downScaling);
                 if (backSlotStack.getItem() instanceof FishingRodItem || backSlotStack.getItem() instanceof OnAStickItem) {
                     matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(180.0F));
                     matrixStack.translate(0.0D, -0.3D, 0.0D);
                 }
-                MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, backSlotStack, ModelTransformation.Mode.GROUND, false, matrixStack, vertexConsumerProvider, i);
+                if (!livingEntity.hasStackEquipped(EquipmentSlot.CHEST)) { //Make items sit flush against back instead of floating when there's no chest plate in slot
+                    matrixStack.translate(0.0F, 0.0F, -0.04F);
+                }
+                MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, backSlotStack, ModelTransformation.Mode.HEAD, false, matrixStack, vertexConsumerProvider, i); //Change from ModelTransformation.Mode.GROUND to .HEAD for items that aren't special case
             } else {
                 if (backSloItem instanceof TridentItem) {
                     matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(52.0F));
@@ -145,5 +151,4 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
         } else
             return false;
     }
-
 }
