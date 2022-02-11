@@ -1,9 +1,5 @@
 package net.backslot.client.feature;
 
-import chronosacaria.mcdw.bases.McdwBow;
-import chronosacaria.mcdw.bases.McdwHammer;
-import chronosacaria.mcdw.bases.McdwStaff;
-import chronosacaria.mcdw.bases.McdwSword;
 import net.backslot.BackSlotMain;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -11,9 +7,6 @@ import net.medievalweapons.item.Big_Axe_Item;
 import net.medievalweapons.item.Healing_Staff_Item;
 import net.medievalweapons.item.Javelin_Item;
 import net.medievalweapons.item.Lance_Item;
-import net.medievalweapons.item.Long_Bow_Item;
-import net.medievalweapons.item.Long_Sword_Item;
-import net.medievalweapons.item.Small_Axe_Item;
 import net.medievalweapons.item.Thalleous_Sword_Item;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.ModelPart;
@@ -49,98 +42,64 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
             ModelPart modelPart = this.getContextModel().body;
             modelPart.rotate(matrixStack);
             Item backSloItem = backSlotStack.getItem();
+
             if (!this.isSpecialModelItem(backSloItem)) {
                 matrixStack.translate(0.0D, 0.0D, 0.22D);
-                float downScaling = 0.0F; // Can be used to downScale specific items
-               /*This code is no longer needed with the change from ModelTransformation.Mode.GROUND to .HEAD down below.
-                 All the scaling, positioning for MCDW/Most other mods can be done within the .json files, in the [head] category.
-                 Leaving it as comments just in case. */
-               /* if (BackSlotMain.isMedievalWeaponsLoaded) {
-                    if (backSlotStack.getItem() instanceof Long_Bow_Item) {
-                        matrixStack.scale(1.0F, 1.0F, 0.5F);
-                    }
-                    if (backSlotStack.getItem() instanceof Small_Axe_Item) {
-                        matrixStack.translate(0.3D, 0.0D, 0.0D);
-                    }
-                    if (backSlotStack.getItem() instanceof Long_Sword_Item) {
-                        matrixStack.translate(0.3D, 0.0D, 0.0D);
-                    }
-                }
-                if (BackSlotMain.isMcdwLoaded) {
-                    if (backSlotStack.getItem() instanceof McdwHammer) {
-                        matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(90.0F));
-                        matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(270.0F));
-                        matrixStack.translate(0.0D, -0.4D, -0.2D);
-                    }
-                    if (backSlotStack.getItem() instanceof McdwBow && !backSlotStack.getItem().getTranslationKey().contains("bow_bonebow")
-                            && !backSlotStack.getItem().getTranslationKey().contains("bow_longbow") && !backSlotStack.getItem().getTranslationKey().contains("bow_red_snake")
-                            && !backSlotStack.getItem().getTranslationKey().contains("bow_guardian_bow")) {
-                        matrixStack.translate(0.0D, 0.23D, 0.0D);
-                    }
-                    if (backSlotStack.getItem() instanceof McdwStaff) {
-                        matrixStack.translate(0.3D, 0.3D, 0.0D);
-                    }
-                    if (backSlotStack.getItem() instanceof McdwSword && backSlotStack.getItem().getTranslationKey().contains("sword_dancers_sword")) {
-                        matrixStack.translate(0.3D, 0.3D, 0.0D);
-                    }
-                }*/
-                matrixStack.scale(BackSlotMain.CONFIG.backslot_scale + downScaling, BackSlotMain.CONFIG.backslot_scale + downScaling, BackSlotMain.CONFIG.backslot_scale + downScaling);
+                matrixStack.scale(BackSlotMain.CONFIG.backslot_scale, BackSlotMain.CONFIG.backslot_scale, BackSlotMain.CONFIG.backslot_scale);
                 if (backSlotStack.getItem() instanceof FishingRodItem || backSlotStack.getItem() instanceof OnAStickItem) {
                     matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(180.0F));
                     matrixStack.translate(0.0D, -0.3D, 0.0D);
                 }
-                if (!livingEntity.hasStackEquipped(EquipmentSlot.CHEST)) { //Make items sit flush against back instead of floating when there's no chest plate in slot
+                if (!livingEntity.hasStackEquipped(EquipmentSlot.CHEST)) {
                     matrixStack.translate(0.0F, 0.0F, -0.04F);
                 }
-                MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, backSlotStack, ModelTransformation.Mode.HEAD, false, matrixStack, vertexConsumerProvider, i); //Change from ModelTransformation.Mode.GROUND to .HEAD for items that aren't special case
+                MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, backSlotStack, ModelTransformation.Mode.HEAD, false, matrixStack, vertexConsumerProvider, i);
             } else {
                 if (backSloItem instanceof TridentItem) {
                     matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(52.0F));
                     matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(40.0F));
-                    matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(-25.F));
-                } else if (BackSlotMain.isMedievalWeaponsLoaded) {
+                    matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(-25.0F));
+                    matrixStack.translate(-0.26D, 0.0D, 0.0D);
+                } else
+                // Check for custom models
+                if (BackSlotMain.isMedievalWeaponsLoaded) {
                     if (backSloItem instanceof Lance_Item || backSloItem instanceof Healing_Staff_Item) {
                         matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90F));
                         matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(50F));
-                        matrixStack.translate(0.0D, 0.2D, 0.0D);
+                        matrixStack.translate(-0.2D, 0.2D, 0.0D);
                     } else if (backSloItem instanceof Thalleous_Sword_Item) {
                         matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90F));
                         matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(240F));
-                        matrixStack.translate(-0.01D, 0.5D, 0.3D);
+                        matrixStack.translate(-0.23D, 0.5D, 0.3D);
                     } else if (backSloItem instanceof Javelin_Item) {
                         matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90F));
                         matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(40F));
-                        matrixStack.translate(0.02D, 0.5D, 0.0D);
+                        matrixStack.translate(-0.2D, 0.5D, 0.0D);
                     } else if (backSloItem instanceof Big_Axe_Item) {
                         if (!player.getOffHandStack().isEmpty()) {
-                            matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(25.0F));
-                            matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(-25.0F));
+                            matrixStack.translate(0.1D, 0.2D, -0.68D);
+                            matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(20.0F));
+                            matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(-30.0F));
                             matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(60.0F));
-                            matrixStack.translate(-0.1D, -0.3D, -0.4D);
                         }
-                        matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(48F));
-                        matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(220F));
-                        matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(267F));
-                        matrixStack.translate(0.9D, 0.05D, 0.1D);
+                        matrixStack.translate(0.4D, 0.7D, 0.14D);
+                        matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(50.0F));
+                        matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(-30.0F));
+                        matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(-120.0F));
+                        if (livingEntity.hasStackEquipped(EquipmentSlot.CHEST))
+                            matrixStack.translate(0.1F, 0.0F, 0.0F);
                     }
                 }
 
-                matrixStack.scale(1.0F, -1.0F, -1.0F);
-                if (!livingEntity.hasStackEquipped(EquipmentSlot.CHEST)) {
+                if (!livingEntity.hasStackEquipped(EquipmentSlot.CHEST))
                     matrixStack.translate(0.05F, 0.0F, 0.0F);
-                } else if (BackSlotMain.isMedievalWeaponsLoaded
-                        && (backSloItem instanceof Lance_Item || backSloItem instanceof Healing_Staff_Item || backSloItem instanceof Thalleous_Sword_Item || backSloItem instanceof Javelin_Item)) {
-                    matrixStack.translate(0.05D, 0.0D, 0.0D);
-                }
-                matrixStack.translate(-0.28D, 0.0D, 0.0D);
+                matrixStack.scale(1.0F, -1.0F, -1.0F);
                 MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, backSlotStack, ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND, false, matrixStack,
                         vertexConsumerProvider, i);
             }
             matrixStack.pop();
         }
     }
-
-    // Belt slot has to get fixed too
 
     private boolean isSpecialModelItem(Item item) {
         if (item instanceof TridentItem) {

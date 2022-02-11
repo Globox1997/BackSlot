@@ -1,12 +1,8 @@
 package net.backslot.client.feature;
 
-import chronosacaria.mcdw.enums.SoulDaggersID;
-import chronosacaria.mcdw.items.ItemsInit;
 import net.backslot.BackSlotMain;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.medievalweapons.item.Long_Sword_Item;
-import net.medievalweapons.item.Small_Axe_Item;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -47,23 +43,7 @@ public class BeltSlotFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
                 matrixStack.translate(0.01F, 0.0F, -0.1F);
             }
             matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(-90.0F));
-            float downScaling = 0.0F;
-            /*This code is no longer needed with the change from ModelTransformation.Mode.GROUND to .HEAD down below.
-              All the scaling, positioning for MCDW/Most other mods can be done within the .json files, in the [head] category.
-              Leaving it as comments just in case. */
-            /*if (BackSlotMain.isMedievalWeaponsLoaded) {
-                if (beltSlotStack.getItem() instanceof Small_Axe_Item) {
-                    downScaling = -0.5F;
-                }
-                if (beltSlotStack.getItem() instanceof Long_Sword_Item) {
-                    downScaling = -0.3F;
-                }
-            }
-            if (BackSlotMain.isMcdwLoaded && (beltSlotStack.getItem() == ItemsInit.soulDaggerItems.get(SoulDaggersID.DAGGER_ETERNAL_KNIFE)
-                    || beltSlotStack.getItem() == ItemsInit.soulDaggerItems.get(SoulDaggersID.SWORD_TRUTHSEEKER))) {
-                downScaling = -0.3F;
-            }*/
-            matrixStack.scale(BackSlotMain.CONFIG.beltslot_scale + downScaling, BackSlotMain.CONFIG.beltslot_scale + downScaling, BackSlotMain.CONFIG.beltslot_scale + downScaling);
+            matrixStack.scale(BackSlotMain.CONFIG.beltslot_scale, BackSlotMain.CONFIG.beltslot_scale, BackSlotMain.CONFIG.beltslot_scale);
             if (beltSlotStack.getItem() instanceof ShearsItem || beltSlotStack.getItem() instanceof FlintAndSteelItem) {
                 matrixStack.scale(0.65F, 0.65F, 0.65F);
                 if (!livingEntity.hasStackEquipped(EquipmentSlot.CHEST)) {
