@@ -1,4 +1,4 @@
-package net.backslot.mixin;
+package net.backslot.mixin.client;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,4 +1,4 @@
-package net.backslot.mixin;
+package net.backslot.mixin.client;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Inject;

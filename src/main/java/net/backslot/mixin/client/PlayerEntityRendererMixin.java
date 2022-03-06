@@ -1,4 +1,4 @@
-package net.backslot.mixin;
+package net.backslot.mixin.client;
 
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import org.spongepowered.asm.mixin.Mixin;
