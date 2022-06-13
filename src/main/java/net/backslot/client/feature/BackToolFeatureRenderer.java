@@ -8,13 +8,13 @@ import net.medievalweapons.item.Healing_Staff_Item;
 import net.medievalweapons.item.Javelin_Item;
 import net.medievalweapons.item.Lance_Item;
 import net.medievalweapons.item.Thalleous_Sword_Item;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
+import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Vec3f;
@@ -29,8 +29,11 @@ import net.minecraft.item.TridentItem;
 @Environment(EnvType.CLIENT)
 public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
 
-    public BackToolFeatureRenderer(FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureRendererContext) {
-        super(featureRendererContext);
+    private final HeldItemRenderer heldItemRenderer;
+
+    public BackToolFeatureRenderer(FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> context, HeldItemRenderer heldItemRenderer) {
+        super(context, heldItemRenderer);
+        this.heldItemRenderer = heldItemRenderer;
     }
 
     @Override
@@ -53,7 +56,7 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
                 if (!livingEntity.hasStackEquipped(EquipmentSlot.CHEST)) {
                     matrixStack.translate(0.0F, 0.0F, -0.04F);
                 }
-                MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, backSlotStack, ModelTransformation.Mode.HEAD, false, matrixStack, vertexConsumerProvider, i);
+                heldItemRenderer.renderItem(livingEntity, backSlotStack, ModelTransformation.Mode.HEAD, false, matrixStack, vertexConsumerProvider, i);
             } else {
                 if (backSloItem instanceof TridentItem) {
                     matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(52.0F));
@@ -94,8 +97,7 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
                 if (!livingEntity.hasStackEquipped(EquipmentSlot.CHEST))
                     matrixStack.translate(0.05F, 0.0F, 0.0F);
                 matrixStack.scale(1.0F, -1.0F, -1.0F);
-                MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, backSlotStack, ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND, false, matrixStack,
-                        vertexConsumerProvider, i);
+                heldItemRenderer.renderItem(livingEntity, backSlotStack, ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND, false, matrixStack, vertexConsumerProvider, i);
             }
             matrixStack.pop();
         }

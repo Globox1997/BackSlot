@@ -21,6 +21,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.encryption.PlayerPublicKey;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -34,8 +35,8 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
     @Unique
     ItemStack beltSlotStack = ItemStack.EMPTY;
 
-    public ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
-        super(world, pos, yaw, profile);
+    public ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile gameProfile, PlayerPublicKey publicKey) {
+        super(world, pos, yaw, gameProfile, publicKey);
     }
 
     @Inject(method = "playerTick", at = @At("HEAD"))

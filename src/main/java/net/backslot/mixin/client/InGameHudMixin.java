@@ -31,7 +31,7 @@ public abstract class InGameHudMixin extends DrawableHelper {
     private int scaledHeight;
 
     @Inject(method = "renderHotbar", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/systems/RenderSystem;disableBlend()V"))
-    private void renderHotbarMixin(float f, MatrixStack matrixStack, CallbackInfo info) {
+    private void renderHotbarMixin(float tickDelta, MatrixStack matrixStack, CallbackInfo info) {
         PlayerEntity playerEntity = this.getCameraPlayer();
         // player can't be null cause it is already checked in method
         if (!BackSlotMain.CONFIG.disable_backslot_hud) {
@@ -46,20 +46,20 @@ public abstract class InGameHudMixin extends DrawableHelper {
                     RenderSystem.enableBlend();
                     RenderSystem.setShaderTexture(0, WIDGETS_TEXTURE);
                     this.drawTexture(matrixStack, i + 91, this.scaledHeight - 23, 53, 22, 29, 24);
-                    this.renderHotbarItem(i + 91 + 10, p, f, playerEntity, backSlotStack, 0);
+                    this.renderHotbarItem(i + 91 + 10, p, tickDelta, playerEntity, backSlotStack, 0);
                     RenderSystem.enableBlend();
                     RenderSystem.setShaderTexture(0, WIDGETS_TEXTURE);
                     this.drawTexture(matrixStack, i + 112, this.scaledHeight - 23, 53, 22, 29, 24);
-                    this.renderHotbarItem(i + 112 + 10, p, f, playerEntity, beltSlotStack, 0);
+                    this.renderHotbarItem(i + 112 + 10, p, tickDelta, playerEntity, beltSlotStack, 0);
                 } else {
                     RenderSystem.enableBlend();
                     RenderSystem.setShaderTexture(0, WIDGETS_TEXTURE);
                     this.drawTexture(matrixStack, i - 91 - 29, this.scaledHeight - 23, 24, 22, 29, 24);
-                    this.renderHotbarItem(i - 91 - 26, p, f, playerEntity, backSlotStack, 0);
+                    this.renderHotbarItem(i - 91 - 26, p, tickDelta, playerEntity, backSlotStack, 0);
                     RenderSystem.enableBlend();
                     RenderSystem.setShaderTexture(0, WIDGETS_TEXTURE);
                     this.drawTexture(matrixStack, i - 112 - 29, this.scaledHeight - 23, 24, 22, 29, 24);
-                    this.renderHotbarItem(i - 112 - 26, p, f, playerEntity, beltSlotStack, 0);
+                    this.renderHotbarItem(i - 112 - 26, p, tickDelta, playerEntity, beltSlotStack, 0);
                 }
             }
         }
@@ -71,7 +71,7 @@ public abstract class InGameHudMixin extends DrawableHelper {
     }
 
     @Shadow
-    private void renderHotbarItem(int i, int j, float f, PlayerEntity playerEntity, ItemStack itemStack, int seed) {
+    private void renderHotbarItem(int i, int j, float tickDelta, PlayerEntity playerEntity, ItemStack itemStack, int seed) {
     }
 
 }

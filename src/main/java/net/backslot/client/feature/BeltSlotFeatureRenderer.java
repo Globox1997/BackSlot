@@ -3,13 +3,13 @@ package net.backslot.client.feature;
 import net.backslot.BackSlotMain;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
+import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.Vec3f;
@@ -22,8 +22,11 @@ import net.minecraft.item.ShearsItem;
 @Environment(EnvType.CLIENT)
 public class BeltSlotFeatureRenderer extends HeldItemFeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
 
-    public BeltSlotFeatureRenderer(FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> featureRendererContext) {
-        super(featureRendererContext);
+    private final HeldItemRenderer heldItemRenderer;
+
+    public BeltSlotFeatureRenderer(FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> context, HeldItemRenderer heldItemRenderer) {
+        super(context, heldItemRenderer);
+        this.heldItemRenderer = heldItemRenderer;
     }
 
     @Override
@@ -50,7 +53,7 @@ public class BeltSlotFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
                     matrixStack.translate(0.0F, 0.0F, 0.015F);
                 }
             }
-            MinecraftClient.getInstance().getHeldItemRenderer().renderItem(livingEntity, beltSlotStack, ModelTransformation.Mode.HEAD, false, matrixStack, vertexConsumerProvider, i);
+            heldItemRenderer.renderItem(livingEntity, beltSlotStack, ModelTransformation.Mode.HEAD, false, matrixStack, vertexConsumerProvider, i);
             matrixStack.pop();
         }
     }
