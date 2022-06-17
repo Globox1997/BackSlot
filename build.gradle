@@ -48,10 +48,15 @@ dependencies {
 		exclude(group: "com.github.TheIllusiveC4")
 	}
 	// Dungeon Weapons
-	modCompileOnly("curse.maven:mcdw-407311:3587872") {
+	modCompileOnly("curse.maven:mcdw-407311:3831291") {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
-	modCompileOnly "curse.maven:enchanthelper-434579:3347061"
+	//modCompileOnly "curse.maven:enchanthelper-434579:3347061"
+	//modCompileOnly "wraith.EnchantGiver:wraith-enchant_giver-1.3.0"
+	// Charm
+	//modCompileOnly modRuntimeOnly("curse.maven:charm-318872:3829804") {
+	//	exclude(group: "net.fabricmc.fabric-api")
+	//}
 	//modRuntime "dev.upcraft:Soulbound:2.0.0"
 	
 }

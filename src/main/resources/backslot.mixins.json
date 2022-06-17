@@ -3,13 +3,15 @@
   "minVersion": "0.8",
   "package": "net.backslot.mixin",
   "compatibilityLevel": "JAVA_17",
+  "plugin": "net.backslot.mixin.compat.BackSlotMixinPlugin",
   "mixins": [
     "PlayerInventoryMixin",
     "PlayerScreenHandlerMixin",
     "ServerPlayerEntityMixin",
     "EntityMixin",
     "EntityTrackerEntryMixin",
-    "ExperienceOrbEntityMixin"
+    "ExperienceOrbEntityMixin",
+    "compat.OnDeathItemDropCompatibility"
   ],
   "client": [
     "client.PlayerEntityRendererMixin",
