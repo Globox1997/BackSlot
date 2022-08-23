@@ -26,8 +26,8 @@
         },  
 		"head": {
 			"rotation": [ 0, 0, 270 ],
-			"translation": [ 0.5, 3.5, 0.05],
-			"scale":[ 0.55, 0.55, 0.5 ]
+			"translation": [ 0.5, 4.0, 0.05],
+			"scale":[ 1.05, 1.05, 1.0 ]
 		}
     },
     "overrides": [

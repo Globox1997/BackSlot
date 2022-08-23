@@ -194,6 +194,7 @@ public class SwitchPacket {
             if (BackSlotMain.isMedievalWeaponsLoaded
                     && (stack.getItem() instanceof Small_Axe_Item || stack.getItem() instanceof Long_Sword_Item || stack.getItem() instanceof Big_Axe_Item || stack.getItem() instanceof Javelin_Item
                             || stack.getItem() instanceof Lance_Item || stack.getItem() instanceof Healing_Staff_Item || stack.getItem() instanceof Thalleous_Sword_Item)) {
+                // Sickle
                 return false;
             }
         }

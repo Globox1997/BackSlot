@@ -1,12 +1,14 @@
 {
   "key.backslot.switch_backslot": "Back Slot Switch",
   "key.backslot.switch_beltslot": "Belt Slot Switch",
+
   "category.backslot.key": "Back Slot",
+  
   "text.autoconfig.backslot.title": "BackSlot Config",
   "text.autoconfig.backslot.category.default": "Default Settings",
   "text.autoconfig.backslot.category.advanced_settings": "Advanced Settings",
-  "text.autoconfig.backslot.option.backslot_scale": "BackSlot item scale",
-  "text.autoconfig.backslot.option.beltslot_scale": "BeltSlot item scale",
+  "text.autoconfig.backslot.option.backslot_scaling": "BackSlot item scale",
+  "text.autoconfig.backslot.option.beltslot_scaling": "BeltSlot item scale",
   "text.autoconfig.backslot.option.backslot_sounds": "BackSlot sounds",
   "text.autoconfig.backslot.option.change_slot_arrangement": "Change slot arrangement",
   "text.autoconfig.backslot.option.disable_backslot_hud": "Disable Backslot HUD",

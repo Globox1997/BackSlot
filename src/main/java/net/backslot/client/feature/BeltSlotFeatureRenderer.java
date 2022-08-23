@@ -46,7 +46,7 @@ public class BeltSlotFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
                 matrixStack.translate(0.01F, 0.0F, -0.1F);
             }
             matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(-90.0F));
-            matrixStack.scale(BackSlotMain.CONFIG.beltslot_scale, BackSlotMain.CONFIG.beltslot_scale, BackSlotMain.CONFIG.beltslot_scale);
+            matrixStack.scale(BackSlotMain.CONFIG.beltslot_scaling, BackSlotMain.CONFIG.beltslot_scaling, BackSlotMain.CONFIG.beltslot_scaling);
             if (beltSlotStack.getItem() instanceof ShearsItem || beltSlotStack.getItem() instanceof FlintAndSteelItem) {
                 matrixStack.scale(0.65F, 0.65F, 0.65F);
                 if (!livingEntity.hasStackEquipped(EquipmentSlot.CHEST)) {
