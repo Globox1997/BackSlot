@@ -24,9 +24,11 @@ public class BackSlotMixinPlugin implements IMixinConfigPlugin {
     public boolean shouldApplyMixin(String targetClassName, String mixinClassName) {
         if (mixinClassName.contains("OnDeathItemDropCompatibility")
                 && (FabricLoader.getInstance().isModLoaded("yigd") || FabricLoader.getInstance().isModLoaded("charm") || FabricLoader.getInstance().isModLoaded("gravestones"))
-                && !FabricLoader.getInstance().isModLoaded("universal-graves")) {
+                && !FabricLoader.getInstance().isModLoaded("universal-graves"))
             return false;
-        }
+        if (mixinClassName.contains("EntityMixin") && !FabricLoader.getInstance().isModLoaded("lambdynlights"))
+            return false;
+
         return true;
     }
 
