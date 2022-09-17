@@ -26,23 +26,23 @@ public class ExperienceOrbEntityMixin {
         if (backSlotRepairable || beltSlotRepairable) {
             if (original != null) {
                 if (backSlotRepairable && beltSlotRepairable) {
-                    if (player.world.random.nextInt(6) == 0) {
-                        return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(41 + player.world.random.nextInt(2)));
+                    if (player.getRandom().nextInt(6) == 0) {
+                        return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(41 + player.getRandom().nextInt(2)));
                     } else
                         return original;
                 } else if (backSlotRepairable) {
-                    if (player.world.random.nextInt(4) == 0) {
+                    if (player.getRandom().nextInt(4) == 0) {
                         return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(41));
                     } else
                         return original;
                 } else {
-                    if (player.world.random.nextInt(4) == 0) {
+                    if (player.getRandom().nextInt(4) == 0) {
                         return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(42));
                     } else
                         return original;
                 }
             } else if (backSlotRepairable && beltSlotRepairable) {
-                return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(41 + player.world.random.nextInt(2)));
+                return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(41 + player.getRandom().nextInt(2)));
             } else if (backSlotRepairable) {
                 return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(41));
             } else {
