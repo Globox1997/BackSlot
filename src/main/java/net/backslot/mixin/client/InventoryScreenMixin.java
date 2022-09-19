@@ -35,26 +35,21 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
 
     @Inject(method = "drawBackground", at = @At(value = "RETURN"))
     public void drawBackgroundMixin(MatrixStack matrices, float delta, int mouseX, int mouseY, CallbackInfo info) {
-        int scaledWidth = this.client.getWindow().getScaledWidth();
-        int scaledHeight = this.client.getWindow().getScaledHeight();
         int backSlot_x = BackSlotMain.CONFIG.backSlot_x;
         int backSlot_y = BackSlotMain.CONFIG.backSlot_y;
         int beltSlot_x = BackSlotMain.CONFIG.beltSlot_x;
         int beltSlot_y = BackSlotMain.CONFIG.beltSlot_y;
+
         if (changeArrangement) {
-            backSlot_x += 75;
-            backSlot_y += 22;
-            beltSlot_x += 57;
-            beltSlot_y += 40;
+            backSlot_x += 57;
+            backSlot_y += 40;
+            beltSlot_x += 75;
+            beltSlot_y += 22;
         }
 
-        if (this.recipeBook.isOpen()) {
-            scaledWidth = scaledWidth + 154;
-        }
         RenderSystem.setShaderTexture(0, BACK_TEXTURE);
-        DrawableHelper.drawTexture(matrices, scaledWidth / 2 - 12 + beltSlot_x, scaledHeight / 2 - 58 + beltSlot_y, 0.0F, 0.0F, 18, 18, 18, 18);
-        RenderSystem.setShaderTexture(0, BACK_TEXTURE);
-        DrawableHelper.drawTexture(matrices, scaledWidth / 2 - 12 + backSlot_x, scaledHeight / 2 - 40 + backSlot_y, 0.0F, 0.0F, 18, 18, 18, 18);
+        DrawableHelper.drawTexture(matrices, this.x + 76 + beltSlot_x, this.y + 43 + beltSlot_y, 0.0F, 0.0F, 18, 18, 18, 18);
+        DrawableHelper.drawTexture(matrices, this.x + 76 + backSlot_x, this.y + 25 + backSlot_y, 0.0F, 0.0F, 18, 18, 18, 18);
     }
 
 }
