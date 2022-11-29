@@ -5,9 +5,11 @@ import chronosacaria.mcdw.bases.McdwHammer;
 import chronosacaria.mcdw.bases.McdwSickle;
 import chronosacaria.mcdw.bases.McdwSpear;
 import chronosacaria.mcdw.bases.McdwStaff;
+import io.netty.buffer.Unpooled;
 import net.backslot.BackSlotMain;
 import net.backslot.sound.BackSlotSounds;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.medievalweapons.item.Big_Axe_Item;
 import net.medievalweapons.item.Francisca_Item;
@@ -33,9 +35,12 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
+
+import java.util.Collection;
 
 public class SwitchPacket {
 
@@ -154,6 +159,13 @@ public class SwitchPacket {
 
             // play sound if done switching
             if (doneSwitching) {
+                if (!player.world.isClient) {
+                    Collection<ServerPlayerEntity> players = PlayerLookup.tracking((ServerWorld) player.world, player.getBlockPos());
+                    PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
+                    data.writeIntArray(new int[] { player.getId(), slot });
+                    data.writeItemStack(player.getInventory().getStack(slot));
+                    players.forEach(p -> ServerPlayNetworking.send(p, SyncPacket.VISIBILITY_UPDATE_PACKET, data));
+                }
                 if (BackSlotMain.CONFIG.backslot_sounds) {
                     if (stackInSlotToPullOutTo.isEmpty() && !stackInSlotToPullOutFrom.isEmpty()) {
                         if (stackInSlotToPullOutFrom.getItem() instanceof SwordItem) {
