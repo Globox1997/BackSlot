@@ -3,7 +3,7 @@ package net.backslot.client.key;
 import org.lwjgl.glfw.GLFW;
 
 import io.netty.buffer.Unpooled;
-import net.backslot.network.SwitchPacket;
+import net.backslot.network.BackSlotServerPacket;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
@@ -31,7 +31,7 @@ public class SwitchKey {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (backSlotKeyBind.wasPressed()) {
                 if (!backSlotBoolean) {
-                    switchItem(client, 41);
+                    syncSlotSwitchItem(client, 41);
                 }
                 backSlotBoolean = true;
             } else if (backSlotBoolean) {
@@ -39,7 +39,7 @@ public class SwitchKey {
             }
             if (beltSlotKeyBind.wasPressed()) {
                 if (!beltSlotBoolean) {
-                    switchItem(client, 42);
+                    syncSlotSwitchItem(client, 42);
                 }
                 beltSlotBoolean = true;
             } else if (beltSlotBoolean) {
@@ -49,10 +49,10 @@ public class SwitchKey {
         });
     }
 
-    public static void switchItem(MinecraftClient client, int slot) {
+    public static void syncSlotSwitchItem(MinecraftClient client, int slot) {
         PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
         buf.writeInt(slot);
-        client.getNetworkHandler().sendPacket(new CustomPayloadC2SPacket(SwitchPacket.SWITCH_PACKET, buf));
+        client.getNetworkHandler().sendPacket(new CustomPayloadC2SPacket(BackSlotServerPacket.SWITCH_PACKET, buf));
     }
 
 }

@@ -2,7 +2,7 @@ package net.backslot;
 
 import net.backslot.client.key.SwitchKey;
 import net.backslot.client.sprite.BackSlotSprites;
-import net.backslot.network.SyncPacket;
+import net.backslot.network.BackSlotClientPacket;
 import net.fabricmc.api.ClientModInitializer;
 
 public class BackSlotClient implements ClientModInitializer {
@@ -10,8 +10,8 @@ public class BackSlotClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         BackSlotSprites.init();
-        SyncPacket.init();
         SwitchKey.init();
+        BackSlotClientPacket.init();
     }
 
 }

@@ -19,7 +19,7 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.util.Identifier;
 import net.backslot.BackSlotMain;
 import net.backslot.client.sprite.BackSlotSprites;
-import net.backslot.network.SwitchPacket;
+import net.backslot.network.SwitchPacketReceiver;
 import net.fabricmc.api.Environment;
 import net.fabricmc.api.EnvType;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -54,7 +54,7 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
 
             @Override
             public boolean canInsert(ItemStack stack) {
-                return SwitchPacket.isItemAllowed(stack, 41);
+                return SwitchPacketReceiver.isItemAllowed(stack, 41);
             }
 
             @Override
@@ -79,7 +79,7 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
 
             @Override
             public boolean canInsert(ItemStack stack) {
-                return SwitchPacket.isItemAllowed(stack, 42);
+                return SwitchPacketReceiver.isItemAllowed(stack, 42);
             }
 
             @Override

@@ -1,19 +1,17 @@
 package net.backslot.client.sprite;
 
-import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
-import net.minecraft.screen.PlayerScreenHandler;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.util.Identifier;
 
+@Environment(EnvType.CLIENT)
 public class BackSlotSprites {
 
+    // assets/minecraft/atlases/blocks.json
     public static final Identifier EMPTY_BACK_SLOT_TEXTURE = new Identifier("backslot", "gui/empty_back_slot");
     public static final Identifier EMPTY_BELT_SLOT_TEXTURE = new Identifier("backslot", "gui/empty_belt_slot");
 
     public static void init() {
-        ClientSpriteRegistryCallback.event(PlayerScreenHandler.BLOCK_ATLAS_TEXTURE).register((atlas, registry) -> {
-            registry.register(EMPTY_BACK_SLOT_TEXTURE);
-            registry.register(EMPTY_BELT_SLOT_TEXTURE);
-        });
     }
 
 }

@@ -9,7 +9,7 @@ import io.netty.buffer.Unpooled;
 
 import org.spongepowered.asm.mixin.injection.At;
 
-import net.backslot.network.SyncPacket;
+import net.backslot.network.BackSlotServerPacket;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,13 +35,13 @@ public class EntityTrackerEntryMixin {
                     PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
                     data.writeIntArray(new int[] { serverPlayer.getId(), i });
                     data.writeItemStack(serverPlayer.getInventory().getStack(i));
-                    ServerPlayNetworking.send((ServerPlayerEntity) player, SyncPacket.VISIBILITY_UPDATE_PACKET, data);
+                    ServerPlayNetworking.send((ServerPlayerEntity) player, BackSlotServerPacket.VISIBILITY_UPDATE_PACKET, data);
                 }
                 if (!player.getInventory().getStack(i).isEmpty()) {
                     PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
                     data.writeIntArray(new int[] { player.getId(), i });
                     data.writeItemStack(player.getInventory().getStack(i));
-                    ServerPlayNetworking.send(serverPlayer, SyncPacket.VISIBILITY_UPDATE_PACKET, data);
+                    ServerPlayNetworking.send(serverPlayer, BackSlotServerPacket.VISIBILITY_UPDATE_PACKET, data);
                 }
             }
         }

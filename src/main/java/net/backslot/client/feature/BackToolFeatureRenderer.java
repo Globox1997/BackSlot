@@ -12,7 +12,7 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformation;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FishingRodItem;
@@ -42,9 +42,10 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
             Item backSloItem = backSlotStack.getItem();
 
             if (backSloItem instanceof TridentItem) {
-                matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(52.0F));
-                matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(40.0F));
-                matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(-25.0F));
+                // matrixStack.multiply(RotationAxis.POSITIVE_Y.getDegreesQuaternion(52.0F));
+                matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(52.0F));
+                matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(40.0F));
+                matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-25.0F));
                 matrixStack.translate(-0.26D, 0.0D, 0.0D);
                 if (!livingEntity.hasStackEquipped(EquipmentSlot.CHEST))
                     matrixStack.translate(0.05F, 0.0F, 0.0F);
@@ -54,7 +55,7 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
                 matrixStack.translate(0.0D, 0.0D, 0.16D);
                 matrixStack.scale(BackSlotMain.CONFIG.backslot_scaling, BackSlotMain.CONFIG.backslot_scaling, BackSlotMain.CONFIG.backslot_scaling);
                 if (backSlotStack.getItem() instanceof FishingRodItem || backSlotStack.getItem() instanceof OnAStickItem) {
-                    matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(180.0F));
+                    matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180.0F));
                     matrixStack.translate(0.0D, -0.3D, 0.0D);
                 }
                 if (livingEntity.hasStackEquipped(EquipmentSlot.CHEST))
