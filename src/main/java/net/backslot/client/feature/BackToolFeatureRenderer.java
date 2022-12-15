@@ -42,7 +42,6 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
             Item backSloItem = backSlotStack.getItem();
 
             if (backSloItem instanceof TridentItem) {
-                // matrixStack.multiply(RotationAxis.POSITIVE_Y.getDegreesQuaternion(52.0F));
                 matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(52.0F));
                 matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(40.0F));
                 matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-25.0F));
