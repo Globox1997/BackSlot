@@ -1,5 +1,5 @@
 ### Added:
-- 
+- Added hud config settings
 ### Fixed:
 - 
 ### Changed:
