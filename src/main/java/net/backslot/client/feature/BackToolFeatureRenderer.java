@@ -10,7 +10,7 @@ import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.render.item.HeldItemRenderer;
-import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.math.RotationAxis;
 import net.minecraft.entity.EquipmentSlot;
@@ -49,7 +49,7 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
                 if (!livingEntity.hasStackEquipped(EquipmentSlot.CHEST))
                     matrixStack.translate(0.05F, 0.0F, 0.0F);
                 matrixStack.scale(1.0F, -1.0F, -1.0F);
-                heldItemRenderer.renderItem(livingEntity, backSlotStack, ModelTransformation.Mode.THIRD_PERSON_RIGHT_HAND, false, matrixStack, vertexConsumerProvider, i);
+                heldItemRenderer.renderItem(livingEntity, backSlotStack, ModelTransformationMode.THIRD_PERSON_RIGHT_HAND, false, matrixStack, vertexConsumerProvider, i);
             } else {
                 matrixStack.translate(0.0D, 0.0D, 0.16D);
                 matrixStack.scale(BackSlotMain.CONFIG.backslot_scaling, BackSlotMain.CONFIG.backslot_scaling, BackSlotMain.CONFIG.backslot_scaling);
@@ -60,7 +60,7 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
                 if (livingEntity.hasStackEquipped(EquipmentSlot.CHEST))
                     matrixStack.translate(0.0F, 0.0F, 0.06F);
 
-                heldItemRenderer.renderItem(livingEntity, backSlotStack, ModelTransformation.Mode.HEAD, false, matrixStack, vertexConsumerProvider, i);
+                heldItemRenderer.renderItem(livingEntity, backSlotStack, ModelTransformationMode.HEAD, false, matrixStack, vertexConsumerProvider, i);
             }
             matrixStack.pop();
         }

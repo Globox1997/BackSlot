@@ -35,6 +35,10 @@ public class BackSlotConfig implements ConfigData {
     @ConfigEntry.Gui.RequiresRestart
     public int beltSlot_y = 0;
     @ConfigEntry.Category("advanced_settings")
+    public int hud_slot_x = 0;
+    @ConfigEntry.Category("advanced_settings")
+    public int hud_slot_y = 0;
+    @ConfigEntry.Category("advanced_settings")
     public float backslot_scaling = 1.0F;
     @ConfigEntry.Category("advanced_settings")
     public float beltslot_scaling = 1.0F;

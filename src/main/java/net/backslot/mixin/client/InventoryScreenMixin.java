@@ -50,6 +50,7 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
         RenderSystem.setShaderTexture(0, BACK_TEXTURE);
         DrawableHelper.drawTexture(matrices, this.x + 76 + beltSlot_x, this.y + 43 + beltSlot_y, 0.0F, 0.0F, 18, 18, 18, 18);
         DrawableHelper.drawTexture(matrices, this.x + 76 + backSlot_x, this.y + 25 + backSlot_y, 0.0F, 0.0F, 18, 18, 18, 18);
+
     }
 
 }
