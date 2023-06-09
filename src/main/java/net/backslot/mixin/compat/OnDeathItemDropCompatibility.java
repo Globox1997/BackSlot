@@ -23,7 +23,7 @@ public abstract class OnDeathItemDropCompatibility extends PlayerEntity {
 
     @Inject(method = "onDeath", at = @At("HEAD"))
     public void onDeathMixin(DamageSource source, CallbackInfo info) {
-        if (!this.world.getGameRules().getBoolean(GameRules.KEEP_INVENTORY)) {
+        if (!this.getWorld().getGameRules().getBoolean(GameRules.KEEP_INVENTORY)) {
             if (!this.getInventory().getStack(41).isEmpty()) {
                 if (this.getInventory().getEmptySlot() != -1)
                     this.getInventory().main.set(this.getInventory().getEmptySlot(), this.getInventory().getStack(41));

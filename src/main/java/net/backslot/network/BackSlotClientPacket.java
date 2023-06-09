@@ -16,8 +16,8 @@ public class BackSlotClientPacket {
             int slot = bufferArray[1];
             ItemStack itemStack = buffer.readItemStack();
             client.execute(() -> {
-                if (client.player.world.getEntityById(entityId) != null) {
-                    PlayerEntity player = (PlayerEntity) client.player.world.getEntityById(entityId);
+                if (client.player.getWorld().getEntityById(entityId) != null) {
+                    PlayerEntity player = (PlayerEntity) client.player.getWorld().getEntityById(entityId);
                     player.getInventory().setStack(slot, itemStack.copy());
                 }
             });

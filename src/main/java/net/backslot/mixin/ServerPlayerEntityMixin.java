@@ -39,7 +39,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
     // LivingEntity getEquipmentChanges metod only checks EquipmentSlot each tick
     @Inject(method = "tick", at = @At("TAIL"))
     private void tickMixin(CallbackInfo info) {
-        if (!this.world.isClient) {
+        if (!this.getWorld().isClient()) {
             if (!ItemStack.areItemsEqual(backSlotStack, this.getInventory().getStack(41))) {
                 sendPacket(41);
             }
@@ -52,7 +52,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
     }
 
     private void sendPacket(int slot) {
-        Collection<ServerPlayerEntity> players = PlayerLookup.tracking((ServerWorld) world, this.getBlockPos());
+        Collection<ServerPlayerEntity> players = PlayerLookup.tracking((ServerWorld) this.getWorld(), this.getBlockPos());
         PacketByteBuf data = new PacketByteBuf(Unpooled.buffer());
         data.writeIntArray(new int[] { this.getId(), slot });
         data.writeItemStack(this.getInventory().getStack(slot));

@@ -153,21 +153,21 @@ public class SwitchPacketReceiver implements ServerPlayNetworking.PlayChannelHan
                 if (stackInSlotToPullOutTo.isEmpty() && !stackInSlotToPullOutFrom.isEmpty()) {
                     if (stackInSlotToPullOutFrom.getItem() instanceof SwordItem) {
                         // pulling out sword to an empty hand
-                        player.world.playSound(null, player.getBlockPos(), BackSlotSounds.SHEATH_SWORD_EVENT, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                        player.getWorld().playSound(null, player.getBlockPos(), BackSlotSounds.SHEATH_SWORD_EVENT, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     } else {
                         // pulling out others to an empty hand
-                        player.world.playSound(null, player.getBlockPos(), SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                        player.getWorld().playSound(null, player.getBlockPos(), SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.PLAYERS, 1.0F, 1.0F);
                     }
                 } else if (stackInSlotToPullOutFrom.getItem() instanceof SwordItem) {
                     // pulling out sword to a non empty hand
-                    player.world.playSound(null, player.getBlockPos(), BackSlotSounds.SHEATH_SWORD_EVENT, SoundCategory.PLAYERS, 1.0F, 0.9F + player.getRandom().nextFloat() * 0.2F);
+                    player.getWorld().playSound(null, player.getBlockPos(), BackSlotSounds.SHEATH_SWORD_EVENT, SoundCategory.PLAYERS, 1.0F, 0.9F + player.getRandom().nextFloat() * 0.2F);
                 } else if (stackInSlotToPullOutTo.getItem() instanceof SwordItem) {
                     // putting back sword item (including while pulling out what there was other
                     // than sword)
-                    player.world.playSound(null, player.getBlockPos(), BackSlotSounds.PACK_UP_ITEM_EVENT, SoundCategory.PLAYERS, 1.0F, 0.9F + player.getRandom().nextFloat() * 0.2F);
+                    player.getWorld().playSound(null, player.getBlockPos(), BackSlotSounds.PACK_UP_ITEM_EVENT, SoundCategory.PLAYERS, 1.0F, 0.9F + player.getRandom().nextFloat() * 0.2F);
                 } else if (!stackInSlotToPullOutTo.isEmpty()) {
                     // putting back other than sword
-                    player.world.playSound(null, player.getBlockPos(), SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.PLAYERS, 1.0F, 1.0F);
+                    player.getWorld().playSound(null, player.getBlockPos(), SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, SoundCategory.PLAYERS, 1.0F, 1.0F);
                 }
             }
         }

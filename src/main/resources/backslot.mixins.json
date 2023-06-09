@@ -15,7 +15,6 @@
   ],
   "client": [
     "client.PlayerEntityRendererMixin",
-    "client.InGameHudMixin",
     "client.InventoryScreenMixin",
     "client.CreativeInventoryScreenMixin"
   ],
