@@ -19,8 +19,6 @@ public class SwitchKey {
 
     public static KeyBinding beltSlotKeyBind;
     public static KeyBinding backSlotKeyBind;
-    public static boolean backSlotBoolean;
-    public static boolean beltSlotBoolean;
 
     public static void init() {
 
@@ -30,22 +28,13 @@ public class SwitchKey {
         KeyBindingHelper.registerKeyBinding(beltSlotKeyBind);
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (backSlotKeyBind.wasPressed()) {
-                if (!backSlotBoolean) {
-                    syncSlotSwitchItem(client, 41);
-                }
-                backSlotBoolean = true;
-            } else if (backSlotBoolean) {
-                backSlotBoolean = false;
+                syncSlotSwitchItem(client, 41);
+                return;
             }
             if (beltSlotKeyBind.wasPressed()) {
-                if (!beltSlotBoolean) {
-                    syncSlotSwitchItem(client, 42);
-                }
-                beltSlotBoolean = true;
-            } else if (beltSlotBoolean) {
-                beltSlotBoolean = false;
+                syncSlotSwitchItem(client, 42);
+                return;
             }
-
         });
     }
 
