@@ -1,6 +1,7 @@
 ### Added:
 - 
 ### Fixed:
-- 
+- Fixed universal grave compat
+- Fixed unsafe handling crash
 ### Changed:
-- Updated to mc 1.20.1
+- 
