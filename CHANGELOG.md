@@ -1,7 +1,6 @@
 ### Added:
 - 
 ### Fixed:
-- Fixed universal grave compat
-- Fixed unsafe handling crash
+- Fixed slot arrangement config
 ### Changed:
 - 
