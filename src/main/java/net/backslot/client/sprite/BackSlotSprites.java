@@ -28,7 +28,7 @@ public class BackSlotSprites {
             if (!client.options.hudHidden) {
                 PlayerEntity playerEntity = client.player;
                 // player can't be null cause it is already checked in method
-                if (!BackSlotMain.CONFIG.disable_backslot_hud) {
+                if (!BackSlotMain.CONFIG.disableBackslotHud) {
                     ItemStack backSlotStack = playerEntity.getInventory().getStack(41);
                     ItemStack beltSlotStack = playerEntity.getInventory().getStack(42);
 
@@ -41,15 +41,15 @@ public class BackSlotSprites {
                         // RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
                         RenderSystem.enableBlend();
                         // RenderSystem.setShaderTexture(0, WIDGETS_TEXTURE);
-                        drawContext.drawTexture(WIDGETS_TEXTURE, i - 91 + (arm == Arm.LEFT ? -29 : 0) + BackSlotMain.CONFIG.hud_slot_x,
-                                drawContext.getScaledWindowHeight() - 23 + BackSlotMain.CONFIG.hud_slot_y, 24, 22, 29, 24);
-                        renderHotbarItem(drawContext, client, i - 91 + (arm == Arm.LEFT ? -26 : 0) + BackSlotMain.CONFIG.hud_slot_x, p + BackSlotMain.CONFIG.hud_slot_y, tickDelta, playerEntity,
+                        drawContext.drawTexture(WIDGETS_TEXTURE, i - 91 + (arm == Arm.LEFT ? -29 : 0) + BackSlotMain.CONFIG.hudSlotX,
+                                drawContext.getScaledWindowHeight() - 23 + BackSlotMain.CONFIG.hudSlotY, 24, 22, 29, 24);
+                        renderHotbarItem(drawContext, client, i - 91 + (arm == Arm.LEFT ? -26 : 0) + BackSlotMain.CONFIG.hudSlotX, p + BackSlotMain.CONFIG.hudSlotY, tickDelta, playerEntity,
                                 backSlotStack, 0);
                         RenderSystem.enableBlend();
                         // RenderSystem.setShaderTexture(0, WIDGETS_TEXTURE);
-                        drawContext.drawTexture(WIDGETS_TEXTURE, i - 112 + (arm == Arm.LEFT ? -29 : 0) + BackSlotMain.CONFIG.hud_slot_x,
-                                drawContext.getScaledWindowHeight() - 23 + BackSlotMain.CONFIG.hud_slot_y, 24, 22, 29, 24);
-                        renderHotbarItem(drawContext, client, i - 112 + (arm == Arm.LEFT ? -26 : 0) + BackSlotMain.CONFIG.hud_slot_x, p + BackSlotMain.CONFIG.hud_slot_y, tickDelta, playerEntity,
+                        drawContext.drawTexture(WIDGETS_TEXTURE, i - 112 + (arm == Arm.LEFT ? -29 : 0) + BackSlotMain.CONFIG.hudSlotX,
+                                drawContext.getScaledWindowHeight() - 23 + BackSlotMain.CONFIG.hudSlotY, 24, 22, 29, 24);
+                        renderHotbarItem(drawContext, client, i - 112 + (arm == Arm.LEFT ? -26 : 0) + BackSlotMain.CONFIG.hudSlotX, p + BackSlotMain.CONFIG.hudSlotY, tickDelta, playerEntity,
                                 beltSlotStack, 0);
                     }
                 }

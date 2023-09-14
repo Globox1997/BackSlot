@@ -26,7 +26,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 
 @Mixin(PlayerScreenHandler.class)
 public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandler<CraftingInventory> {
-    private static boolean changeArrangement = BackSlotMain.CONFIG.change_slot_arrangement;
+    private static boolean changeArrangement = BackSlotMain.CONFIG.changeSlotArrangement;
 
     public PlayerScreenHandlerMixin(ScreenHandlerType<PlayerScreenHandler> screenHandlerType, int i) {
         super(screenHandlerType, i);
@@ -35,18 +35,19 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
     // Tried different injection points to fix a mod compatibility bug but it didnt work
     @Inject(method = "<init>*", at = @At("TAIL"))
     private void onConstructed(PlayerInventory inventory, boolean onServer, PlayerEntity owner, CallbackInfo info) {
-        int backSlot_x = BackSlotMain.CONFIG.backSlot_x;
-        int backSlot_y = BackSlotMain.CONFIG.backSlot_y;
-        int beltSlot_x = BackSlotMain.CONFIG.beltSlot_x;
-        int beltSlot_y = BackSlotMain.CONFIG.beltSlot_y;
+        int backSlotX = BackSlotMain.CONFIG.backSlotX;
+        int backSlotY = BackSlotMain.CONFIG.backSlotY;
+
+        int beltSlotX = BackSlotMain.CONFIG.beltSlotX;
+        int beltSlotY = BackSlotMain.CONFIG.beltSlotY;
         if (changeArrangement) {
-            backSlot_x += 75;
-            backSlot_y += 22;
-            beltSlot_x += 57;
-            beltSlot_y += 40;
+            backSlotX += 75;
+            backSlotY += 22;
+            beltSlotX += 57;
+            beltSlotY += 40;
         }
 
-        this.addSlot(new Slot(inventory, 41, 77 + backSlot_x, 44 + backSlot_y) {
+        this.addSlot(new Slot(inventory, 41, 77 + backSlotX, 44 + backSlotY) {
             @Override
             public int getMaxItemCount() {
                 return 1;
@@ -71,7 +72,7 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
 
         });
 
-        this.addSlot(new Slot(inventory, 42, 77 + beltSlot_x, 26 + beltSlot_y) {
+        this.addSlot(new Slot(inventory, 42, 77 + beltSlotX, 26 + beltSlotY) {
             @Override
             public int getMaxItemCount() {
                 return 1;

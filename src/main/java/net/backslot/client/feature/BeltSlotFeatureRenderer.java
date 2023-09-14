@@ -38,7 +38,7 @@ public class BeltSlotFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
             ModelPart modelPart = this.getContextModel().body;
             modelPart.rotate(matrixStack);
             double switchBeltSide = 0.29D;
-            if (BackSlotMain.CONFIG.switch_beltslot_side) {
+            if (BackSlotMain.CONFIG.switchBeltslotSide) {
                 switchBeltSide = -0.29D;
             }
             matrixStack.translate(switchBeltSide, 0.5D, 0.05D);
@@ -46,7 +46,7 @@ public class BeltSlotFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
                 matrixStack.translate(0.01F, 0.0F, -0.1F);
             }
             matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-90.0F));
-            matrixStack.scale(BackSlotMain.CONFIG.beltslot_scaling, BackSlotMain.CONFIG.beltslot_scaling, BackSlotMain.CONFIG.beltslot_scaling);
+            matrixStack.scale(BackSlotMain.CONFIG.beltslotScaling, BackSlotMain.CONFIG.beltslotScaling, BackSlotMain.CONFIG.beltslotScaling);
             if (beltSlotStack.getItem() instanceof ShearsItem || beltSlotStack.getItem() instanceof FlintAndSteelItem) {
                 matrixStack.scale(0.65F, 0.65F, 0.65F);
                 if (!livingEntity.hasStackEquipped(EquipmentSlot.CHEST)) {

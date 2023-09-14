@@ -1,6 +1,8 @@
 package net.backslot.mixin.client;
 
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -22,10 +24,13 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 @Mixin(InventoryScreen.class)
 public abstract class InventoryScreenMixin extends AbstractInventoryScreen<PlayerScreenHandler> implements RecipeBookProvider {
+
     private static final Identifier BACK_TEXTURE = new Identifier("backslot", "textures/gui/blank.png");
     @Shadow
-    private final RecipeBookWidget recipeBook = new RecipeBookWidget();
-    private static boolean changeArrangement = BackSlotMain.CONFIG.change_slot_arrangement;
+    @Mutable
+    @Final
+    private RecipeBookWidget recipeBook;
+    private static boolean changeArrangement = BackSlotMain.CONFIG.changeSlotArrangement;
 
     public InventoryScreenMixin(PlayerScreenHandler screenHandler, PlayerInventory playerInventory, Text text) {
         super(screenHandler, playerInventory, text);
@@ -33,20 +38,21 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
 
     @Inject(method = "drawBackground", at = @At(value = "RETURN"))
     public void drawBackgroundMixin(DrawContext context, float delta, int mouseX, int mouseY, CallbackInfo info) {
-        int backSlot_x = BackSlotMain.CONFIG.backSlot_x;
-        int backSlot_y = BackSlotMain.CONFIG.backSlot_y;
-        int beltSlot_x = BackSlotMain.CONFIG.beltSlot_x;
-        int beltSlot_y = BackSlotMain.CONFIG.beltSlot_y;
+        int backSlotX = BackSlotMain.CONFIG.backSlotX;
+        int backSlotY = BackSlotMain.CONFIG.backSlotY;
+
+        int beltSlotX = BackSlotMain.CONFIG.beltSlotX;
+        int beltSlotY = BackSlotMain.CONFIG.beltSlotY;
 
         if (changeArrangement) {
-            backSlot_x += 57;
-            backSlot_y += 40;
-            beltSlot_x += 75;
-            beltSlot_y += 22;
+            backSlotX += 57;
+            backSlotY += 40;
+            beltSlotX += 75;
+            beltSlotY += 22;
         }
 
-        context.drawTexture(BACK_TEXTURE, this.x + 76 + beltSlot_x, this.y + 43 + beltSlot_y, 0.0F, 0.0F, 18, 18, 18, 18);
-        context.drawTexture(BACK_TEXTURE, this.x + 76 + backSlot_x, this.y + 25 + backSlot_y, 0.0F, 0.0F, 18, 18, 18, 18);
+        context.drawTexture(BACK_TEXTURE, this.x + 76 + backSlotX, this.y + 43 + backSlotY, 0.0F, 0.0F, 18, 18, 18, 18);
+        context.drawTexture(BACK_TEXTURE, this.x + 76 + beltSlotX, this.y + 25 + beltSlotY, 0.0F, 0.0F, 18, 18, 18, 18);
 
     }
 

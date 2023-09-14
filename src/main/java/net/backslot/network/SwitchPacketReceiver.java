@@ -54,7 +54,7 @@ public class SwitchPacketReceiver implements ServerPlayNetworking.PlayChannelHan
 
             // pull out to offhand if pulling out from belt slot and offhand switch is on,
             // aka belt slot always goes with offhand
-            if (BackSlotMain.CONFIG.offhand_switch) {
+            if (BackSlotMain.CONFIG.offhandSwitch) {
                 if (slotToPullOutTo != 40) {
                     if (slotToPullOutFrom == 42) {
                         slotToPullOutTo = 40;
@@ -63,7 +63,7 @@ public class SwitchPacketReceiver implements ServerPlayNetworking.PlayChannelHan
             }
 
             // shield in the back would always be pulled out to offhand
-            if (BackSlotMain.CONFIG.offhand_shield) {
+            if (BackSlotMain.CONFIG.offhandShield) {
                 if (slotToPullOutTo != 40) {
                     if (slotToPullOutFrom == 41) {
                         ItemStack backSlotStack = playerInventory.getStack(slotToPullOutFrom);
@@ -76,7 +76,7 @@ public class SwitchPacketReceiver implements ServerPlayNetworking.PlayChannelHan
             }
 
             // fallback early to offhand if failure in main hand is expected
-            if (BackSlotMain.CONFIG.offhand_fallback) {
+            if (BackSlotMain.CONFIG.offhandFallback) {
                 if (slotToPullOutTo != 40) {
                     ItemStack slotStack = playerInventory.getStack(slotToPullOutFrom);
                     if (slotStack.isEmpty()) {
@@ -115,7 +115,7 @@ public class SwitchPacketReceiver implements ServerPlayNetworking.PlayChannelHan
                 playerInventory.setStack(slotToPutBackTo, stackToPutBack); // put back
                 playerInventory.markDirty();
                 doneSwitching = true;
-            } else if (BackSlotMain.CONFIG.put_aside) {
+            } else if (BackSlotMain.CONFIG.putAside) {
                 // try to put aside to an empty inventory slot if there is any
                 int slotToPutAside = playerInventory.getEmptySlot();
                 boolean canPutAside = slotToPutAside >= 0;
@@ -128,7 +128,7 @@ public class SwitchPacketReceiver implements ServerPlayNetworking.PlayChannelHan
                     playerInventory.setStack(slotToPutBackTo, stackToPutBack); // put back
                     playerInventory.markDirty();
                     doneSwitching = true;
-                } else if (BackSlotMain.CONFIG.drop_holding) {
+                } else if (BackSlotMain.CONFIG.dropHolding) {
                     // even drop an item stack being held in order to make an empty space for
                     // pulling out
                     ItemStack stackToDrop = playerInventory.removeStack(slotToPullOutTo);
@@ -150,7 +150,7 @@ public class SwitchPacketReceiver implements ServerPlayNetworking.PlayChannelHan
 
             // play sound if done switching
             if (doneSwitching) {
-                if (BackSlotMain.CONFIG.backslot_sounds) {
+                if (BackSlotMain.CONFIG.backslotSounds) {
                     if (stackInSlotToPullOutTo.isEmpty() && !stackInSlotToPullOutFrom.isEmpty()) {
                         if (stackInSlotToPullOutFrom.getItem() instanceof SwordItem) {
                             // pulling out sword to an empty hand

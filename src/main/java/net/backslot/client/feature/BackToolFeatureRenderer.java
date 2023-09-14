@@ -52,7 +52,7 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
                 heldItemRenderer.renderItem(livingEntity, backSlotStack, ModelTransformationMode.THIRD_PERSON_RIGHT_HAND, false, matrixStack, vertexConsumerProvider, i);
             } else {
                 matrixStack.translate(0.0D, 0.0D, 0.16D);
-                matrixStack.scale(BackSlotMain.CONFIG.backslot_scaling, BackSlotMain.CONFIG.backslot_scaling, BackSlotMain.CONFIG.backslot_scaling);
+                matrixStack.scale(BackSlotMain.CONFIG.backslotScaling, BackSlotMain.CONFIG.backslotScaling, BackSlotMain.CONFIG.backslotScaling);
                 if (backSlotStack.getItem() instanceof FishingRodItem || backSlotStack.getItem() instanceof OnAStickItem) {
                     matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180.0F));
                     matrixStack.translate(0.0D, -0.3D, 0.0D);
