@@ -1,57 +1,45 @@
 package net.backslot.mixin;
 
-import java.util.AbstractMap;
-import java.util.Map;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.At;
-
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.ExperienceOrbEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.network.ServerPlayerEntity;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+
+import java.util.Optional;
 
 @Mixin(ExperienceOrbEntity.class)
 public class ExperienceOrbEntityMixin {
 
-    @ModifyVariable(method = "repairPlayerGears", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/enchantment/EnchantmentHelper;chooseEquipmentWith(Lnet/minecraft/enchantment/Enchantment;Lnet/minecraft/entity/LivingEntity;Ljava/util/function/Predicate;)Ljava/util/Map$Entry;"), ordinal = 0)
-    private Map.Entry<EquipmentSlot, ItemStack> repairPlayerGearsMixin(Map.Entry<EquipmentSlot, ItemStack> original, PlayerEntity player, int amount) {
-        ItemStack backStack = player.getInventory().getStack(41);
-        ItemStack beltStack = player.getInventory().getStack(42);
-        boolean backSlotRepairable = !backStack.isEmpty() && backStack.isDamaged()
-                && beltStack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(Enchantments.MENDING.getRegistry()));
-        boolean beltSlotRepairable = !beltStack.isEmpty() && beltStack.isDamaged()
-                && beltStack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(Enchantments.MENDING.getRegistry()));
+    @Inject(method = "repairPlayerGears", at = @At(value = "INVOKE", target = "Ljava/util/Optional;isPresent()Z"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
+    private void repairPlayerGearsMixin(ServerPlayerEntity player, int amount, CallbackInfoReturnable<Integer> info, Optional optional) {
+        if (optional.isEmpty()) {
+            ItemStack backStack = player.getInventory().getStack(41);
+            ItemStack beltStack = player.getInventory().getStack(42);
+            boolean backSlotRepairable = !backStack.isEmpty() && backStack.isDamaged()
+                    && beltStack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(Enchantments.MENDING.getRegistry()));
+            boolean beltSlotRepairable = !beltStack.isEmpty() && beltStack.isDamaged()
+                    && beltStack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(Enchantments.MENDING.getRegistry()));
 
-        beltStack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(Enchantments.MENDING.getRegistry()));
-        if (backSlotRepairable || beltSlotRepairable) {
-            if (original != null) {
-                if (backSlotRepairable && beltSlotRepairable) {
-                    if (player.getRandom().nextInt(6) == 0) {
-                        return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(41 + player.getRandom().nextInt(2)));
-                    } else
-                        return original;
-                } else if (backSlotRepairable) {
-                    if (player.getRandom().nextInt(4) == 0) {
-                        return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(41));
-                    } else
-                        return original;
+            beltStack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(Enchantments.MENDING.getRegistry()));
+            if (backSlotRepairable || beltSlotRepairable) {
+                int i;
+                if (backSlotRepairable) {
+                    i = EnchantmentHelper.getRepairWithXp(player.getServerWorld(), backStack, amount);
+                    int j = Math.min(i, backStack.getDamage());
+                    backStack.setDamage(backStack.getDamage() - j);
                 } else {
-                    if (player.getRandom().nextInt(4) == 0) {
-                        return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(42));
-                    } else
-                        return original;
+                    i = EnchantmentHelper.getRepairWithXp(player.getServerWorld(), beltStack, amount);
+                    int j = Math.min(i, beltStack.getDamage());
+                    beltStack.setDamage(beltStack.getDamage() - j);
                 }
-            } else if (backSlotRepairable && beltSlotRepairable) {
-                return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(41 + player.getRandom().nextInt(2)));
-            } else if (backSlotRepairable) {
-                return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(41));
-            } else {
-                return new AbstractMap.SimpleEntry<EquipmentSlot, ItemStack>(EquipmentSlot.OFFHAND, player.getInventory().getStack(42));
+                info.setReturnValue(Math.max(0, amount - i));
             }
-        } else
-            return original;
+        }
     }
 }
