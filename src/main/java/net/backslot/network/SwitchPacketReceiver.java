@@ -1,25 +1,12 @@
 package net.backslot.network;
 
-import chronosacaria.mcdw.bases.McdwGlaive;
-import chronosacaria.mcdw.bases.McdwHammer;
-import chronosacaria.mcdw.bases.McdwSickle;
-import chronosacaria.mcdw.bases.McdwSpear;
-import chronosacaria.mcdw.bases.McdwStaff;
+import chronosacaria.mcdw.bases.*;
 import net.backslot.BackSlotMain;
 import net.backslot.sound.BackSlotSounds;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.medievalweapons.item.*;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.FishingRodItem;
-import net.minecraft.item.FlintAndSteelItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.OnAStickItem;
-import net.minecraft.item.RangedWeaponItem;
-import net.minecraft.item.ShearsItem;
-import net.minecraft.item.ShieldItem;
-import net.minecraft.item.SwordItem;
-import net.minecraft.item.ToolItem;
-import net.minecraft.item.TridentItem;
+import net.minecraft.item.*;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 
@@ -180,9 +167,9 @@ public class SwitchPacketReceiver implements ServerPlayNetworking.PlayPayloadHan
         // BackSlot
         if (stack.isEmpty() || stack.getItem() instanceof ToolItem
                 || (slot == 41 && (stack.isIn(BackSlotMain.BACKSLOT_ITEMS) || stack.getItem() instanceof RangedWeaponItem || stack.getItem() instanceof FishingRodItem
-                        || stack.getItem() instanceof TridentItem || stack.getItem() instanceof OnAStickItem || (BackSlotMain.isMedievalWeaponsLoaded && stack.getItem() instanceof FranciscaItem)))
+                || stack.getItem() instanceof TridentItem || stack.getItem() instanceof OnAStickItem || (BackSlotMain.isMedievalWeaponsLoaded && stack.getItem() instanceof FranciscaItem)))
                 || (slot == 42 && (stack.isIn(BackSlotMain.BELTSLOT_ITEMS) || stack.getItem() instanceof FlintAndSteelItem || stack.getItem() instanceof ShearsItem
-                        || (BackSlotMain.isMedievalWeaponsLoaded && stack.getItem() instanceof FranciscaItem)))) {
+                || (BackSlotMain.isMedievalWeaponsLoaded && stack.getItem() instanceof FranciscaItem)))) {
             return true;
         } else {
             return false;
