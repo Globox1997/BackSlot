@@ -8,15 +8,7 @@ import chronosacaria.mcdw.bases.McdwStaff;
 import net.backslot.BackSlotMain;
 import net.backslot.sound.BackSlotSounds;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.medievalweapons.item.Big_Axe_Item;
-import net.medievalweapons.item.Francisca_Item;
-import net.medievalweapons.item.Healing_Staff_Item;
-import net.medievalweapons.item.Javelin_Item;
-import net.medievalweapons.item.Lance_Item;
-import net.medievalweapons.item.Long_Sword_Item;
-import net.medievalweapons.item.Sickle_Item;
-import net.medievalweapons.item.Small_Axe_Item;
-import net.medievalweapons.item.Thalleous_Sword_Item;
+import net.medievalweapons.item.*;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.FishingRodItem;
 import net.minecraft.item.FlintAndSteelItem;
@@ -179,18 +171,18 @@ public class SwitchPacketReceiver implements ServerPlayNetworking.PlayPayloadHan
                     || stack.getItem() instanceof McdwSickle || stack.getItem() instanceof McdwStaff)) {
                 return false;
             }
-            if (BackSlotMain.isMedievalWeaponsLoaded && (stack.getItem() instanceof Small_Axe_Item || stack.getItem() instanceof Long_Sword_Item || stack.getItem() instanceof Big_Axe_Item
-                    || stack.getItem() instanceof Javelin_Item || stack.getItem() instanceof Lance_Item || stack.getItem() instanceof Healing_Staff_Item
-                    || stack.getItem() instanceof Thalleous_Sword_Item || stack.getItem() instanceof Sickle_Item)) {
+            if (BackSlotMain.isMedievalWeaponsLoaded && (stack.getItem() instanceof SmallAxeItem || stack.getItem() instanceof LongSwordItem || stack.getItem() instanceof BigAxeItem
+                    || stack.getItem() instanceof JavelinItem || stack.getItem() instanceof LanceItem || stack.getItem() instanceof HealingStaffItem
+                    || stack.getItem() instanceof ThalleousSwordItem || stack.getItem() instanceof SickleItem)) {
                 return false;
             }
         }
         // BackSlot
         if (stack.isEmpty() || stack.getItem() instanceof ToolItem
                 || (slot == 41 && (stack.isIn(BackSlotMain.BACKSLOT_ITEMS) || stack.getItem() instanceof RangedWeaponItem || stack.getItem() instanceof FishingRodItem
-                        || stack.getItem() instanceof TridentItem || stack.getItem() instanceof OnAStickItem || (BackSlotMain.isMedievalWeaponsLoaded && stack.getItem() instanceof Francisca_Item)))
+                        || stack.getItem() instanceof TridentItem || stack.getItem() instanceof OnAStickItem || (BackSlotMain.isMedievalWeaponsLoaded && stack.getItem() instanceof FranciscaItem)))
                 || (slot == 42 && (stack.isIn(BackSlotMain.BELTSLOT_ITEMS) || stack.getItem() instanceof FlintAndSteelItem || stack.getItem() instanceof ShearsItem
-                        || (BackSlotMain.isMedievalWeaponsLoaded && stack.getItem() instanceof Francisca_Item)))) {
+                        || (BackSlotMain.isMedievalWeaponsLoaded && stack.getItem() instanceof FranciscaItem)))) {
             return true;
         } else {
             return false;

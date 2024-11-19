@@ -1,6 +1,6 @@
 ### Added:
 - 
 ### Fixed:
-- 
+- Fixed medievalweapons compat
 ### Changed:
-- Updated to mc 1.21.1
+- 

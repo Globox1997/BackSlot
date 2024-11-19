@@ -10,15 +10,6 @@ public record VisibilityPacket(int entityId, int slotId, ItemStack itemStack) im
 
     public static final CustomPayload.Id<VisibilityPacket> PACKET_ID = new CustomPayload.Id<>(Identifier.of("backslot", "visibility_packet"));
 
-    // public static final PacketCodec<RegistryByteBuf, VisibilityPacket> PACKET_CODEC = PacketCodec.of((value, buf) -> {
-    // buf.writeInt(value.entityId);
-    // buf.writeInt(value.slotId);
-    // buf.writeBoolean(value.itemStack.isEmpty());
-    // if (!value.itemStack.isEmpty()) {
-    // ItemStack.PACKET_CODEC.encode(buf, value.itemStack);
-    // }
-    // }, buf -> new VisibilityPacket(buf.readInt(), buf.readInt(), buf.readBoolean() ? ItemStack.EMPTY : ItemStack.PACKET_CODEC.decode(buf)));
-
     public static final PacketCodec<RegistryByteBuf, VisibilityPacket> PACKET_CODEC = PacketCodec.of(VisibilityPacket::write, VisibilityPacket::new);
 
     public VisibilityPacket(RegistryByteBuf buf) {
