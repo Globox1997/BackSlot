@@ -1,14 +1,14 @@
 package net.backslot.network;
 
+import net.backslot.BackSlotMain;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
 
 public record VisibilityPacket(int entityId, int slotId, ItemStack itemStack) implements CustomPayload {
 
-    public static final CustomPayload.Id<VisibilityPacket> PACKET_ID = new CustomPayload.Id<>(Identifier.of("backslot", "visibility_packet"));
+    public static final CustomPayload.Id<VisibilityPacket> PACKET_ID = new CustomPayload.Id<>(BackSlotMain.identifierOf("visibility_packet"));
 
     public static final PacketCodec<RegistryByteBuf, VisibilityPacket> PACKET_CODEC = PacketCodec.of(VisibilityPacket::write, VisibilityPacket::new);
 

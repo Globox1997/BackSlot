@@ -1,7 +1,6 @@
 package net.backslot.client.sprite;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-
 import net.backslot.BackSlotMain;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -16,11 +15,11 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class BackSlotSprites {
 
-    public static final Identifier EMPTY_BACK_SLOT_TEXTURE = Identifier.of("backslot", "gui/empty_back_slot");
-    public static final Identifier EMPTY_BELT_SLOT_TEXTURE = Identifier.of("backslot", "gui/empty_belt_slot");
+    public static final Identifier EMPTY_BACK_SLOT_TEXTURE = BackSlotMain.identifierOf("gui/empty_back_slot");
+    public static final Identifier EMPTY_BELT_SLOT_TEXTURE = BackSlotMain.identifierOf("gui/empty_belt_slot");
 
-    public static final Identifier HOTBAR_BACK_SLOT_TEXTURE = Identifier.of("backslot", "textures/gui/hotbar_back_slot.png");
-    public static final Identifier HOTBAR_BELT_SLOT_TEXTURE = Identifier.of("backslot", "textures/gui/hotbar_back_slot.png");
+    public static final Identifier HOTBAR_BACK_SLOT_TEXTURE = BackSlotMain.identifierOf("textures/gui/hotbar_back_slot.png");
+    public static final Identifier HOTBAR_BELT_SLOT_TEXTURE = BackSlotMain.identifierOf("textures/gui/hotbar_back_slot.png");
 
     public static void init() {
         HudRenderCallback.EVENT.register((drawContext, tickCounter) -> {

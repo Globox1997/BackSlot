@@ -1,14 +1,15 @@
 package net.backslot.sound;
 
+import net.backslot.BackSlotMain;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 public class BackSlotSounds {
-    public static final Identifier PACK_UP_ITEM = Identifier.of("backslot:pack_up_item");
+    public static final Identifier PACK_UP_ITEM = BackSlotMain.identifierOf("pack_up_item");
     public static SoundEvent PACK_UP_ITEM_EVENT = SoundEvent.of(PACK_UP_ITEM);
-    public static final Identifier SHEATH_SWORD = Identifier.of("backslot:sheath_sword");
+    public static final Identifier SHEATH_SWORD = BackSlotMain.identifierOf("sheath_sword");
     public static SoundEvent SHEATH_SWORD_EVENT = SoundEvent.of(SHEATH_SWORD);
 
     public static void init() {

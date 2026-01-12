@@ -16,8 +16,8 @@ public class BackSlotMain implements ModInitializer {
 
     public static BackSlotConfig CONFIG = new BackSlotConfig();
 
-    public static final TagKey<Item> BACKSLOT_ITEMS = TagKey.of(RegistryKeys.ITEM, Identifier.of("backslot", "backslot_items"));
-    public static final TagKey<Item> BELTSLOT_ITEMS = TagKey.of(RegistryKeys.ITEM, Identifier.of("backslot", "beltslot_items"));
+    public static final TagKey<Item> BACKSLOT_ITEMS = TagKey.of(RegistryKeys.ITEM, identifierOf("backslot_items"));
+    public static final TagKey<Item> BELTSLOT_ITEMS = TagKey.of(RegistryKeys.ITEM, identifierOf("beltslot_items"));
 
     public static final boolean isMedievalWeaponsLoaded = FabricLoader.getInstance().isModLoaded("medievalweapons");
     public static final boolean isMcdwLoaded = FabricLoader.getInstance().isModLoaded("mcdw");
@@ -28,6 +28,10 @@ public class BackSlotMain implements ModInitializer {
         CONFIG = AutoConfig.getConfigHolder(BackSlotConfig.class).getConfig();
         BackSlotSounds.init();
         BackSlotServerPacket.init();
+    }
+
+    public static Identifier identifierOf(String name) {
+        return Identifier.of("backslot", name);
     }
 
 }
