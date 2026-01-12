@@ -1,11 +1,14 @@
 plugins {
-	id 'fabric-loom' version '1.7-SNAPSHOT'
+	id 'fabric-loom' version '1.14-SNAPSHOT'
 	id 'maven-publish'
 }
 
-archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
+
+base {
+	archivesName = project.archives_base_name
+}
 
 repositories {
 	// maven { url 'https://jitpack.io' }
@@ -26,7 +29,8 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	// Amecs Key
-	modApi include("de.siphalor:amecsapi-1.20:${project.amecs_version}") {
+//	modApi include("de.siphalor.amecs-api:amecs-api-1.21.1:${project.amecs_version}") {
+	modApi include("de.siphalor.amecs-api:amecs-api-mc1.21.1:${project.amecs_version}") {
 		exclude group: "net.fabricmc.fabric-api"
 	}
 	// Config
@@ -38,7 +42,7 @@ dependencies {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 	// Medieval Weapons
-	modCompileOnly ('maven.modrinth:medievalweapons:1.5.0+1.21.1'){
+	modCompileOnly ('maven.modrinth:medievalweapons:1.5.1+1.21.1'){
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 	// modCompileOnly ('com.github.Globox1997:MedievalWeapons:1.19-SNAPSHOT') {
@@ -84,8 +88,10 @@ java {
 }
 
 jar {
+	inputs.property "archivesName", project.base.archivesName
+
 	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}" }
+		rename { "${it}_${inputs.properties.archivesName}"}
 	}
 }
 
