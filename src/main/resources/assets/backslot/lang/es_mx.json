@@ -1,0 +1,28 @@
+{
+  "key.backslot.switch_backslot": "Cambiar Ranura Trasera",
+  "key.backslot.switch_beltslot": "Cambiar Ranura del Cinturón",
+
+  "category.backslot.key": "Ranura Trasera",
+  
+  "text.autoconfig.backslot.title": "Configuración de BackSlot",
+  "text.autoconfig.backslot.category.default": "Configuración Predeterminada",
+  "text.autoconfig.backslot.category.advanced_settings": "Configuración Avanzada",
+  "text.autoconfig.backslot.option.backslotScaling": "Escala del ítem en BackSlot",
+  "text.autoconfig.backslot.option.beltslotScaling": "Escala del ítem en BeltSlot",
+  "text.autoconfig.backslot.option.backslotSounds": "Sonidos de BackSlot",
+  "text.autoconfig.backslot.option.changeSlotArrangement": "Cambiar disposición de ranuras",
+  "text.autoconfig.backslot.option.disableBackslotHud": "Desactivar HUD de BackSlot",
+  "text.autoconfig.backslot.option.backSlotX": "BackSlot X",
+  "text.autoconfig.backslot.option.backSlotY": "BackSlot Y",
+  "text.autoconfig.backslot.option.beltSlotX": "BeltSlot X",
+  "text.autoconfig.backslot.option.beltSlotY": "BeltSlot Y",
+  "text.autoconfig.backslot.option.hudSlotX": "Hud Slot X",
+  "text.autoconfig.backslot.option.hudSlotY": "Hud Slot Y",
+  "text.autoconfig.backslot.option.backSlotX.@PrefixText": "Posiciones de Ranuras del Inventario",
+  "text.autoconfig.backslot.option.switchBeltslotSide": "Cambiar lado de BeltSlot",
+  "text.autoconfig.backslot.option.offhandSwitch": "Cambio de mano secundaria",
+  "text.autoconfig.backslot.option.offhandShield": "Cambio de escudo en mano secundaria",
+  "text.autoconfig.backslot.option.offhandFallback": "Reemplazo de mano secundaria",
+  "text.autoconfig.backslot.option.putAside": "Apartar si la mano está llena",
+  "text.autoconfig.backslot.option.dropHolding": "Soltar ítem cuando no hay espacio"
+}
