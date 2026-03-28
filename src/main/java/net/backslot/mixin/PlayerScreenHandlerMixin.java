@@ -3,6 +3,7 @@ package net.backslot.mixin;
 import com.mojang.datafixers.util.Pair;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
@@ -27,6 +28,7 @@ import net.minecraft.enchantment.Enchantments;
 
 @Mixin(value = PlayerScreenHandler.class, priority = 999)
 public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandler<CraftingRecipeInput, CraftingRecipe> {
+    @Unique
     private static boolean changeArrangement = BackSlotMain.CONFIG.changeSlotArrangement;
 
     public PlayerScreenHandlerMixin(ScreenHandlerType<PlayerScreenHandler> screenHandlerType, int i) {
@@ -63,9 +65,8 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
             @Override
             public boolean canTakeItems(PlayerEntity playerEntity) {
                 ItemStack itemStack = this.getStack();
-                return !itemStack.isEmpty() && !playerEntity.isCreative()
-                        && itemStack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(Enchantments.BINDING_CURSE.getRegistry())) ? false
-                                : super.canTakeItems(playerEntity);
+                return (itemStack.isEmpty() || playerEntity.isCreative()
+                        || itemStack.getEnchantments().getEnchantments().stream().noneMatch(entry -> entry.matchesId(Enchantments.BINDING_CURSE.getRegistry()))) && super.canTakeItems(playerEntity);
             }
 
             @Environment(EnvType.CLIENT)
@@ -90,9 +91,8 @@ public abstract class PlayerScreenHandlerMixin extends AbstractRecipeScreenHandl
             @Override
             public boolean canTakeItems(PlayerEntity playerEntity) {
                 ItemStack itemStack = this.getStack();
-                return !itemStack.isEmpty() && !playerEntity.isCreative()
-                        && itemStack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(Enchantments.BINDING_CURSE.getRegistry())) ? false
-                                : super.canTakeItems(playerEntity);
+                return (itemStack.isEmpty() || playerEntity.isCreative()
+                        || itemStack.getEnchantments().getEnchantments().stream().noneMatch(entry -> entry.matchesId(Enchantments.BINDING_CURSE.getRegistry()))) && super.canTakeItems(playerEntity);
             }
 
             @Environment(EnvType.CLIENT)
