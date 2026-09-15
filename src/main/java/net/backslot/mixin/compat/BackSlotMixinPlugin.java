@@ -29,8 +29,9 @@ public class BackSlotMixinPlugin implements IMixinConfigPlugin {
                 return true;
             }
         }
-        if (mixinClassName.contains("EntityMixin") && !mixinClassName.contains("ServerPlayerEntityMixin") && !FabricLoader.getInstance().isModLoaded("lambdynlights"))
+        if (mixinClassName.contains("EntityMixin") && !mixinClassName.contains("ServerPlayerEntityMixin") && !FabricLoader.getInstance().isModLoaded("lambdynlights")) {
             return false;
+        }
 
         return true;
     }

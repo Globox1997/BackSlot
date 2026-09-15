@@ -1,25 +1,19 @@
 package net.backslot.mixin;
 
-import java.util.Collection;
-
 import com.mojang.authlib.GameProfile;
-
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import org.spongepowered.asm.mixin.injection.At;
-
-import net.backslot.network.VisibilityPacket;
-import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.backslot.slot.BackSlot;
+import net.backslot.slot.BeltSlot;
+import net.backslot.slot.ModSlots;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin extends PlayerEntity {
@@ -33,25 +27,19 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
         super(world, pos, yaw, gameProfile);
     }
 
-    // LivingEntity getEquipmentChanges metod only checks EquipmentSlot each tick
+    // LivingEntity getEquipmentChanges method only checks EquipmentSlot each tick
     @Inject(method = "tick", at = @At("TAIL"))
     private void tickMixin(CallbackInfo info) {
         if (!this.getWorld().isClient()) {
-            if (!ItemStack.areItemsEqual(backSlotStack, this.getInventory().getStack(41))) {
-                sendPacket(41);
+            if (!ItemStack.areItemsEqual(backSlotStack, this.getInventory().getStack(BackSlot.INVENTORY_INDEX))) {
+                ModSlots.sendVisibilityPacket((ServerPlayerEntity) (Object) this, BackSlot.INVENTORY_INDEX);
             }
-            backSlotStack = this.getInventory().getStack(41);
-            if (!ItemStack.areItemsEqual(beltSlotStack, this.getInventory().getStack(42))) {
-                sendPacket(42);
+            backSlotStack = this.getInventory().getStack(BackSlot.INVENTORY_INDEX);
+            if (!ItemStack.areItemsEqual(beltSlotStack, this.getInventory().getStack(BeltSlot.INVENTORY_INDEX))) {
+                ModSlots.sendVisibilityPacket((ServerPlayerEntity) (Object) this, BeltSlot.INVENTORY_INDEX);
             }
-            beltSlotStack = this.getInventory().getStack(42);
+            beltSlotStack = this.getInventory().getStack(BeltSlot.INVENTORY_INDEX);
         }
-    }
-
-    private void sendPacket(int slot) {
-        Collection<ServerPlayerEntity> players = PlayerLookup.tracking((ServerWorld) this.getWorld(), this.getBlockPos());
-        players.forEach(player -> ServerPlayNetworking.send(player, new VisibilityPacket(this.getId(), slot, this.getInventory().getStack(slot))));
-
     }
 
 }

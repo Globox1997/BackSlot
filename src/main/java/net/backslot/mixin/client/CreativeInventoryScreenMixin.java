@@ -20,11 +20,11 @@ public abstract class CreativeInventoryScreenMixin extends AbstractInventoryScre
         super(new CreativeInventoryScreen.CreativeScreenHandler(player), player.getInventory(), ScreenTexts.EMPTY);
     }
 
-    @Inject(method = "setSelectedTab", at = @At(value = "FIELD", target = "Lnet/minecraft/client/gui/screen/ingame/CreativeInventoryScreen;deleteItemSlot:Lnet/minecraft/screen/slot/Slot;", shift = At.Shift.BEFORE))
+    @Inject(method = "setSelectedTab", at = @At(value = "FIELD", target = "Lnet/minecraft/client/gui/screen/ingame/CreativeInventoryScreen;deleteItemSlot:Lnet/minecraft/screen/slot/Slot;"))
     private void setSelectedTabMixin(ItemGroup group, CallbackInfo info) {
         for (int i = 0; i < this.handler.slots.size(); ++i) {
             if (i == 46) {
-                ((CreativeInventoryScreen.CreativeScreenHandler) this.handler).slots.remove(i);
+                this.handler.slots.remove(i);
             }
         }
     }

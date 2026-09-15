@@ -1,5 +1,7 @@
 package net.backslot.mixin;
 
+import net.backslot.slot.BackSlot;
+import net.backslot.slot.BeltSlot;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.ExperienceOrbEntity;
@@ -19,14 +21,13 @@ public class ExperienceOrbEntityMixin {
     @Inject(method = "repairPlayerGears", at = @At(value = "INVOKE", target = "Ljava/util/Optional;isPresent()Z"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
     private void repairPlayerGearsMixin(ServerPlayerEntity player, int amount, CallbackInfoReturnable<Integer> info, Optional optional) {
         if (optional.isEmpty()) {
-            ItemStack backStack = player.getInventory().getStack(41);
-            ItemStack beltStack = player.getInventory().getStack(42);
+            ItemStack backStack = player.getInventory().getStack(BackSlot.INVENTORY_INDEX);
+            ItemStack beltStack = player.getInventory().getStack(BeltSlot.INVENTORY_INDEX);
             boolean backSlotRepairable = !backStack.isEmpty() && backStack.isDamaged()
                     && beltStack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(Enchantments.MENDING.getRegistry()));
             boolean beltSlotRepairable = !beltStack.isEmpty() && beltStack.isDamaged()
                     && beltStack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(Enchantments.MENDING.getRegistry()));
 
-            beltStack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(Enchantments.MENDING.getRegistry()));
             if (backSlotRepairable || beltSlotRepairable) {
                 int i;
                 if (backSlotRepairable) {

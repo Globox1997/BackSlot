@@ -2,6 +2,8 @@ package net.backslot.mixin.compat;
 
 import com.mojang.authlib.GameProfile;
 
+import net.backslot.slot.BackSlot;
+import net.backslot.slot.BeltSlot;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -24,21 +26,21 @@ public abstract class OnDeathItemDropCompatibility extends PlayerEntity {
     @Inject(method = "onDeath", at = @At("HEAD"))
     public void onDeathMixin(DamageSource source, CallbackInfo info) {
         if (!this.getWorld().getGameRules().getBoolean(GameRules.KEEP_INVENTORY)) {
-            if (!this.getInventory().getStack(41).isEmpty()) {
+            if (!this.getInventory().getStack(BackSlot.INVENTORY_INDEX).isEmpty()) {
                 if (this.getInventory().getEmptySlot() != -1)
-                    this.getInventory().main.set(this.getInventory().getEmptySlot(), this.getInventory().getStack(41));
+                    this.getInventory().main.set(this.getInventory().getEmptySlot(), this.getInventory().getStack(BackSlot.INVENTORY_INDEX));
                 else {
-                    this.dropStack(this.getInventory().getStack(41));
+                    this.dropStack(this.getInventory().getStack(BackSlot.INVENTORY_INDEX));
                 }
-                this.getInventory().removeStack(41);
+                this.getInventory().removeStack(BackSlot.INVENTORY_INDEX);
             }
-            if (!this.getInventory().getStack(42).isEmpty()) {
+            if (!this.getInventory().getStack(BeltSlot.INVENTORY_INDEX).isEmpty()) {
                 if (this.getInventory().getEmptySlot() != -1) {
-                    this.getInventory().main.set(this.getInventory().getEmptySlot(), this.getInventory().getStack(42));
+                    this.getInventory().main.set(this.getInventory().getEmptySlot(), this.getInventory().getStack(BeltSlot.INVENTORY_INDEX));
                 } else {
-                    this.dropStack(this.getInventory().getStack(42));
+                    this.dropStack(this.getInventory().getStack(BeltSlot.INVENTORY_INDEX));
                 }
-                this.getInventory().removeStack(42);
+                this.getInventory().removeStack(BeltSlot.INVENTORY_INDEX);
             }
         }
     }

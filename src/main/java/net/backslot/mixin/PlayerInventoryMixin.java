@@ -35,8 +35,6 @@ public abstract class PlayerInventoryMixin implements Inventory {
     @Unique
     private DefaultedList<ItemStack> beltSlot;
 
-    public PlayerInventoryMixin(PlayerEntity player) {
-    }
 
     @Inject(method = "<init>*", at = @At("RETURN"))
     private void initMixin(PlayerEntity playerEntity, CallbackInfo info) {
