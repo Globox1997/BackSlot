@@ -12,14 +12,9 @@ import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.RotationAxis;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.FishingRodItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.OnAStickItem;
-import net.minecraft.item.TridentItem;
+import net.minecraft.item.*;
+import net.minecraft.util.math.RotationAxis;
 
 @Environment(EnvType.CLIENT)
 public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
@@ -33,8 +28,7 @@ public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
 
     @Override
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, AbstractClientPlayerEntity livingEntity, float f, float g, float h, float j, float k, float l) {
-        PlayerEntity player = (PlayerEntity) livingEntity;
-        ItemStack backSlotStack = player.getInventory().getStack(41);
+        ItemStack backSlotStack = livingEntity.getInventory().getStack(41);
         if (livingEntity instanceof AbstractClientPlayerEntity && !backSlotStack.isEmpty()) {
             matrixStack.push();
             ModelPart modelPart = this.getContextModel().body;

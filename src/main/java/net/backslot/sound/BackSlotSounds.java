@@ -7,6 +7,7 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 
 public class BackSlotSounds {
+
     public static final Identifier PACK_UP_ITEM = BackSlotMain.identifierOf("pack_up_item");
     public static SoundEvent PACK_UP_ITEM_EVENT = SoundEvent.of(PACK_UP_ITEM);
     public static final Identifier SHEATH_SWORD = BackSlotMain.identifierOf("sheath_sword");

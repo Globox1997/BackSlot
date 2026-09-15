@@ -35,7 +35,7 @@ public abstract class EntityTrackerEntryMixin {
 
                 }
                 if (!serverPlayerEntity.getInventory().getStack(i).isEmpty()) {
-                    ServerPlayNetworking.send((ServerPlayerEntity) serverPlayer, new VisibilityPacket(serverPlayerEntity.getId(), i, serverPlayerEntity.getInventory().getStack(i)));
+                    ServerPlayNetworking.send(serverPlayer, new VisibilityPacket(serverPlayerEntity.getId(), i, serverPlayerEntity.getInventory().getStack(i)));
                 }
             }
         }

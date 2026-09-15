@@ -27,15 +27,17 @@ public abstract class OnDeathItemDropCompatibility extends PlayerEntity {
             if (!this.getInventory().getStack(41).isEmpty()) {
                 if (this.getInventory().getEmptySlot() != -1)
                     this.getInventory().main.set(this.getInventory().getEmptySlot(), this.getInventory().getStack(41));
-                else
+                else {
                     this.dropStack(this.getInventory().getStack(41));
+                }
                 this.getInventory().removeStack(41);
             }
             if (!this.getInventory().getStack(42).isEmpty()) {
-                if (this.getInventory().getEmptySlot() != -1)
+                if (this.getInventory().getEmptySlot() != -1) {
                     this.getInventory().main.set(this.getInventory().getEmptySlot(), this.getInventory().getStack(42));
-                else
+                } else {
                     this.dropStack(this.getInventory().getStack(42));
+                }
                 this.getInventory().removeStack(42);
             }
         }

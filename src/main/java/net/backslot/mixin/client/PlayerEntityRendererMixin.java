@@ -13,7 +13,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Environment(EnvType.CLIENT)
 @Mixin(PlayerEntityRenderer.class)
@@ -23,7 +22,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
         super(ctx, model, shadowRadius);
     }
 
-    @Inject(method = "<init>", at = @At("TAIL"), locals = LocalCapture.CAPTURE_FAILSOFT)
+    @Inject(method = "<init>", at = @At("TAIL"))
     private void initMixin(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo info) {
         this.addFeature(new BackToolFeatureRenderer(this, ctx.getHeldItemRenderer()));
         this.addFeature(new BeltSlotFeatureRenderer(this, ctx.getHeldItemRenderer()));

@@ -13,7 +13,6 @@ import net.minecraft.client.render.item.HeldItemRenderer;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FlintAndSteelItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ShearsItem;
@@ -31,8 +30,7 @@ public class BeltSlotFeatureRenderer extends HeldItemFeatureRenderer<AbstractCli
 
     @Override
     public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, AbstractClientPlayerEntity livingEntity, float f, float g, float h, float j, float k, float l) {
-        PlayerEntity player = (PlayerEntity) livingEntity;
-        ItemStack beltSlotStack = player.getInventory().getStack(42);
+        ItemStack beltSlotStack = livingEntity.getInventory().getStack(42);
         if (livingEntity instanceof AbstractClientPlayerEntity && !beltSlotStack.isEmpty()) {
             matrixStack.push();
             ModelPart modelPart = this.getContextModel().body;
