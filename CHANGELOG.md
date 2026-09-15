@@ -3,4 +3,4 @@
 ### Fixed:
 - 
 ### Changed:
-- Updated amecs api dependency
+- Updated medievalweapons compat

@@ -160,7 +160,7 @@ public class SwitchPacketReceiver implements ServerPlayNetworking.PlayPayloadHan
             }
             if (BackSlotMain.isMedievalWeaponsLoaded && (stack.getItem() instanceof SmallAxeItem || stack.getItem() instanceof LongSwordItem || stack.getItem() instanceof BigAxeItem
                     || stack.getItem() instanceof JavelinItem || stack.getItem() instanceof LanceItem || stack.getItem() instanceof HealingStaffItem
-                    || stack.getItem() instanceof ThalleousSwordItem || stack.getItem() instanceof SickleItem)) {
+                    || stack.getItem() instanceof HeroSwordItem || stack.getItem() instanceof SickleItem)) {
                 return false;
             }
         }
