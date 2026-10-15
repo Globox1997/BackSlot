@@ -7,17 +7,17 @@ import net.backslot.network.BackSlotServerPacket;
 import net.backslot.sound.BackSlotSounds;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.item.Item;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 
 public class BackSlotMain implements ModInitializer {
 
     public static BackSlotConfig CONFIG = new BackSlotConfig();
 
-    public static final TagKey<Item> BACKSLOT_ITEMS = TagKey.of(RegistryKeys.ITEM, identifierOf("backslot_items"));
-    public static final TagKey<Item> BELTSLOT_ITEMS = TagKey.of(RegistryKeys.ITEM, identifierOf("beltslot_items"));
+    public static final TagKey<Item> BACKSLOT_ITEMS = TagKey.create(Registries.ITEM, identifierOf("backslot_items"));
+    public static final TagKey<Item> BELTSLOT_ITEMS = TagKey.create(Registries.ITEM, identifierOf("beltslot_items"));
 
     public static final boolean isMedievalWeaponsLoaded = FabricLoader.getInstance().isModLoaded("medievalweapons");
     public static final boolean isMcdwLoaded = FabricLoader.getInstance().isModLoaded("mcdw");
@@ -31,7 +31,7 @@ public class BackSlotMain implements ModInitializer {
     }
 
     public static Identifier identifierOf(String name) {
-        return Identifier.of("backslot", name);
+        return Identifier.fromNamespaceAndPath("backslot", name);
     }
 
 }

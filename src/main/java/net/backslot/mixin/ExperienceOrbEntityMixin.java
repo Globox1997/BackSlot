@@ -2,12 +2,15 @@ package net.backslot.mixin;
 
 import net.backslot.slot.BackSlot;
 import net.backslot.slot.BeltSlot;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.ExperienceOrbEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantedItemInUse;
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -15,32 +18,43 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Optional;
 
-@Mixin(ExperienceOrbEntity.class)
+@Mixin(ExperienceOrb.class)
 public class ExperienceOrbEntityMixin {
 
-    @Inject(method = "repairPlayerGears", at = @At(value = "INVOKE", target = "Ljava/util/Optional;isPresent()Z"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
-    private void repairPlayerGearsMixin(ServerPlayerEntity player, int amount, CallbackInfoReturnable<Integer> info, Optional optional) {
-        if (optional.isEmpty()) {
-            ItemStack backStack = player.getInventory().getStack(BackSlot.INVENTORY_INDEX);
-            ItemStack beltStack = player.getInventory().getStack(BeltSlot.INVENTORY_INDEX);
-            boolean backSlotRepairable = !backStack.isEmpty() && backStack.isDamaged()
-                    && beltStack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(Enchantments.MENDING.getRegistry()));
-            boolean beltSlotRepairable = !beltStack.isEmpty() && beltStack.isDamaged()
-                    && beltStack.getEnchantments().getEnchantments().stream().anyMatch(entry -> entry.matchesId(Enchantments.MENDING.getRegistry()));
+    @Shadow
+    private int repairPlayerItems(ServerPlayer player, int amount) {
+        throw new AssertionError();
+    }
 
-            if (backSlotRepairable || beltSlotRepairable) {
-                int i;
-                if (backSlotRepairable) {
-                    i = EnchantmentHelper.getRepairWithXp(player.getServerWorld(), backStack, amount);
-                    int j = Math.min(i, backStack.getDamage());
-                    backStack.setDamage(backStack.getDamage() - j);
-                } else {
-                    i = EnchantmentHelper.getRepairWithXp(player.getServerWorld(), beltStack, amount);
-                    int j = Math.min(i, beltStack.getDamage());
-                    beltStack.setDamage(beltStack.getDamage() - j);
+    // Mirrors vanilla repairPlayerItems for the back and belt slot when no vanilla slot item can be repaired
+    @Inject(method = "repairPlayerItems", at = @At(value = "INVOKE", target = "Ljava/util/Optional;isPresent()Z"), cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT)
+    private void repairPlayerGearsMixin(ServerPlayer player, int amount, CallbackInfoReturnable<Integer> info, Optional<EnchantedItemInUse> optional) {
+        if (optional.isEmpty()) {
+            ItemStack stack = backslot$getRepairableStack(player.getInventory().getItem(BackSlot.INVENTORY_INDEX));
+            if (stack.isEmpty()) {
+                stack = backslot$getRepairableStack(player.getInventory().getItem(BeltSlot.INVENTORY_INDEX));
+            }
+            if (!stack.isEmpty()) {
+                int toRepair = EnchantmentHelper.modifyDurabilityToRepairFromXp(player.level(), stack, amount);
+                int repair = Math.min(toRepair, stack.getDamageValue());
+                stack.setDamageValue(stack.getDamageValue() - repair);
+                if (repair > 0) {
+                    int remaining = amount - repair * amount / toRepair;
+                    if (remaining > 0) {
+                        info.setReturnValue(this.repairPlayerItems(player, remaining));
+                        return;
+                    }
                 }
-                info.setReturnValue(Math.max(0, amount - i));
+                info.setReturnValue(0);
             }
         }
+    }
+
+    @Unique
+    private static ItemStack backslot$getRepairableStack(ItemStack stack) {
+        if (!stack.isEmpty() && stack.isDamaged() && EnchantmentHelper.has(stack, EnchantmentEffectComponents.REPAIR_WITH_XP)) {
+            return stack;
+        }
+        return ItemStack.EMPTY;
     }
 }

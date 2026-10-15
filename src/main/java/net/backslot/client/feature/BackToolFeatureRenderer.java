@@ -1,63 +1,67 @@
 package net.backslot.client.feature;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import net.backslot.BackSlotMain;
+import net.backslot.client.render.BackSlotRenderState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
-import net.minecraft.client.render.entity.model.PlayerEntityModel;
-import net.minecraft.client.render.item.HeldItemRenderer;
-import net.minecraft.client.render.model.json.ModelTransformationMode;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.*;
-import net.minecraft.util.math.RotationAxis;
+import net.minecraft.client.model.player.PlayerModel;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.world.item.FishingRodItem;
+import net.minecraft.world.item.FoodOnAStickItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TridentItem;
 
 @Environment(EnvType.CLIENT)
-public class BackToolFeatureRenderer extends HeldItemFeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
+public class BackToolFeatureRenderer extends RenderLayer<AvatarRenderState, PlayerModel> {
 
-    private final HeldItemRenderer heldItemRenderer;
-
-    public BackToolFeatureRenderer(FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> context, HeldItemRenderer heldItemRenderer) {
-        super(context, heldItemRenderer);
-        this.heldItemRenderer = heldItemRenderer;
+    public BackToolFeatureRenderer(RenderLayerParent<AvatarRenderState, PlayerModel> renderer) {
+        super(renderer);
     }
 
     @Override
-    public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, AbstractClientPlayerEntity livingEntity, float f, float g, float h, float j, float k, float l) {
-        ItemStack backSlotStack = livingEntity.getInventory().getStack(41);
-        if (livingEntity instanceof AbstractClientPlayerEntity && !backSlotStack.isEmpty()) {
-            matrixStack.push();
-            ModelPart modelPart = this.getContextModel().body;
-            modelPart.rotate(matrixStack);
-            Item backSloItem = backSlotStack.getItem();
-
-            if (backSloItem instanceof TridentItem) {
-                matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(52.0F));
-                matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(40.0F));
-                matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(-25.0F));
-                matrixStack.translate(-0.26D, 0.0D, 0.0D);
-                if (!livingEntity.hasStackEquipped(EquipmentSlot.CHEST))
-                    matrixStack.translate(0.05F, 0.0F, 0.0F);
-                matrixStack.scale(1.0F, -1.0F, -1.0F);
-                heldItemRenderer.renderItem(livingEntity, backSlotStack, ModelTransformationMode.THIRD_PERSON_RIGHT_HAND, false, matrixStack, vertexConsumerProvider, i);
-            } else {
-                matrixStack.translate(0.0D, 0.0D, 0.16D);
-                matrixStack.scale(BackSlotMain.CONFIG.backslotScaling, BackSlotMain.CONFIG.backslotScaling, BackSlotMain.CONFIG.backslotScaling);
-                if (backSlotStack.getItem() instanceof FishingRodItem || backSlotStack.getItem() instanceof OnAStickItem) {
-                    matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(180.0F));
-                    matrixStack.translate(0.0D, -0.3D, 0.0D);
-                }
-                if (livingEntity.hasStackEquipped(EquipmentSlot.CHEST))
-                    matrixStack.translate(0.0F, 0.0F, 0.06F);
-
-                heldItemRenderer.renderItem(livingEntity, backSlotStack, ModelTransformationMode.HEAD, false, matrixStack, vertexConsumerProvider, i);
-            }
-            matrixStack.pop();
+    public void submit(PoseStack poseStack, SubmitNodeCollector collector, int lightCoords, AvatarRenderState state, float yRot, float xRot) {
+        BackSlotRenderState data = (BackSlotRenderState) state;
+        ItemStack stack = data.backslot$getBackStack();
+        ItemStackRenderState item = data.backslot$getBackItem();
+        if (stack.isEmpty() || item.isEmpty()) {
+            return;
         }
-    }
 
+        boolean hasChest = !state.chestEquipment.isEmpty();
+        Item type = stack.getItem();
+
+        poseStack.pushPose();
+        this.getParentModel().body.translateAndRotate(poseStack);
+
+        if (type instanceof TridentItem) {
+            poseStack.rotateDegrees(Axis.YP, 52.0F);
+            poseStack.rotateDegrees(Axis.XP, 40.0F);
+            poseStack.rotateDegrees(Axis.ZP, -25.0F);
+            poseStack.translate(-0.26F, 0.0F, 0.0F);
+            if (!hasChest) poseStack.translate(0.05F, 0.0F, 0.0F);
+            poseStack.scale(1.0F, -1.0F, -1.0F);
+        } else {
+            poseStack.translate(0.0F, 0.0F, 0.16F);
+            float s = BackSlotMain.CONFIG.backslotScaling;
+            poseStack.scale(s, s, s);
+            if (type instanceof FishingRodItem || type instanceof FoodOnAStickItem) {
+                poseStack.rotateDegrees(Axis.ZP, 180.0F);
+                poseStack.translate(0.0F, -0.3F, 0.0F);
+            }
+            if (hasChest) {
+                poseStack.translate(0.0F, 0.0F, 0.06F);
+            }
+        }
+
+        item.submit(poseStack, collector, lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
+        poseStack.popPose();
+    }
 }

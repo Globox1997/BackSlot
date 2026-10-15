@@ -12,7 +12,7 @@
     "issues": "https://github.com/Globox1997/BackSlot/issues",
     "sources": "https://github.com/Globox1997/BackSlot"
   },
-  "license": "GLPv3",
+  "license": "GPLv3",
   "icon": "assets/backslot/icon.png",
   "environment": "*",
   "entrypoints": {
@@ -30,14 +30,15 @@
     "backslot.mixins.json"
   ],
   "depends": {
-    "java": ">=21",
+    "java": ">=25",
     "minecraft": ">=${minecraft_version}",
-    "fabric-api": ">=${fabric_version}",
+    "fabric-api": ">=${fabric_api_version}",
     "fabricloader": ">=${loader_version}",
     "cloth-config2": ">=${cloth_config_version}"
   },
   "suggests": {
-    "flamingo": "*"
+    "flamingo": "*",
+    "amecs_key_modifiers": "*"
   },
   "custom": {
     "mc-publish": {

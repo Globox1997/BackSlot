@@ -1,59 +1,58 @@
 package net.backslot.client.feature;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import net.backslot.BackSlotMain;
+import net.backslot.client.render.BackSlotRenderState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.ModelPart;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
-import net.minecraft.client.render.entity.model.PlayerEntityModel;
-import net.minecraft.client.render.item.HeldItemRenderer;
-import net.minecraft.client.render.model.json.ModelTransformationMode;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.FlintAndSteelItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShearsItem;
-import net.minecraft.util.math.RotationAxis;
+import net.minecraft.client.model.player.PlayerModel;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.entity.state.AvatarRenderState;
+import net.minecraft.client.renderer.item.ItemStackRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.world.item.FlintAndSteelItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShearsItem;
 
 @Environment(EnvType.CLIENT)
-public class BeltSlotFeatureRenderer extends HeldItemFeatureRenderer<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> {
+public class BeltSlotFeatureRenderer extends RenderLayer<AvatarRenderState, PlayerModel> {
 
-    private final HeldItemRenderer heldItemRenderer;
-
-    public BeltSlotFeatureRenderer(FeatureRendererContext<AbstractClientPlayerEntity, PlayerEntityModel<AbstractClientPlayerEntity>> context, HeldItemRenderer heldItemRenderer) {
-        super(context, heldItemRenderer);
-        this.heldItemRenderer = heldItemRenderer;
+    public BeltSlotFeatureRenderer(RenderLayerParent<AvatarRenderState, PlayerModel> renderer) {
+        super(renderer);
     }
 
     @Override
-    public void render(MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, AbstractClientPlayerEntity livingEntity, float f, float g, float h, float j, float k, float l) {
-        ItemStack beltSlotStack = livingEntity.getInventory().getStack(42);
-        if (livingEntity instanceof AbstractClientPlayerEntity && !beltSlotStack.isEmpty()) {
-            matrixStack.push();
-            ModelPart modelPart = this.getContextModel().body;
-            modelPart.rotate(matrixStack);
-            double switchBeltSide = 0.29D;
-            if (BackSlotMain.CONFIG.switchBeltslotSide) {
-                switchBeltSide = -0.29D;
-            }
-            matrixStack.translate(switchBeltSide, 0.5D, 0.05D);
-            if (beltSlotStack.getItem() instanceof FlintAndSteelItem) {
-                matrixStack.translate(0.01F, 0.0F, -0.1F);
-            }
-            matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-90.0F));
-            matrixStack.scale(BackSlotMain.CONFIG.beltslotScaling, BackSlotMain.CONFIG.beltslotScaling, BackSlotMain.CONFIG.beltslotScaling);
-            if (beltSlotStack.getItem() instanceof ShearsItem || beltSlotStack.getItem() instanceof FlintAndSteelItem) {
-                matrixStack.scale(0.65F, 0.65F, 0.65F);
-                if (!livingEntity.hasStackEquipped(EquipmentSlot.CHEST)) {
-                    matrixStack.translate(0.0F, 0.0F, 0.015F);
-                }
-            }
-            heldItemRenderer.renderItem(livingEntity, beltSlotStack, ModelTransformationMode.HEAD, false, matrixStack, vertexConsumerProvider, i);
-            matrixStack.pop();
+    public void submit(PoseStack poseStack, SubmitNodeCollector collector, int lightCoords, AvatarRenderState state, float yRot, float xRot) {
+        BackSlotRenderState data = (BackSlotRenderState) state;
+        ItemStack stack = data.backslot$getBeltStack();
+        ItemStackRenderState item = data.backslot$getBeltItem();
+        if (stack.isEmpty() || item.isEmpty()) {
+            return;
         }
-    }
 
+        boolean hasChest = !state.chestEquipment.isEmpty();
+        boolean small = stack.getItem() instanceof ShearsItem || stack.getItem() instanceof FlintAndSteelItem;
+
+        poseStack.pushPose();
+        this.getParentModel().body.translateAndRotate(poseStack);
+
+        float side = BackSlotMain.CONFIG.switchBeltslotSide ? -0.29F : 0.29F;
+        poseStack.translate(side, 0.5F, 0.05F);
+        if (stack.getItem() instanceof FlintAndSteelItem) poseStack.translate(0.01F, 0.0F, -0.1F);
+        poseStack.rotateDegrees(Axis.YP, -90.0F);
+        float s = BackSlotMain.CONFIG.beltslotScaling;
+        poseStack.scale(s, s, s);
+        if (small) {
+            poseStack.scale(0.65F, 0.65F, 0.65F);
+            if (!hasChest) {
+                poseStack.translate(0.0F, 0.0F, 0.015F);
+            }
+        }
+
+        item.submit(poseStack, collector, lightCoords, OverlayTexture.NO_OVERLAY, state.outlineColor);
+        poseStack.popPose();
+    }
 }

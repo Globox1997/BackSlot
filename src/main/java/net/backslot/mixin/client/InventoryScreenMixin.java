@@ -3,35 +3,37 @@ package net.backslot.mixin.client;
 import net.backslot.BackSlotMain;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;
-import net.minecraft.client.gui.screen.ingame.InventoryScreen;
-import net.minecraft.client.gui.screen.recipebook.RecipeBookProvider;
-import net.minecraft.client.gui.screen.recipebook.RecipeBookWidget;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.screen.PlayerScreenHandler;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import org.spongepowered.asm.mixin.*;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.screens.inventory.AbstractRecipeBookScreen;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.gui.screens.recipebook.RecipeBookComponent;
+import net.minecraft.client.gui.screens.recipebook.RecipeUpdateListener;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.InventoryMenu;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(EnvType.CLIENT)
 @Mixin(InventoryScreen.class)
-public abstract class InventoryScreenMixin extends AbstractInventoryScreen<PlayerScreenHandler> implements RecipeBookProvider {
+public abstract class InventoryScreenMixin extends AbstractRecipeBookScreen<InventoryMenu> implements RecipeUpdateListener {
 
     @Unique
     private static final Identifier BACK_TEXTURE = BackSlotMain.identifierOf("textures/gui/blank.png");
     @Unique
-    private static boolean changeArrangement = BackSlotMain.CONFIG.changeSlotArrangement;
+    private static final boolean changeArrangement = BackSlotMain.CONFIG.changeSlotArrangement;
 
-    public InventoryScreenMixin(PlayerScreenHandler screenHandler, PlayerInventory playerInventory, Text text) {
-        super(screenHandler, playerInventory, text);
+    public InventoryScreenMixin(InventoryMenu menu, RecipeBookComponent<?> recipeBookComponent, Inventory inventory, Component title) {
+        super(menu, recipeBookComponent, inventory, title);
     }
 
-    @Inject(method = "drawBackground", at = @At(value = "RETURN"))
-    public void drawBackgroundMixin(DrawContext context, float delta, int mouseX, int mouseY, CallbackInfo info) {
+    @Inject(method = "extractBackground", at = @At("RETURN"))
+    public void backslot$drawBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo info) {
         int backSlotX = BackSlotMain.CONFIG.backSlotX;
         int backSlotY = BackSlotMain.CONFIG.backSlotY;
 
@@ -39,15 +41,13 @@ public abstract class InventoryScreenMixin extends AbstractInventoryScreen<Playe
         int beltSlotY = BackSlotMain.CONFIG.beltSlotY;
 
         if (changeArrangement) {
-            backSlotX += 57;
-            backSlotY += 40;
-            beltSlotX += 75;
-            beltSlotY += 22;
+            backSlotX += 75;
+            backSlotY += 22;
+            beltSlotX += 57;
+            beltSlotY += 40;
         }
 
-        context.drawTexture(BACK_TEXTURE, this.x + 76 + backSlotX, this.y + 43 + backSlotY, 0.0F, 0.0F, 18, 18, 18, 18);
-        context.drawTexture(BACK_TEXTURE, this.x + 76 + beltSlotX, this.y + 25 + beltSlotY, 0.0F, 0.0F, 18, 18, 18, 18);
-
+        graphics.blit(RenderPipelines.GUI_TEXTURED, BACK_TEXTURE, this.leftPos + 76 + backSlotX, this.topPos + 43 + backSlotY, 0.0F, 0.0F, 18, 18, 18, 18);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, BACK_TEXTURE, this.leftPos + 76 + beltSlotX, this.topPos + 25 + beltSlotY, 0.0F, 0.0F, 18, 18, 18, 18);
     }
-
 }

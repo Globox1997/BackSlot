@@ -2,21 +2,22 @@
   "required": true,
   "minVersion": "0.8",
   "package": "net.backslot.mixin",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_25",
   "plugin": "net.backslot.mixin.compat.BackSlotMixinPlugin",
   "mixins": [
+    "EntityTrackerEntryMixin",
+    "ExperienceOrbEntityMixin",
+    "LivingEntityMixin",
     "PlayerInventoryMixin",
     "PlayerScreenHandlerMixin",
     "ServerPlayerEntityMixin",
-    "LivingEntityMixin",
-    "EntityTrackerEntryMixin",
-    "ExperienceOrbEntityMixin",
     "compat.OnDeathItemDropCompatibility"
   ],
   "client": [
-    "client.PlayerEntityRendererMixin",
-    "client.InventoryScreenMixin",
-    "client.CreativeInventoryScreenMixin"
+    "client.AvatarRendererMixin",
+    "client.AvatarRenderStateMixin",
+    "client.CreativeInventoryScreenMixin",
+    "client.InventoryScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -8,6 +8,7 @@ import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 @Config(name = "backslot")
 @Config.Gui.Background("minecraft:textures/block/stone.png")
 public class BackSlotConfig implements ConfigData {
+
     public boolean backslotSounds = true;
     @ConfigEntry.Gui.RequiresRestart
     @Comment("Use for mod compatibility")

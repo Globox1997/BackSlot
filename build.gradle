@@ -1,9 +1,9 @@
 plugins {
-	id 'fabric-loom' version '1.17-SNAPSHOT'
+	id 'net.fabricmc.fabric-loom' version "${loom_version}"
 	id 'maven-publish'
 }
 
-version = project.mod_version
+version = "${project.mod_version}+${project.minecraft_version}"
 group = project.maven_group
 
 base {
@@ -11,71 +11,77 @@ base {
 }
 
 repositories {
-	maven { url "https://maven.siphalor.de/" }
-	maven { url "https://maven.shedaniel.me/" }
-	maven { url "https://maven.terraformersmc.com/" }
-	maven { url "https://api.modrinth.com/maven" }
+	maven { url = "https://maven.siphalor.de/" }
+	maven { url = "https://maven.shedaniel.me/" }
+	maven { url = "https://maven.terraformersmc.com/" }
+	maven { url = "https://api.modrinth.com/maven" }
 }
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
-	// Amecs
-	modApi include("de.siphalor.amecs-api:amecs-api-mc1.21.1:${project.amecs_version}") {
-		exclude group: "net.fabricmc.fabric-api"
+	// Amecs (optional, not on the dev runtime: the mc26.2 build crashes on 26.3)
+	compileOnly("de.siphalor.amecs.amecs-key-modifiers:amecs-key-modifiers-mc${project.amecs_version}") {
+		exclude(group: "net.fabricmc.fabric-api")
 	}
 	// Config
-	modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
+	implementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
     	exclude(group: "net.fabricmc.fabric-api")
   	}
 	// Modmenu
-	modCompileOnly modRuntimeOnly("com.terraformersmc:modmenu:${project.mod_menu_version}") {
+	compileOnly runtimeOnly("com.terraformersmc:modmenu:${project.mod_menu_version}") {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 	// Medieval Weapons
-	modCompileOnly ('maven.modrinth:medievalweapons:1.6.1+1.21.1'){
+	compileOnly ('maven.modrinth:medievalweapons:1.6.1+1.21.1'){
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 	// Dungeon Weapons
-	modCompileOnly ('maven.modrinth:mcdw:9.0.4'){
+	compileOnly ('maven.modrinth:mcdw:9.0.4'){
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 }
 
 processResources {
-	inputs.property "version", project.version
+	def version = project.version
+	inputs.property "version", version
+
+	def fabricApiVersion = project.fabric_api_version
+	def loaderVersion = project.loader_version
+	def minecraftVersion = project.minecraft_version
+	def clothConfigVersion = project.cloth_config_version
+	def amecsVersion = project.amecs_version
 
 	filesMatching("fabric.mod.json") {
-		expand "version": project.version, "fabric_version": project.fabric_version, "loader_version": project.loader_version, "minecraft_version": project.minecraft_version, "cloth_config_version": project.cloth_config_version
+		expand "version": version, "fabric_api_version": fabricApiVersion, "loader_version": loaderVersion, "minecraft_version": minecraftVersion, "cloth_config_version": clothConfigVersion, "amecs_version": amecsVersion
 	}
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 21
+	it.options.release = 25
 }
 
 java {
 	withSourcesJar()
 
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
 }
 
 jar {
-	inputs.property "archivesName", project.base.archivesName
+	def projectName = project.name
+	inputs.property "projectName", projectName
 
 	from("LICENSE") {
-		rename { "${it}_${inputs.properties.archivesName}"}
+		rename { "${it}_$projectName"}
 	}
 }
 
 publishing {
 	publications {
-		mavenJava(MavenPublication) {
-			artifactId = project.archives_base_name
+		create("mavenJava", MavenPublication) {
 			from components.java
 		}
 	}
