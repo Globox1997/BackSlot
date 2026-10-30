@@ -11,11 +11,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.world.item.FishingRodItem;
-import net.minecraft.world.item.FoodOnAStickItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TridentItem;
+import net.minecraft.world.item.*;
 
 public class BackToolFeatureRenderer extends RenderLayer<AvatarRenderState, PlayerModel> {
 
@@ -43,8 +39,21 @@ public class BackToolFeatureRenderer extends RenderLayer<AvatarRenderState, Play
             poseStack.rotateDegrees(Axis.XP, 40.0F);
             poseStack.rotateDegrees(Axis.ZP, -25.0F);
             poseStack.translate(-0.26F, 0.0F, 0.0F);
-            if (!hasChest) poseStack.translate(0.05F, 0.0F, 0.0F);
+            if (!hasChest) {
+                poseStack.translate(0.05F, 0.0F, 0.0F);
+            }
             poseStack.scale(1.0F, -1.0F, -1.0F);
+        } else if (BackSlotMain.CONFIG.allowShieldOnBack && type instanceof ShieldItem) {
+            poseStack.rotateDegrees(Axis.ZP, 45.0F);
+            double chestTranslate = 0.145D;
+
+            if (BackSlotMain.CONFIG.shieldClipping) {
+                chestTranslate = chestTranslate + 0.125D;
+            }
+            poseStack.translate(0.71D, 0.72D, chestTranslate + 0.42D);
+
+            float s = BackSlotMain.CONFIG.backslotScaling;
+            poseStack.scale(s, s, s);
         } else {
             poseStack.translate(0.0F, 0.0F, 0.16F);
             float s = BackSlotMain.CONFIG.backslotScaling;

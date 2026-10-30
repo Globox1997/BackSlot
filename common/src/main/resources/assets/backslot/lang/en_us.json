@@ -24,5 +24,7 @@
   "text.autoconfig.backslot.option.offhandShield": "Offhand shield switch",
   "text.autoconfig.backslot.option.offhandFallback": "Offhand fallback",
   "text.autoconfig.backslot.option.putAside": "Put aside if full hand",
-  "text.autoconfig.backslot.option.dropHolding": "Drop item when no space"
+  "text.autoconfig.backslot.option.dropHolding": "Drop item when no space",
+  "text.autoconfig.backslot.option.allowShieldOnBack": "Allow Shield On Back",
+  "text.autoconfig.backslot.option.shieldClipping": "Shield Clipping"
 }

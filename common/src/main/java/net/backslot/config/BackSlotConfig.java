@@ -21,6 +21,8 @@ public class BackSlotConfig implements ConfigData {
     public boolean offhandFallback = true;
     public boolean putAside = true;
     public boolean dropHolding = true;
+    public boolean allowShieldOnBack = true;
+    public boolean shieldClipping = true;
     @ConfigEntry.Category("advanced_settings")
     @ConfigEntry.Gui.RequiresRestart
     @ConfigEntry.Gui.PrefixText
