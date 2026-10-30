@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "backslot",
+  "version": "${version}",
+  "name": "BackSlot",
+  "description": "Adds two slots to your inventory which get displayed on your character",
+  "authors": [
+    "Globox_Z"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/backslot",
+    "issues": "https://github.com/Globox1997/BackSlot/issues",
+    "sources": "https://github.com/Globox1997/BackSlot"
+  },
+  "license": "GPLv3",
+  "icon": "assets/backslot/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.backslot.fabric.BackSlotFabric"
+    ],
+    "client": [
+      "net.backslot.fabric.client.BackSlotFabricClient"
+    ],
+    "modmenu": [
+      "net.backslot.fabric.client.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "backslot.mixins.json"
+  ],
+  "depends": {
+    "java": ">=25",
+    "minecraft": ">=${minecraft_version}",
+    "fabric-api": ">=${fabric_api_version}",
+    "fabricloader": ">=${loader_version}",
+    "cloth-config2": ">=${cloth_config_version}"
+  },
+  "suggests": {
+    "flamingo": "*",
+    "amecs_key_modifiers": "*"
+  }
+}

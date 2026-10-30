@@ -25,15 +25,21 @@ jobs:
         uses: christian-draeger/read-properties@1.1.1
         with:
           path: './gradle.properties'
-          properties: 'archives_base_name mod_version minecraft_version'
+          properties: 'archives_base_name mod_version minecraft_version modrinth_id curseforge_id'
 
-      - uses: Kir-Antipov/mc-publish@v3.3
+      - name: publish fabric
+        uses: Kira-NT/mc-publish@v3.3.2
         with:
+          modrinth-id: ${{ steps.properties.outputs.modrinth_id }}
           modrinth-featured: true
           modrinth-unfeature-mode: subset
+          curseforge-id: ${{ steps.properties.outputs.curseforge_id }}
 
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+
+          files: fabric/build/libs/!(*-@(dev|sources|javadoc)).jar
+          loaders: fabric
 
           name: '${{ steps.properties.outputs.archives_base_name }}-${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}'
           version: '${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}'
@@ -45,6 +51,37 @@ jobs:
 
           dependencies: |
             fabric-api | depends | *
+            cloth-config | depends | *
+
+          changelog-file: CHANGELOG.md
+
+          retry-attempts: 2
+          retry-delay: 10000
+          fail-mode: fail
+
+      - name: publish neoforge
+        uses: Kira-NT/mc-publish@v3.3.2
+        with:
+          modrinth-id: ${{ steps.properties.outputs.modrinth_id }}
+          modrinth-featured: true
+          modrinth-unfeature-mode: subset
+          curseforge-id: ${{ steps.properties.outputs.curseforge_id }}
+
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+
+          files: neoforge/build/libs/!(*-@(dev|sources|javadoc)).jar
+          loaders: neoforge
+
+          name: '${{ steps.properties.outputs.archives_base_name }}-neoforge-${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}'
+          version: '${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}-neoforge'
+          game-versions: |
+            ${{ steps.properties.outputs.minecraft_version }}
+
+          version-type: release
+          version-resolver: exact
+
+          dependencies: |
             cloth-config | depends | *
 
           changelog-file: CHANGELOG.md

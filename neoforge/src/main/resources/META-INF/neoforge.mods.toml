@@ -1,0 +1,37 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "GPLv3"
+issueTrackerURL = "https://github.com/Globox1997/BackSlot/issues"
+
+[[mods]]
+modId = "backslot"
+version = "${version}"
+displayName = "BackSlot"
+displayURL = "https://www.curseforge.com/minecraft/mc-mods/backslot"
+iconFile = "assets/backslot/icon.png"
+authors = "Globox_Z"
+description = '''Adds two slots to your inventory which get displayed on your character'''
+
+[[mixins]]
+config = "backslot.mixins.json"
+
+[[dependencies.backslot]]
+modId = "neoforge"
+type = "required"
+versionRange = "[${neoforge_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.backslot]]
+modId = "minecraft"
+type = "required"
+versionRange = "[${minecraft_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.backslot]]
+modId = "cloth_config"
+type = "required"
+versionRange = "[${cloth_config_version},)"
+ordering = "NONE"
+side = "BOTH"
