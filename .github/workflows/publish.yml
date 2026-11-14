@@ -41,8 +41,8 @@ jobs:
           files: fabric/build/libs/!(*-@(dev|sources|javadoc)).jar
           loaders: fabric
 
-          name: '${{ steps.properties.outputs.archives_base_name }}-${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}'
-          version: '${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}'
+          name: '${{ steps.properties.outputs.archives_base_name }}-fabric-${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}'
+          version: '${{ steps.properties.outputs.mod_version }}+${{ steps.properties.outputs.minecraft_version }}-fabric'
           game-versions: |
             ${{ steps.properties.outputs.minecraft_version }}
 
