@@ -11,7 +11,7 @@ BackSlot is a mod built for both the [Fabric Loader](https://fabricmc.net/) and 
 BackSlot is licensed under GPLv3.
 
 ### Datapacks
-Add items which can be worn on the back or belt via a datapack. There are two backslot item tags given called `backslot_items` and `beltslot_items`. To adjust the position and size of the rendered items, a resource pack is needed. BackSlot uses the head renderer which can be set or configured in the models folder and looks like this:
+Add items which can be worn on the back or belt via a datapack. There are two backslot item tags given called `backslot_items` and `beltslot_items`. Items in the `beltslot_excluded` tag can never be put on the belt. To adjust the position and size of the rendered items, a resource pack is needed. BackSlot uses the head renderer which can be set or configured in the models folder and looks like this:
 
 ```json
 "head": {

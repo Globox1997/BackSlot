@@ -17,6 +17,7 @@ public class BackSlotMain {
 
     public static final TagKey<Item> BACKSLOT_ITEMS = TagKey.create(Registries.ITEM, identifierOf("backslot_items"));
     public static final TagKey<Item> BELTSLOT_ITEMS = TagKey.create(Registries.ITEM, identifierOf("beltslot_items"));
+    public static final TagKey<Item> BELTSLOT_EXCLUDED = TagKey.create(Registries.ITEM, identifierOf("beltslot_excluded"));
 
     public static final boolean isMedievalWeaponsLoaded = Services.PLATFORM.isModLoaded("medievalweapons");
     public static final boolean isMcdwLoaded = Services.PLATFORM.isModLoaded("mcdw");

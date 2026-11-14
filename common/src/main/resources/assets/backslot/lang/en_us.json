@@ -28,5 +28,9 @@
   "text.autoconfig.backslot.option.allowShieldOnBack": "Allow Shield On Back",
   "text.autoconfig.backslot.option.shieldClipping": "Shield Clipping",
   "text.autoconfig.backslot.option.doubleBackSword": "Double Back Sword",
-  "text.autoconfig.backslot.option.allowLanternOnBelt": "Allow Lantern On Belt"
+  "text.autoconfig.backslot.option.allowLanternOnBelt": "Allow Lantern On Belt",
+
+  "tag.item.backslot.backslot_items": "Back Slot Items",
+  "tag.item.backslot.beltslot_items": "Belt Slot Items",
+  "tag.item.backslot.beltslot_excluded": "Belt Slot Excluded Items"
 }

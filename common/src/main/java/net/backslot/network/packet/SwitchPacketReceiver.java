@@ -76,7 +76,11 @@ public class SwitchPacketReceiver {
 
         boolean doneSwitching = false;
         boolean canPutBack = isItemAllowed(stackToPutBack, slotToPutBackTo);
-        if (canPutBack) {
+        if (canPutBack && stackToPutBack.getCount() > 1 && stackInSlotToPullOutFrom.isEmpty()) {
+            playerInventory.setItem(slotToPutBackTo, stackToPutBack.split(1));
+            playerInventory.setChanged();
+            doneSwitching = true;
+        } else if (canPutBack && stackToPutBack.getCount() <= 1) {
             playerInventory.setItem(slotToPullOutTo, stackInSlotToPullOutFrom);
             playerInventory.setItem(slotToPutBackTo, stackToPutBack);
             playerInventory.setChanged();
@@ -131,26 +135,21 @@ public class SwitchPacketReceiver {
     }
 
     public static boolean isItemAllowed(ItemStack stack, int slot) {
-        return true;
-//        if (slot == BeltSlot.INVENTORY_INDEX) {
-//            if (BackSlotMain.isMcdwLoaded && (stack.getItem() instanceof McdwHammer || stack.getItem() instanceof McdwGlaive || stack.getItem() instanceof McdwSpear
-//                    || stack.getItem() instanceof McdwSickle || stack.getItem() instanceof McdwStaff)) {
-//                return false;
-//            }
-//            if (BackSlotMain.isMedievalWeaponsLoaded && (stack.getItem() instanceof SmallAxeItem || stack.getItem() instanceof LongSwordItem || stack.getItem() instanceof BigAxeItem
-//                    || stack.getItem() instanceof JavelinItem || stack.getItem() instanceof LanceItem || stack.getItem() instanceof HealingStaffItem
-//                    || stack.getItem() instanceof HeroSwordItem || stack.getItem() instanceof SickleItem)) {
-//                return false;
-//            }
-//        }
-//        if (stack.isEmpty() || stack.getItem() instanceof TieredItem
-//                || (slot == BackSlot.INVENTORY_INDEX && (stack.is(BackSlotMain.BACKSLOT_ITEMS) || stack.getItem() instanceof ProjectileWeaponItem || stack.getItem() instanceof FishingRodItem
-//                || stack.getItem() instanceof TridentItem || stack.getItem() instanceof FoodOnAStickItem || (BackSlotMain.isMedievalWeaponsLoaded && stack.getItem() instanceof FranciscaItem)))
-//                || (slot == BeltSlot.INVENTORY_INDEX && (stack.is(BackSlotMain.BELTSLOT_ITEMS) || stack.getItem() instanceof FlintAndSteelItem || stack.getItem() instanceof ShearsItem
-//                || (BackSlotMain.isMedievalWeaponsLoaded && stack.getItem() instanceof FranciscaItem)))) {
-//            return true;
-//        } else {
-//            return false;
-//        }
+        if (stack.isEmpty()) {
+            return true;
+        }
+        Item item = stack.getItem();
+        if (slot == BackSlot.INVENTORY_INDEX) {
+            return stack.is(BackSlotMain.BACKSLOT_ITEMS) || item instanceof ProjectileWeaponItem || item instanceof FishingRodItem || item instanceof TridentItem
+                    || item instanceof FoodOnAStickItem || (BackSlotMain.CONFIG.allowShieldOnBack && item instanceof ShieldItem);
+        }
+        if (slot == BeltSlot.INVENTORY_INDEX) {
+            if (stack.is(BackSlotMain.BELTSLOT_EXCLUDED)) {
+                return false;
+            }
+            return stack.is(BackSlotMain.BELTSLOT_ITEMS) || item instanceof FlintAndSteelItem || item instanceof ShearsItem
+                    || (BackSlotMain.CONFIG.allowLanternOnBelt && BeltSlot.isLantern(stack));
+        }
+        return false;
     }
 }
