@@ -35,9 +35,5 @@
     "fabric-api": ">=${fabric_api_version}",
     "fabricloader": ">=${loader_version}",
     "cloth-config2": ">=${cloth_config_version}"
-  },
-  "suggests": {
-    "flamingo": "*",
-    "amecs_key_modifiers": "*"
   }
 }
