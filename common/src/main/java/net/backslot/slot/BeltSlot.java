@@ -6,9 +6,11 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.block.LanternBlock;
 
 public class BeltSlot extends Slot {
 
@@ -38,6 +40,11 @@ public class BeltSlot extends Slot {
     @Override
     public Identifier getNoItemIcon() {
         return EMPTY_ICON;
+    }
+
+    // Lantern, soul lantern and the copper lanterns
+    public static boolean isLantern(ItemStack stack) {
+        return stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof LanternBlock;
     }
 
 }

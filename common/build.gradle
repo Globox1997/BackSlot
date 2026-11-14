@@ -12,6 +12,10 @@ dependencies {
     compileOnly("me.shedaniel.cloth:cloth-config:${cloth_config_version}") {
         transitive = false
     }
+    // Iris
+    compileOnly ('maven.modrinth:iris:1.11.7+26.3-fabric'){
+        exclude(group: "net.fabricmc.fabric-api")
+    }
 }
 
 configurations {

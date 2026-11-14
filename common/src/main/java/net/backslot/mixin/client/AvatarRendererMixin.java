@@ -2,21 +2,26 @@ package net.backslot.mixin.client;
 
 import net.backslot.client.feature.BackToolFeatureRenderer;
 import net.backslot.client.feature.BeltSlotFeatureRenderer;
+import net.backslot.BackSlotMain;
 import net.backslot.client.render.BackSlotRenderState;
 import net.backslot.slot.BackSlot;
 import net.backslot.slot.BeltSlot;
 import net.minecraft.client.entity.ClientAvatarEntity;
 import net.minecraft.client.model.player.PlayerModel;
+import net.minecraft.client.renderer.block.BlockModelResolver;
+import net.minecraft.client.renderer.block.model.BlockDisplayContext;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.world.entity.Avatar;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TridentItem;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -24,12 +29,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(AvatarRenderer.class)
 public abstract class AvatarRendererMixin<AvatarlikeEntity extends Avatar & ClientAvatarEntity> extends LivingEntityRenderer<AvatarlikeEntity, AvatarRenderState, PlayerModel> {
 
+    @Unique
+    private static final BlockDisplayContext BACKSLOT$BLOCK_DISPLAY_CONTEXT = BlockDisplayContext.create();
+
+    @Unique
+    private BlockModelResolver backslot$blockModelResolver;
+
     public AvatarRendererMixin(EntityRendererProvider.Context ctx, PlayerModel model, float shadowRadius) {
         super(ctx, model, shadowRadius);
     }
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void backslot$init(EntityRendererProvider.Context ctx, boolean slim, CallbackInfo info) {
+        this.backslot$blockModelResolver = ctx.getBlockModelResolver();
         this.addLayer(new BackToolFeatureRenderer(this));
         this.addLayer(new BeltSlotFeatureRenderer(this));
     }
@@ -40,6 +52,7 @@ public abstract class AvatarRendererMixin<AvatarlikeEntity extends Avatar & Clie
 
         data.backslot$getBackItem().clear();
         data.backslot$getBeltItem().clear();
+        data.backslot$getBeltBlock().clear();
         data.backslot$setBackStack(ItemStack.EMPTY);
         data.backslot$setBeltStack(ItemStack.EMPTY);
 
@@ -55,7 +68,11 @@ public abstract class AvatarRendererMixin<AvatarlikeEntity extends Avatar & Clie
         }
         if (!belt.isEmpty()) {
             data.backslot$setBeltStack(belt);
-            this.itemModelResolver.updateForLiving(data.backslot$getBeltItem(), belt, ItemDisplayContext.HEAD, entity);
+            if (BackSlotMain.CONFIG.allowLanternOnBelt && BeltSlot.isLantern(belt)) {
+                this.backslot$blockModelResolver.update(data.backslot$getBeltBlock(), ((BlockItem) belt.getItem()).getBlock().defaultBlockState(), BACKSLOT$BLOCK_DISPLAY_CONTEXT);
+            } else {
+                this.itemModelResolver.updateForLiving(data.backslot$getBeltItem(), belt, ItemDisplayContext.HEAD, entity);
+            }
         }
     }
 }

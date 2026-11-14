@@ -1,6 +1,7 @@
 package net.backslot.mixin.client;
 
 import net.backslot.client.render.BackSlotRenderState;
+import net.minecraft.client.renderer.block.BlockModelRenderState;
 import net.minecraft.client.renderer.entity.state.AvatarRenderState;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.world.item.ItemStack;
@@ -15,6 +16,8 @@ public class AvatarRenderStateMixin implements BackSlotRenderState {
     @Unique
     private final ItemStackRenderState backslot$beltItem = new ItemStackRenderState();
     @Unique
+    private final BlockModelRenderState backslot$beltBlock = new BlockModelRenderState();
+    @Unique
     private ItemStack backslot$backStack = ItemStack.EMPTY;
     @Unique
     private ItemStack backslot$beltStack = ItemStack.EMPTY;
@@ -27,6 +30,11 @@ public class AvatarRenderStateMixin implements BackSlotRenderState {
     @Override
     public ItemStackRenderState backslot$getBeltItem() {
         return backslot$beltItem;
+    }
+
+    @Override
+    public BlockModelRenderState backslot$getBeltBlock() {
+        return backslot$beltBlock;
     }
 
     @Override

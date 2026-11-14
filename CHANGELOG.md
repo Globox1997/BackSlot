@@ -1,5 +1,7 @@
 ### Added:
 - NeoForge support
+- Shield support
+- Lantern support
 ### Fixed:
 - 
 ### Changed:

@@ -26,5 +26,7 @@
   "text.autoconfig.backslot.option.putAside": "Put aside if full hand",
   "text.autoconfig.backslot.option.dropHolding": "Drop item when no space",
   "text.autoconfig.backslot.option.allowShieldOnBack": "Allow Shield On Back",
-  "text.autoconfig.backslot.option.shieldClipping": "Shield Clipping"
+  "text.autoconfig.backslot.option.shieldClipping": "Shield Clipping",
+  "text.autoconfig.backslot.option.doubleBackSword": "Double Back Sword",
+  "text.autoconfig.backslot.option.allowLanternOnBelt": "Allow Lantern On Belt"
 }

@@ -28,6 +28,8 @@ public class BackSlotMixinPlugin implements IMixinConfigPlugin {
             } else if (Services.PLATFORM.isModLoaded("yigd") || Services.PLATFORM.isModLoaded("charm") || Services.PLATFORM.isModLoaded("gravestones")) {
                 return true;
             }
+        } else if (mixinClassName.contains("IdMapUniformsMixin") && !Services.PLATFORM.isModLoaded("iris")) {
+            return false;
         }
         return true;
     }

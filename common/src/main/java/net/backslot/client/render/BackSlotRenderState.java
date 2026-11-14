@@ -1,5 +1,6 @@
 package net.backslot.client.render;
 
+import net.minecraft.client.renderer.block.BlockModelRenderState;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.world.item.ItemStack;
 
@@ -8,6 +9,8 @@ public interface BackSlotRenderState {
     ItemStackRenderState backslot$getBackItem();
 
     ItemStackRenderState backslot$getBeltItem();
+
+    BlockModelRenderState backslot$getBeltBlock();
 
     ItemStack backslot$getBackStack();
 

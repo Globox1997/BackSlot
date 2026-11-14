@@ -17,7 +17,8 @@
     "client.AvatarRendererMixin",
     "client.AvatarRenderStateMixin",
     "client.CreativeInventoryScreenMixin",
-    "client.InventoryScreenMixin"
+    "client.InventoryScreenMixin",
+    "compat.IdMapUniformsMixin"
   ],
   "injectors": {
     "defaultRequire": 1
